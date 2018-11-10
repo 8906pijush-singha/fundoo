@@ -1,0 +1,67 @@
+.App1 {
+  text-align: center;
+  width:25%;
+  padding: 1%;
+  margin-top:5%; 
+  margin-left:37%; 
+  box-sizing: content-box;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
+}
+.App2 {
+  text-align: center;
+  width: 48%;
+  padding: 1%;
+  margin-top:10%; 
+  margin-left:26%; 
+  box-sizing: content-box;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.9), 0 6px 20px 0 rgba(0, 0, 0, 0.9);
+}
+
+#forgot{
+  margin-right: 22%;
+  text-decoration:none;
+  color: #1A237E;
+}
+#acunt {
+  margin-right: none;
+  text-decoration:none;
+  color: #1A237E;
+}
+#registerLink{
+  margin-right: none;
+  text-decoration:none;
+  color: #1A237E;
+}
+#homeLink{
+  margin-right: none;
+  text-decoration:none;
+  color: #1A237E;
+}
+/* .App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
