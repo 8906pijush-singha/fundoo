@@ -37,8 +37,6 @@ class LoginInput extends Component {
         }
   render() {
     return (
-
-      
       <div >
         <TextField
         label="Email"

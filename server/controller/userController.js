@@ -1,34 +1,22 @@
-// exports.registration=(req,res)=>{
-//     try {
-//         if(req.body==null)
-//             throw "empty body"
-//     } catch (err) {
-        
-//     }
-// }
 const userServices = require('../services/userServices');
 
 const jwt=require('jsonwebtoken');
 
 exports.registration = (req, res) => {
-
 //       console.log(token);
       
 //       jwt.verify(token, 'secret1', function(err, decoded) {
 //         console.log(decoded) 
 //           });
-    let responseResult = {status:false,
-    message:"something bad happend"};
-    if(req.body == null){
-        responseResult.message = 'field empty';
-        res.status(404).send(responseResult);
-    } 
+    let responseResult = {
+        status:false,
+        message:"something bad happend"
+    };
     userServices.registration(req.body, (err, result) => {
         if(err){
             responseResult.message = err;
             res.status(400).send(responseResult);
         } else {
-            console.log("control " ,result);
             responseResult.message="registerted successfully";
             responseResult.status = true;
             responseResult.data = result;
@@ -37,7 +25,6 @@ exports.registration = (req, res) => {
     })
 }
 exports.login = (req, res) => {
-    console.log(req.body);
     let responseResult = {
         status:false,
         message:"something bad happend"
@@ -52,18 +39,20 @@ exports.login = (req, res) => {
                 status:true,
                 message:"login successfull",
               }, 'secret1', { expiresIn: '1h' });
-            console.log(token);
+            console.log("token===",token);
             // responseResult.token = token;
-            res.status(200).send(token);
-            
+            res.status(200).send(token);      
         }
     })
 }
 
 
 
-
-
+//     console.log("dsgherh",req.body);
+//     let responseResult = {
+//         status:false,
+//         message:"something bad happend"
+//     };
 
 
 

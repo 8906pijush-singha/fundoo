@@ -49,7 +49,11 @@ userModel.prototype.find = (data, callback) => {
     User.findOne({"email":data.email},(err, result) => {
         if(err) {
             callback(err);
-        } else {
+        
+        }
+        else if(result===null){
+            callback("invalid input");
+        }else {
             if(result.password===data.password){
  
                 return callback(null,result);

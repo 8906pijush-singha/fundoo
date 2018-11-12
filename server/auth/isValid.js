@@ -13,15 +13,26 @@
 //     });
 //   });
 
-  function valid(req,res,next){
-    let responseResult = {};
-    if(req.body === null){
+  exports.loginValid=(req,res,next)=>{
+    
+    if(req.body === null||req.body ==={}){
+      let responseResult = {};
         responseResult.status = false;
         responseResult.message = 'field empty';
+        console.log("jhvhv")
         res.status(404).send(responseResult);
     }
     next();
   }
 
-
-  module.exports=valid;
+  exports.registrationValid=(req,res,next)=>{
+    
+    if(req.body === null||req.body ==={}){
+      let responseResult = {};
+        responseResult.status = false;
+        responseResult.message = 'field empty';
+        console.log("jhvhv")
+        res.status(404).send(responseResult);
+    }
+    next();
+  }

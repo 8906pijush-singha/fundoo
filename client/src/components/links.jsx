@@ -18,7 +18,7 @@ class RegisterLink extends Component{
     render(){
         return(
             <div>
-            <a href="/login" id="registerLink" 
+            <a href="/" id="registerLink" 
             >Already have an acount?</a>
             </div>
         )
@@ -29,7 +29,7 @@ class Home extends Component{
     render(){
         return(
             <div>
-            <a href="/login" id="homeLink" 
+            <a href="/" id="homeLink" 
             >Back to sign in</a>
             </div>
         )
