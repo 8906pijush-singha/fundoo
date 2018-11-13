@@ -36,3 +36,15 @@
     }
     next();
   }
+
+
+  exports.tokenValid=(req,res,next)=>{
+    console.log(req.headers);
+    
+    if(req.header === null||req.header ===""){
+      let responseResult = {};
+        responseResult.status = false;
+        res.status(404).send(responseResult);
+    }
+    next();
+  }

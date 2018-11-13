@@ -22,3 +22,14 @@ exports.login = (data, callback) => {
         }
     })
 }
+
+exports.tokenCheck = (data, callback) => {
+    
+    user.findID(data, (err, result) => {
+        if(err) {
+            callback(err);
+        } else {
+            return callback(null, result);
+        }
+    })
+}

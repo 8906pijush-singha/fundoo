@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import LoginInput from '../components/login_input'
 import { Links } from '../components/links';
-import { auth } from '../services/auth';
+// import { auth } from '../services/auth';
 
 const style={
     width:"35%",
@@ -9,9 +9,6 @@ const style={
 }
 
 class Login extends Component{
-    componentWillMount(){
-        auth()
-    }
     render(){
         if(localStorage.getItem("token")!==null){
             window.location.href='note';

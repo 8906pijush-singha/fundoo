@@ -63,4 +63,16 @@ userModel.prototype.find = (data, callback) => {
         }
     })
 }
+userModel.prototype.findID = (data, callback) => {
+
+    User.findOne({"_id":data.id},(err, result) => {
+        if(err) {
+            callback(err);
+        
+        }
+        else 
+            return callback(null,result);
+            
+    })
+}
 module.exports= new userModel;

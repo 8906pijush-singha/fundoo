@@ -9,9 +9,9 @@ class Note extends Component
         window.location.href="/";
     }
     render(){
-        if(localStorage.getItem("token")===null){
-           return( window.location.href="/")
-        }else{
+        // if(localStorage.getItem("token")===null){
+        //    return( window.location.href="/")
+        // }else{
         return(
             <form onSubmit={this.clearLocslStorage}>
                 <Button variant="contained"
@@ -20,6 +20,7 @@ class Note extends Component
 
             </form>
         )
-    }}
+    }
+// }
 }
 export default Note;
