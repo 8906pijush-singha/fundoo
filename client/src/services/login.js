@@ -9,6 +9,7 @@ export function login(email,password){
         .then(function (response) {
             console.log(response.data);
           localStorage.setItem("token",response.data);
+          localStorage.setItem("isAuth",true);              
           window.location.href='note';
         })
         .catch(function (error) {

@@ -10,7 +10,7 @@ const userController = require('../controller/userController');
 
 router.post('/register',auth.registrationValid, userController.registration);
 router.post('/login',auth.loginValid,userController.login);
-router.post('/auth',auth.tokenValid,userController.tokenValid);
+router.post('/token',auth.tokenValid,userController.tokenValid);
 
 
 module.exports=router;

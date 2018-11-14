@@ -1,5 +1,6 @@
 import React,{ Component } from "react";
 import { Button } from "@material-ui/core";
+import { auth } from "../services/auth";
 
 class Note extends Component
 {
@@ -8,10 +9,13 @@ class Note extends Component
         localStorage.clear();
         window.location.href="/";
     }
+    componentWillMount(){
+        auth();
+    }
     render(){
-        // if(localStorage.getItem("token")===null){
-        //    return( window.location.href="/")
-        // }else{
+        if(localStorage.getItem("isAuth")===null){
+           return( window.location.href="/")
+        }else{
         return(
             <form onSubmit={this.clearLocslStorage}>
                 <Button variant="contained"
@@ -21,6 +25,6 @@ class Note extends Component
             </form>
         )
     }
-// }
+    }
 }
 export default Note;

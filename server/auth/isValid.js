@@ -39,12 +39,19 @@
 
 
   exports.tokenValid=(req,res,next)=>{
-    console.log(req.headers);
+    const token=req.headers['access-token'];
+    console.log("token ",token);
     
-    if(req.header === null||req.header ===""){
+    if(token == null || token == undefined || token ==""){
+      console.log('if', token);
+      
       let responseResult = {};
         responseResult.status = false;
+        responseResult.msg = 'auth';
         res.status(404).send(responseResult);
+    } else {
+    //   console.log('else ', token);
+      
+      next()
     }
-    next();
   }

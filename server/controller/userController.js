@@ -47,13 +47,16 @@ exports.tokenValid = (req, res) => {
     let responseResult = {
         status:false
     };
-    jwt.verify(req.header, 'secret1', function(err, decoded) {
+    jwt.verify(req.headers['access-token'], 'secret1', function(err, decoded) {
         if(err){
-            responseResult.message = err;
+            responseResult.message = "err";
             res.status(400).send(responseResult);
         }
+        req.decoded=decoded;
         console.log(decoded);
-        userServices.tokenCheck(decoded, (err, result) => {
+        userServices.tokenCheck(req.decoded, (err, result) => {
+            console.log(result);
+            
             if(err){
                 responseResult.message = err;
                 res.status(400).send(responseResult);
