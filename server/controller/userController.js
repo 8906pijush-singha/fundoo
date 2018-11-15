@@ -37,7 +37,7 @@ exports.login = (req, res) => {
                 status:true,
                 message:"login successfull",
               }, 'secret1', { expiresIn: '1h' });
-            console.log("token===",token);
+            console.log("token===\n",token);
             
             res.status(200).send(token);      
         }
@@ -49,13 +49,13 @@ exports.tokenValid = (req, res) => {
     };
     jwt.verify(req.headers['access-token'], 'secret1', function(err, decoded) {
         if(err){
-            responseResult.message = "err";
+            responseResult.message = err;
             res.status(400).send(responseResult);
         }
         req.decoded=decoded;
-        console.log(decoded);
+        //console.log(decoded);
         userServices.tokenCheck(req.decoded, (err, result) => {
-            console.log(result);
+            //console.log(result);
             
             if(err){
                 responseResult.message = err;
@@ -67,3 +67,22 @@ exports.tokenValid = (req, res) => {
         })
     });
 }
+
+exports.forgotController = (req, res) => {
+    //       console.log(token);
+          
+          
+        let responseResult = {
+            status:false,
+            message:"something bad happend"
+        };
+        userServices.forgot(req.body, (err, result) => {
+            if(err){
+                responseResult.message = err;
+                res.status(400).send(responseResult);
+            } else {
+
+                res.status(200).send(responseResult);
+            }
+        })
+    }

@@ -1,6 +1,6 @@
 import React,{ Component } from "react";
 import { Button } from "@material-ui/core";
-import { auth } from "../services/auth";
+// import { auth } from "../services/auth";
 
 class Note extends Component
 {
@@ -9,11 +9,11 @@ class Note extends Component
         localStorage.clear();
         window.location.href="/";
     }
-    componentWillMount(){
-        auth();
-    }
+    // componentWillMount(){
+    //     auth();
+    // }
     render(){
-        if(localStorage.getItem("isAuth")===null){
+        if(localStorage.getItem("isAuth")!=="true"){
            return( window.location.href="/")
         }else{
         return(

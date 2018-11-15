@@ -42,16 +42,27 @@
     const token=req.headers['access-token'];
     console.log("token ",token);
     
-    if(token == null || token == undefined || token ==""){
+    if(token == 'null' || token == undefined || token ==""){
       console.log('if', token);
       
       let responseResult = {};
         responseResult.status = false;
         responseResult.msg = 'auth';
-        res.status(404).send(responseResult);
+        res.status(200).send(responseResult);
     } else {
-    //   console.log('else ', token);
-      
+      console.log('else ', token);
       next()
     }
+  }
+
+  exports.forgotEmailValid=(req,res,next)=>{
+    
+    if(req.body === "null"||req.body ==={}){
+      let responseResult = {};
+        responseResult.status = false;
+        responseResult.message = 'field empty';
+        console.log("jhvhv")
+        res.status(404).send(responseResult);
+    }
+    next();
   }
