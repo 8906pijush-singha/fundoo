@@ -1,10 +1,22 @@
 const mongoose = require('mongoose');
 
 const UserSchema=new mongoose.Schema({
-    fname:String,
-    lname:String,
-    email:String,
-    password:String
+    fname:{
+        type:String,
+        required:true
+    },
+    lname:{ type:String,
+        required:true,
+    },
+    email:{ type:String,
+        required:true,
+        lowercase:true,
+        trim:true,
+        unique:true
+    },
+    password:{ type:String,
+        required:true
+    }
 })
 
 var User = mongoose.model('fundoo_user',UserSchema);
@@ -63,6 +75,8 @@ userModel.prototype.find = (data, callback) => {
         }
     })
 }
+
+
 userModel.prototype.findID = (data, callback) => {
 
     User.findOne({"_id":data.id},(err, result) => {
@@ -73,6 +87,9 @@ userModel.prototype.findID = (data, callback) => {
             return callback(null,result);            
     })
 }
+
+
+
 userModel.prototype.findEmail = (data, callback) => {
 
     User.findOne({"email":data.email},(err, result) => {

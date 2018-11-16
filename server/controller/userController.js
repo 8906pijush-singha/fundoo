@@ -2,10 +2,10 @@ const userServices = require('../services/userServices');
 
 const jwt=require('jsonwebtoken');
 
-exports.registration = (req, res) => {
+exports.registration = (req, res,next) => {
 //       console.log(token);
       
-      
+    try{  
     let responseResult = {
         status:false,
         message:"something bad happend"
@@ -21,16 +21,27 @@ exports.registration = (req, res) => {
             res.status(200).send(responseResult);
         }
     })
+}catch(err){
+    next(err);
 }
-exports.login = (req, res) => {
-    let responseResult = {
-        status:false,
-        message:"something bad happend"
-    };
+}
+exports.login = (req, res,next) => {
+    try{
+    // let responseResult = {
+    //     status:false,
+    //     message:"something bad happend"
+    // };
+    // const v=new Error();
+    // v.
     userServices.login(req.body, (err, result) => {
         if(err){
-            responseResult.message = err;
-            res.status(400).send(responseResult);
+            const obj={
+                status:400,
+                msg:"something bad happend"
+            }
+            next(obj)
+            // responseResult.message = err;
+            // res.status(400).send(responseResult);
         } else {
             const token= jwt.sign({
                 id:result.id,
@@ -42,6 +53,9 @@ exports.login = (req, res) => {
             res.status(200).send(token);      
         }
     })
+}catch(err){
+    next(err)
+}
 }
 exports.tokenValid = (req, res) => {
     let responseResult = {

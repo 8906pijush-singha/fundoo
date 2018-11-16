@@ -15,6 +15,6 @@ const userController = require('../controller/userController');
 router.post('/register',auth.registrationValid, userController.registration);
 router.post('/login',auth.loginValid,userController.login);
 router.post('/token',auth.tokenValid,userController.tokenValid);
-//router.post('/forgot',auth.forgotEmailValid,userController.forgotController)
+// router.post('/forgot',auth.forgotEmailValid,userController.forgotCo/ntroller)
 
 module.exports=router;
