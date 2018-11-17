@@ -3,7 +3,7 @@ var nodemailer = require('nodemailer');
 
 
 exports.registration = (data, callback) => {
-    user.save(data, (err, result) => {
+    user.save1(data, (err, result) => {
         if(err) {
             callback(err);
         } else {
@@ -12,10 +12,9 @@ exports.registration = (data, callback) => {
     })
 }
 
-
 exports.login = (data, callback) => {
     // console.log(data);
-    user.find(data, (err, result) => {
+    user.find1(data, (err, result) => {
         if(err) {
             callback(err);
         } else {
@@ -36,7 +35,7 @@ exports.tokenCheck = (data, callback) => {
     })
 }
 
-exports.tokenCheck = (data, callback) => {
+exports.forgot = (data, callback) => {
     
     user.findEmail(data, (err, result) => {
         if(err) {

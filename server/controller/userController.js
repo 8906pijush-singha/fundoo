@@ -37,7 +37,7 @@ exports.login = (req, res,next) => {
         if(err){
             const obj={
                 status:400,
-                msg:"something bad happend"
+                msg:"something bad happened"
             }
             next(obj)
             // responseResult.message = err;
@@ -46,7 +46,7 @@ exports.login = (req, res,next) => {
             const token= jwt.sign({
                 id:result.id,
                 status:true,
-                message:"login successfull",
+                message:"login successful",
               }, 'secret1', { expiresIn: '1h' });
             console.log("token===\n",token);
             
@@ -57,14 +57,20 @@ exports.login = (req, res,next) => {
     next(err)
 }
 }
-exports.tokenValid = (req, res) => {
+exports.tokenValid = (req, res, next) => {
+    try{
     let responseResult = {
         status:false
     };
     jwt.verify(req.headers['access-token'], 'secret1', function(err, decoded) {
         if(err){
-            responseResult.message = err;
-            res.status(400).send(responseResult);
+            const obj={
+                status:400,
+                msg:"something bad happened"
+            }
+            next(obj)
+            // responseResult.message = err;
+            // res.status(400).send(responseResult);
         }
         req.decoded=decoded;
         //console.log(decoded);
@@ -80,23 +86,34 @@ exports.tokenValid = (req, res) => {
             }
         })
     });
+}catch(err){
+    next(err)
+}
 }
 
-exports.forgotController = (req, res) => {
+exports.forgotController = (req, res, next) => {
     //       console.log(token);
           
-          
+       try{   
         let responseResult = {
             status:false,
             message:"something bad happend"
         };
         userServices.forgot(req.body, (err, result) => {
             if(err){
-                responseResult.message = err;
-                res.status(400).send(responseResult);
+                const obj={
+                    status:400,
+                    msg:"something bad happened"
+                }
+                next(obj)
+                // responseResult.message = err;
+                // res.status(400).send(responseResult);
             } else {
 
                 res.status(200).send(responseResult);
             }
         })
+    }catch(err){
+        next(err)
+    }
     }
