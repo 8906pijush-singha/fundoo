@@ -23,7 +23,6 @@
     }
     else if (/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i.test(req.body.email)===false
     ||/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/.test(req.body.password)===false) {
-      console.log("valid input")
       const err=new Error();
       err.msg="Not a valid input";
       err.status=400;
@@ -84,4 +83,24 @@
         res.status(404).send(responseResult);
     }
     next();
+  }
+
+
+  exports.resetPassValid=(req,res,next)=>{
+    
+    if(req.body === "null"||req.body ==={}){
+      let responseResult = {};
+        responseResult.status = false;
+        responseResult.message = 'field empty';
+        console.log("jhvhv")
+        res.status(404).send(responseResult);
+    }else if(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/.test(req.body.password)===false){
+      const err=new Error();
+      err.msg="Not a valid input";
+      err.status=400;
+      // res.status(400).send(err);
+      next(err);
+    }else{
+      next();
+    }
   }

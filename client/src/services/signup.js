@@ -11,7 +11,7 @@ function signup(fname,lname,email,password){
         .then(function (response) {
           console.log(response);
           console.log("galat hai");
-          window.location.href='login';
+          window.location.href='/';
         })
         .catch(function (error) {
           console.log(error);

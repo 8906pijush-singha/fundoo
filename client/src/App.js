@@ -4,7 +4,7 @@ import './App.css';
 import Login from './screen/login'
 import Register from './screen/register';
 import Forgot from './screen/forgotPassword';
-// import Note from './screen/note';
+import Note from './screen/note';
 import ResetPassword from './screen/resetPassword';
 import AppBarComp from './components/appbar';
 class App extends Component{
@@ -15,7 +15,7 @@ class App extends Component{
       <Route path='/register' component={Register} />
       <Route path='/' exact strict component={Login} />
       <Route path='/forgot' component={Forgot} />
-      {/* <Route path='/note' component={Note} /> */}
+      <Route path='/note' component={Note} />
       <Route path='/reset' component={ResetPassword} />
       <Route path='/notes' component={AppBarComp} />
 

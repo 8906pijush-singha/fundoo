@@ -95,12 +95,10 @@ exports.forgotController = (req, res, next) => {
     //       console.log(token);
           
        try{   
-        let responseResult = {
-            status:false,
-            message:"something bad happend"
-        };
         userServices.forgot(req.body, (err, result) => {
             if(err){
+                console.log("control err");
+                
                 const obj={
                     status:400,
                     msg:"something bad happened"
@@ -110,10 +108,40 @@ exports.forgotController = (req, res, next) => {
                 // res.status(400).send(responseResult);
             } else {
 
-                res.status(200).send(responseResult);
+                console.log("control else");
+                res.status(200).send(result);
             }
         })
     }catch(err){
         next(err)
     }
+}
+
+
+exports.resetController = (req, res, next) => {
+    //       console.log(token);
+          
+       try{  
+           console.log("reset controller");
+            
+        userServices.reset(req, (err, result) => {
+            if(err){
+                console.log("control err");
+                
+                const obj={
+                    status:400,
+                    msg:"something bad happened"
+                }
+                next(obj)
+                // responseResult.message = err;
+                // res.status(400).send(responseResult);
+            } else {
+
+                console.log("control else",result);
+                res.status(200).send(result);
+            }
+        })
+    }catch(err){
+        next(err)
     }
+}

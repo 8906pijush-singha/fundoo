@@ -1,5 +1,6 @@
 import React,{Component} from 'react'
 import { TextField, Button } from '@material-ui/core';
+import { forgot } from '../services/forgot';
 
 class ForgotInput extends Component{
     constructor(){
@@ -21,7 +22,7 @@ class ForgotInput extends Component{
                   alert('invalid email');
               }
               else {
-                alert("hoh ho");
+                forgot(this.state.email);
                
               }
               e.preventDefault();

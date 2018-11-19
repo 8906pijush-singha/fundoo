@@ -1,5 +1,6 @@
 import React,{ Component } from "react";
 import { Button, TextField } from "@material-ui/core";
+import { reset } from "../services/reset";
 // import { auth } from "../services/auth";
 
 class ResetPasswordInput extends Component
@@ -32,7 +33,8 @@ class ResetPasswordInput extends Component
                 alert("mismatched password")
               }
               else {
-                alert("ok");
+                alert(window.location.pathname.substr(7));
+                reset(this.state.password);
               }
               e.preventDefault();
           }

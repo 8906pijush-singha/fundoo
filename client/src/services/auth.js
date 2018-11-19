@@ -6,7 +6,7 @@ export function auth(){
     method: "POST",
     headers: {
       "access-token": localStorage.getItem("token")
-    }
+    },
     }).then(function (response) {
             console.log(response);
             if(response.data.status===true)
