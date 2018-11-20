@@ -87,6 +87,7 @@
 
 
   exports.resetPassValid=(req,res,next)=>{
+    console.log(req.body);
     
     if(req.body === "null"||req.body ==={}){
       let responseResult = {};
@@ -95,8 +96,12 @@
         console.log("jhvhv")
         res.status(404).send(responseResult);
     }else if(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/.test(req.body.password)===false){
+      console.log("password=",req.body.password);
+      
       const err=new Error();
       err.msg="Not a valid input";
+      console.log(err.msg);
+      
       err.status=400;
       // res.status(400).send(err);
       next(err);

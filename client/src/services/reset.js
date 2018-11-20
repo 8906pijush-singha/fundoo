@@ -4,9 +4,9 @@ export function reset(password){
   axios('/reset',{
     method: "POST",
     headers: {
-      "access-token": localStorage.getItem(window.location.pathname.substr(7))
+      "access-token": window.location.pathname.substr(7)
     },
-    body:{
+    data:{
         password:password
     }
     }).then(function (response) {
@@ -17,4 +17,4 @@ export function reset(password){
           
           // alert(error);
         });
-      }
+  }

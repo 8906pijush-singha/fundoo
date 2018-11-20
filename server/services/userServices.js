@@ -1,9 +1,14 @@
 const user = require('../app/model/user');
 const nodemailer = require('nodemailer');
 const async=require('async');
-var jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const bcrypt=require('bcrypt-nodejs');
 
 exports.registration = (data, callback) => {
+
+
+    data.password =bcrypt.hashSync(data.password);
+
     user.save(data, (err, result) => {
         if(err) {
             callback(err);

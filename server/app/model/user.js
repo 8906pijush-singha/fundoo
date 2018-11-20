@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const bcrypt =require('bcrypt-nodejs')
 const UserSchema=new mongoose.Schema({
     fname:{
         type:String,
@@ -73,7 +73,7 @@ userModel.prototype.find = (data, callback) => {
         else if(result===null){
             callback("invalid input");
         }else {
-            if(result.password===data.password){
+            if(bcrypt.compareSync(data.password,result.password )){
  
                 return callback(null,result);
             }
