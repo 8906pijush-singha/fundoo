@@ -14,7 +14,6 @@ export function reset(password){
         })
         .catch(function (error) {
           console.log(error);
-          
-          // alert(error);
+           alert(error);
         });
   }

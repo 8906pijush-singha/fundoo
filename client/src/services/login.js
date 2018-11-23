@@ -8,11 +8,14 @@ export function login(email,password){
         })
         .then(function (response) {
             console.log(response.data);
-          localStorage.setItem("token",response.data);
-          localStorage.setItem("isAuth",true);              
-          window.location.href='note';
+          localStorage.setItem("token",response.data.token);
+          localStorage.setItem("isAuth",true); 
+          localStorage.setItem("UserName",response.data.userName); 
+          localStorage.setItem("Email",email);
+          window.location.href='notes';
         })
         .catch(function (error) {
           console.log(error);
+          alert(error);
         });
       }

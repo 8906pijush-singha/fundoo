@@ -49,8 +49,13 @@ exports.login = (req, res,next) => {
                 message:"login successful",
               }, 'secret1', { expiresIn: '1h' });
             console.log("token===\n",token);
+            const obj={
+                token:token,
+                userName:result.fname+" "+result.lname
+            }
             
-            res.status(200).send(token);      
+
+            res.status(200).send(obj);      
         }
     })
 }catch(err){

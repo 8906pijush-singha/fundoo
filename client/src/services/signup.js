@@ -15,6 +15,7 @@ function signup(fname,lname,email,password){
         })
         .catch(function (error) {
           console.log(error);
+          alert(error);
         });
   }
 export{

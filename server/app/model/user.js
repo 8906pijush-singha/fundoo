@@ -73,7 +73,11 @@ userModel.prototype.find = (data, callback) => {
         else if(result===null){
             callback("invalid input");
         }else {
-            if(bcrypt.compareSync(data.password,result.password )){
+            // var bycrptResult = bcrypt.compareSync(data.password,result.password)
+            // console.log('77 : ',bycrptResult);
+            console.log('78');
+            
+            if(bcrypt.compareSync(data.password,result.password)){
  
                 return callback(null,result);
             }
@@ -118,9 +122,9 @@ userModel.prototype.findToken = (data, callback) => {
     })
 }
 userModel.prototype.saveUser=(data,callback)=>{
-    // const userData = new User(data);  
-    console.log(data.resetPasswordExpires,"\n\n",data.resetPasswordToken);
+
     
+
     User.findOneAndUpdate({email:data.email},{$set: {  resetPasswordToken : data.resetPasswordToken,
         resetPasswordExpires: data.resetPasswordExpires }},(err, result) => {
         if(err) {
@@ -134,9 +138,9 @@ userModel.prototype.saveUser=(data,callback)=>{
 
 
 userModel.prototype.savePassword=(data,callback)=>{
-    console.log(data);         
+    const hash=bcrypt.hash(data.password);         
     User.findOneAndUpdate({email:data.email},{$set: {  resetPasswordToken :undefined,
-        resetPasswordExpires:undefined,password:data.password }},(err, result) => {
+        resetPasswordExpires:undefined,password:hash }},(err, result) => {
         if(err) {
             callback(err);
         } else {

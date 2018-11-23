@@ -151,6 +151,7 @@ exports.reset = (data, callback) => {
                         })
                     }else{
                         console.log("obj");
+                        callback(err)
                     }                    
                 },
                     function(result, done) {

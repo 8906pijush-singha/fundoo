@@ -14,7 +14,7 @@ class Login extends Component{
     // }
     render(){
         if(localStorage.getItem("isAuth")==="true"){
-            window.location.href='note';
+            window.location.href='notes';
           }else{
         return(
             <form className="App1">
