@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import { IconButton, Fade, Popper, Paper, Menu } from '@material-ui/core'
-import { MenuItem } from '@material-ui/core';
+import { IconButton, Fade, Popper, Paper, Tooltip } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = theme => ({
   root: {
-    width: 500,
+    width: 50
   },
   typography: {
     padding: theme.spacing.unit * 2,
@@ -78,24 +77,30 @@ class UserProfile extends Component {
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
                 <Paper >
-                  <div style={{ width: "300px",height:"150px" }}
+                  <div style={{ width: "300px", height: "150px" }}
                     open={open}>
-                        {/* <IconButton> */}
-                        <AccountCircle style={{ width: "100px", height: "150px", float:"left" }} /><p /><p /><br/>
-                        <div style = {{float:"right", marginRight:"10px", marginLeft:"10px", lineHeight:"1", paddingBottom:"0px 0px "}}>{username}</div>
-                        <div style = {{float:"right", marginRight:"2px", marginLeft:"10px"}}>{email}</div><p /><p /><p /><p />
-                        <div style = {{float:"right", marginRight:"2px", marginLeft:"10px"}} onClick={this.clearLocslStorage}>Logout</div>
+                    {/* <IconButton> */}
+                    <AccountCircle style={{ width: "100px", height: "150px", float: "left" }} /><br />
+                    <div style={{ float: "right", marginRight: "10px", marginLeft: "10px", lineHeight: "1", paddingBottom: "0px 0px " }}>{username}</div>
+                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }}>{email}</div><br /><br /><br /><br /><br /><br />
+                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }} onClick={this.clearLocslStorage}>Logout</div>
                   </div>
                 </Paper>
               </Fade>
             )}
           </Popper>
-          <IconButton
-            style={{ marginLeft: "400px" }}
-            onClick={this.handleClick("bottom-end")}
-          >
-            <AccountCircle style={{ width: "30px", height: "30px" }} />
-          </IconButton>
+          <Tooltip title={<div>
+            <div id="AcountTooltip">Fundoo Account</div>
+            <div>{localStorage.getItem("UserName")}</div>
+            <div>{localStorage.getItem("Email")}</div>
+          </div>}>
+            <IconButton
+              style={{ marginLeft: "100px" }}
+              onClick={this.handleClick("bottom-end")}
+            >
+              <AccountCircle style={{ width: "30px", height: "30px" }} />
+            </IconButton>
+          </Tooltip>
         </div>
       )
     }
