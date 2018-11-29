@@ -39,6 +39,7 @@ class LoginInput extends Component {
     return (
       <div >
         <TextField
+          id="email"
           label="Email"
           type="Email"
           value={this.state.email}
@@ -51,6 +52,7 @@ class LoginInput extends Component {
           //  }}
           // if it is text field and u need to remove the underline do the above 
           // and if it is input then simply use "disableUnderline={true}" 
+          id="password"
           type="password"
           label="Password"
           value={this.state.password}
@@ -58,6 +60,7 @@ class LoginInput extends Component {
         />
         <p />
         <Button
+          id="btnLogin"
           type="submit"
           style={{ fontSize: "100%" }}
           component="span"

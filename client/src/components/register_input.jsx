@@ -61,17 +61,20 @@ class RegisterInput extends Component {
     return (
       <div >
         <TextField
+        id="firstName"
         label="First name"
         value={this.state.firstName}
         onChange={this.handleFirstName}
         />
         <TextField
+        id="lastName"
         label="Last name"
         value={this.state.lastName}
         onChange={this.handleLastName}
         />
        
         <TextField
+        id="emailReg"
         label="Email"
         type="Email"
         value={this.state.email}
@@ -83,12 +86,14 @@ class RegisterInput extends Component {
         // if it is text field and u need to remove the underline do the above 
         // and if it is input the simply use "disableUnderline={true}"  */}
         <TextField
+        id="passwordReg"
         type="password"
         label="Password"
         value={this.state.password}
         onChange={this.handlePassword}
         />
         <TextField
+        id="passwordConf"
         type="password"
         label="Confirm password"
         value={this.state.confirmPassword}

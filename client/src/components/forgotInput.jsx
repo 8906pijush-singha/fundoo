@@ -30,6 +30,7 @@ class ForgotInput extends Component {
         return (
             <div>
                 <TextField
+                    id="emailfogt"
                     type="Email"
                     placeholder="Registered email"
                     value={this.state.email}
