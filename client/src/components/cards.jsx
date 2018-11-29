@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
-import { Card, Grid } from '@material-ui/core';
+import { Card } from '@material-ui/core';
 class Cards extends Component {
-    render() {
-        return (
-            <div >
 
-                <div style={{width:"300px"}}>
-                    <Card className="cards">
+    render() {
+        let changeCardStyle = this.props.parentProps ? "verticalCards" : "_cards";
+        return (
+            <div className="gridCards" >
+
+                <div >
+                    <Card className={changeCardStyle}>
                         Hi Pijush
                         </Card>
                 </div>
 
 
                 <div>
-                    <Card className="cards">
+                    <Card className={changeCardStyle}>
                         Hello
                         </Card></div>
 
 
 
                 <div>
-                    <Card className="cards">
+                    <Card className={changeCardStyle}>
                         good morning
                         </Card></div>
 
                 <div>
-                    <Card className="cards">
+                    <Card className={changeCardStyle}>
                         good morning
                     </Card>
                 </div>

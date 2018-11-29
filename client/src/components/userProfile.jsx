@@ -79,7 +79,6 @@ class UserProfile extends Component {
                 <Paper >
                   <div style={{ width: "300px", height: "150px" }}
                     open={open}>
-                    {/* <IconButton> */}
                     <AccountCircle style={{ width: "100px", height: "150px", float: "left" }} /><br />
                     <div style={{ float: "right", marginRight: "10px", marginLeft: "10px", lineHeight: "1", paddingBottom: "0px 0px " }}>{username}</div>
                     <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }}>{email}</div><br /><br /><br /><br /><br /><br />

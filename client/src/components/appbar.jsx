@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
-import { AppBar, Toolbar, IconButton, InputBase, MenuItem, Drawer, MuiThemeProvider, createMuiTheme, Tooltip } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, InputBase, MuiThemeProvider, createMuiTheme, Tooltip } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import UserProfile from './userProfile';
+import MenuDrawer from './menuDrawer';
+import ViewCards from './cardsView';
 
 const theme = createMuiTheme({
     overrides: {
         MuiDrawer: {
             paperAnchorLeft: {
                 top: 66,
-                width: 300,
+                width: 280,
                 background: "white"
                 
             },
@@ -39,10 +41,15 @@ class AppBarComp extends Component {
             open: false
         }
         this.handleDrawer = this.handleDrawer.bind(this);
+        this.setView=this.setView.bind(this);
     }
     handleDrawer() {
         this.setState({ open: !this.state.open })
     }
+    setView(){
+        this.props.parentProps();
+    }
+    
     render() {
         if (localStorage.getItem("isAuth") !== "true") {
             return (window.location.href = "/")
@@ -83,11 +90,8 @@ class AppBarComp extends Component {
                                     <img src={require('../assets/gear.png')} alt="setting icon" ></img>
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="List View">
-                                <IconButton style={{ marginRight: "0px" }}>
-                                    <img src={require('../assets/view-agenda.svg')} alt="setting icon" ></img>
-                                </IconButton>
-                            </Tooltip>
+
+                            <ViewCards parentProps={this.setView} />
                             
                             <UserProfile />
 
@@ -95,27 +99,7 @@ class AppBarComp extends Component {
 
 
                     </AppBar>
-                        <Drawer
-                            open={this.state.open}
-                            variant="persistent"
-                        // containerStyle={{ 'top': 70, "boxShadow": 0 }}
-                        >
-                            <MenuItem><img src={require('../assets/note.svg')} alt="Note icon" style={{ marginRight: "55px" }}></img>Notes</MenuItem>
-                            <MenuItem><img src={require('../assets/icons8-alarm-24.png')} alt="Reminder icon" style={{ marginRight: "55px" }}></img>Reminders</MenuItem>
-                            <div style={{ height: "92px", borderBottom: "1px solid lightgrey", borderTop: "1px solid lightgrey" }}>
-                                <div style={{ fontSize: "85%", marginLeft: "10px", marginTop: "10px", color: "grey", fontFamily: "georgia" }}>
-                                    LABELS
-                                    </div>
-                                <MenuItem style={{ marginBottom: "100px" }}>
-                                    <img src={require('../assets/edit.svg')} alt="edit icon" style={{ marginRight: "55px" }}></img>
-                                    Edit labels
-                                </MenuItem>
-                            </div>
-                            <MenuItem><img src={require('../assets/baseline-archive-24px.svg')} alt="archive icon" style={{ marginRight: "55px" }}></img>Archive</MenuItem>
-                            <MenuItem><img src={require('../assets/icons8-trash-24.png')} alt="trash icon" style={{ marginRight: "55px" }}></img>Trash</MenuItem>
-
-
-                        </Drawer>
+                        <MenuDrawer parentProps={this.state.open} />
 
                 </MuiThemeProvider>
 

@@ -23,7 +23,6 @@ class ForgotInput extends Component {
         }
         else {
             forgot(this.state.email);
-
         }
         e.preventDefault();
     }

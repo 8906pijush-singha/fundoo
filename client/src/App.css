@@ -57,7 +57,8 @@
 .createNote{
   border: 1px solid lightgrey;
   width:400px;
-  height: 40px;
+  height: 30px;
+  padding: 10px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -97,25 +98,49 @@
   }
 } */
 #card1 {
-  height: 55px;
+  height: 30px;
   width: 550px;
+  padding: 10px;
   margin-left:100px;
   margin-top:50px; 
 }
 #card2 {
-  height: 155px;
+  height: 90px;
   width: 550px;
+  padding: 10px;
   margin-left:100px;
   margin-top:50px;
 }
-.cards{
-  width: 300px;
+._cards{
+  width: 200px;
   height: 100px;
-  margin-left: 200px;
   margin-top: 20px;
+  padding: 7px;
   box-shadow: 2px 2px 2px grey;
-  display: grid;
+}
+.verticalCards{
+  height: 100px;
+  width: 550px;
+  padding: 7px;
+  margin-left:100px;
+  margin-top: 50px;
+  box-shadow: 2px 2px 2px grey;
 }
 .dashBoard{
-  margin-left: 300px;
+  margin-left: 310px;
+  max-width: 700px;
 }
+.gridCards{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.noteSVG{
+  margin-right: 20px;
+}
+/* .listCards{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+} */
