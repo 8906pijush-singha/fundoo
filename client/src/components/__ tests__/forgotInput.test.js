@@ -7,7 +7,7 @@ const component = shallow(<ForgotInput />);
 
 
 
-describe('<Login /> Component', () => {
+describe('<ForgotInput /> Component', () => {
     it('should render without throwing an error', () => {
         expect(true).toBe(true);
     })

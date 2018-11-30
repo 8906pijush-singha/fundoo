@@ -50,12 +50,14 @@ class ResetPasswordInput extends Component
         return(
             <form onSubmit={this.validate} >
                 <TextField
+                    id="password"
                     type="password"
                     label="Password"
                     value={this.state.password}
                     onChange={this.handlePassword}
                 /><p />
                 <TextField
+                    id="confPassword"
                     type="password"
                     label="Confirm password"
                     value={this.state.confirmPassword}
