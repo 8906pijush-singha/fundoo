@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Input, Card } from '@material-ui/core';
-import Reminder from './reminder';
-import AddPerson from './addPerson';
-import NoteColor from './noteColor';
-import NoteArchive from './noteArchive';
+import { Input, Card, Button } from '@material-ui/core';
+
 import Upload from './upload';
-import More from './noteMore';
+import Tools from './Tools';
+
 
 
 class CreateNote extends Component {
@@ -17,6 +15,7 @@ class CreateNote extends Component {
         this.setOnCreateNoteClickFalse = this.setOnCreateNoteClickFalse.bind(this);
         this.setOnCreateNoteClickTrue = this.setOnCreateNoteClickTrue.bind(this);
         this.getCreateNoteStatus = this.getCreateNoteStatus.bind(this);
+        this.handleClick=this.handleClick.bind(this);
     }
 
     getCreateNoteStatus() {
@@ -40,6 +39,10 @@ class CreateNote extends Component {
         // console.log("Child call");
         return false;
     }
+    handleClick(e){
+        e.preventDefault();
+        this.setState({onCreateNoteClick:false});
+    }
     render() {
         return (
         !this.state.onCreateNoteClick ?
@@ -47,11 +50,13 @@ class CreateNote extends Component {
                 <Card id="card1">
                     <div>
                         <Input placeholder="Take a note... "
+                            className="createNoteInput"
                             readOnly={true}
                             disableUnderline={true}
                             onClick={this.setOnCreateNoteClickTrue}
 
                         ></Input>
+                        <Upload/>
                     </div>
                 </Card>
             </div>
@@ -59,7 +64,9 @@ class CreateNote extends Component {
             <div>
                 <Card id="card2">
                     <div>
-                        <Input placeholder="Title "
+                        <Input
+                            className="createNoteInput" 
+                            placeholder="Title "
                             readOnly={false}
                             disableUnderline={true}
                             onClick={this.disableClick}
@@ -68,12 +75,16 @@ class CreateNote extends Component {
                         ></Input>
                     </div>
                     <div>
-                        <Input placeholder="Take a note... "
+                        <Input
+                            className="createNoteInput"
+                             placeholder="Take a note... "
                             disableUnderline={true}
                             // disabled={onclick}                                
                             onClick={this.disableClick}
                         ></Input>
-                        <div><Reminder /><AddPerson/><NoteColor /><Upload/><NoteArchive/><More/></div>
+                        <div className="createNoteTools">
+                       <Tools/>
+                       <Button onClick={this.handleClick} >Close</Button></div>
                     </div>
                 </Card>
             </div>

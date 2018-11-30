@@ -5,6 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import UserProfile from './userProfile';
 import MenuDrawer from './menuDrawer';
 import ViewCards from './cardsView';
+import Settings from './settings';
 
 const theme = createMuiTheme({
     overrides: {
@@ -13,7 +14,7 @@ const theme = createMuiTheme({
                 top: 66,
                 width: 280,
                 background: "white"
-                
+
             },
             paperAnchorDockedLeft: {
                 borderColor: "white"
@@ -41,15 +42,20 @@ class AppBarComp extends Component {
             open: false
         }
         this.handleDrawer = this.handleDrawer.bind(this);
-        this.setView=this.setView.bind(this);
+        this.setView = this.setView.bind(this);
+        this.handelRefresh = this.handelRefresh.bind(this);
     }
     handleDrawer() {
         this.setState({ open: !this.state.open })
     }
-    setView(){
+    setView() {
         this.props.parentProps();
     }
-    
+    handelRefresh(e) {
+        e.preventDefault();
+        window.location.reload();
+    }
+
     render() {
         if (localStorage.getItem("isAuth") !== "true") {
             return (window.location.href = "/")
@@ -81,25 +87,21 @@ class AppBarComp extends Component {
 
                             <Tooltip title="refresh">
                                 <IconButton style={{ marginRight: "10px", marginLeft: "5px" }}>
-                                    <img src={require('../assets/refresh_grey_27x27.png')} alt="refresh icon" ></img>
+                                    <img src={require('../assets/refresh_grey_27x27.png')} alt="refresh icon" onClick={this.handelRefresh} ></img>
                                 </IconButton>
                             </Tooltip>
 
-                            <Tooltip title="setting">
-                                <IconButton style={{ marginRight: "10px" }}>
-                                    <img src={require('../assets/gear.png')} alt="setting icon" ></img>
-                                </IconButton>
-                            </Tooltip>
+                            <Settings />
 
                             <ViewCards parentProps={this.setView} />
-                            
+
                             <UserProfile />
 
                         </Toolbar>
 
 
                     </AppBar>
-                        <MenuDrawer parentProps={this.state.open} />
+                    <MenuDrawer parentProps={this.state.open} />
 
                 </MuiThemeProvider>
 
