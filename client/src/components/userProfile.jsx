@@ -22,15 +22,6 @@ class UserProfile extends Component {
     localStorage.clear();
     window.location.href = "/";
   }
-  // constructor(){
-  //   super();
-  //   this.state = {
-  //     anchorEl: null,
-  //     open: false,
-  //     placement: null,
-  //   };
-  //   this.handleClick=this.handleClick.bind(this);
-  // }
   state = {
     anchorEl: null,
     open: false,
@@ -46,22 +37,6 @@ class UserProfile extends Component {
     }));
 
   };
-  // handleClick =(event) => {
-  //   const { currentTarget } = event;
-  //   this.setState(() => ({
-  //     anchorEl: currentTarget,
-  //     open:!this.state.open
-  //   }));
-
-  // };
-
-  // handleClick(){
-  //   const { currentTarget } = event;
-  //   this.setState({open:!this.state.open})
-  //   this.setState({anchorEl: currentTarget})
-  // }
-
-
   render() {
     const { classes } = this.props;
     const { anchorEl, open, placement } = this.state;
@@ -77,13 +52,62 @@ class UserProfile extends Component {
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
                 <Paper >
-                  <div style={{ width: "300px", height: "150px" }}
+
+
+                  <div className="userProfile"
                     open={open}>
-                    <AccountCircle style={{ width: "100px", height: "150px", float: "left" }} /><br />
-                    <div style={{ float: "right", marginRight: "10px", marginLeft: "10px", lineHeight: "1", paddingBottom: "0px 0px " }}>{username}</div>
-                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }}>{email}</div><br /><br /><br /><br /><br /><br />
-                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }} onClick={this.clearLocslStorage}>Logout</div>
+                    
+                    <div className="userProfileIconWithDetails">
+                      <AccountCircle style={{ width: "100px", height: "100px", float: "left" ,paddingTop:"20px"}} />
+                      
+                      <div className="accountDetails">
+                        <div >{username}</div>
+                        <div >{email}</div>
+                      </div>
+                    
+                    </div>
+                    
+                    <div onClick={this.clearLocslStorage} className="logoutButton">Logout</div>
                   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                  {/* <div style={{ width: "300px", height: "150px" }}
+                    open={open}>
+                    <AccountCircle style={{ width: "100px", height: "150px", float: "left" }} />
+                    <div style={{ float: "right", marginRight: "10px", marginLeft: "10px", lineHeight: "1", paddingBottom: "0px 0px " }}>{username}</div>
+                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }}>{email}</div>
+                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }} onClick={this.clearLocslStorage}>Logout</div>
+                  </div> */}
                 </Paper>
               </Fade>
             )}

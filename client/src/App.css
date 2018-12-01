@@ -154,11 +154,11 @@
 .createNoteInput{
   width:500px;
 }
-.remindersMenuItem{
+/* .remindersMenuItem{
   height: 5px;
   width: 118px;
-  font-size: 14px;
-}
+  font-size: 12px;
+} */
 .cardTools{
   display: flex;
 }
@@ -166,4 +166,37 @@
 .createNoteTools{
   display: flex;
   justify-content : space-between;
+}
+.reminderPopper{
+  width: 300px;
+}
+.userProfile{
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 150px;
+
+  flex-direction: row-reverse;
+}
+.userProfileIconWithDetails{
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20px;
+  border-bottom:1px solid #ccc ;
+}
+div .reminderIcon{
+  padding-left: 15px;
+}
+.accountDetails{
+  padding-top: 30px;
+  padding-left: 14px;
+}
+.logoutButton{
+  width: 65px;
+  height: 28px;
+  padding-top: 4px;
+}
+div .menuItemReminder{
+  display: flex;
+  justify-content: space-between;
 }

@@ -8,8 +8,9 @@ import More from './noteMore';
 
 class Tools extends Component{
     render(){
+        let ampm = parseInt(new Date().getHours())>=8 ? "PM" : "AM";
         return(
-            <div className="cardTools"><Reminder /><AddPerson/><NoteColor /><Upload/><NoteArchive/><More/></div>
+            <div className="cardTools"><Reminder parentProps={ampm}/><AddPerson/><NoteColor /><Upload/><NoteArchive/><More/></div>
         )
     }
 }
