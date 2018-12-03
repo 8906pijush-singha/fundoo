@@ -9,7 +9,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../auth/isValid')
 const userController = require('../controller/userController');
-
+const noteController = require('../controller/noteController');
 // const User=require('../app/model/user');
 
 // User.methods(['get','put','post','delete']);
@@ -34,5 +34,12 @@ router.post('/forgot', auth.forgotEmailValid, userController.forgotController)
  * routing for reset
  */
 router.post('/reset', auth.resetPassValid, userController.resetController)
+
+/**
+ * API ROUTES FOR NOTES----------------------------------------
+ */
+
+router.post('/createNote',noteController.createNote)
+
 
 module.exports = router;

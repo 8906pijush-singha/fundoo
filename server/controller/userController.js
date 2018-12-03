@@ -123,8 +123,6 @@ exports.tokenValid = (req, res, next) => {
  * @param {callback function} next 
  */
 exports.forgotController = (req, res, next) => {
-    //       console.log(token);
-
     try {
         userServices.forgot(req.body, (err, result) => {
             if (err) {

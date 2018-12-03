@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Popper from '@material-ui/core/Popper';
 import Fade from '@material-ui/core/Fade';
 import { MenuItem, Paper, ListItem, TextField } from '@material-ui/core';
+import BasicDateTimePicker from './dateAndtime';
 
 class PickDateAndTime extends Component {
     state = {
@@ -11,12 +12,12 @@ class PickDateAndTime extends Component {
     };
 
 
-    onClick=event=>{
-         console.log("abcde");
+    // onClick=event=>{
+    //      console.log("abcde");
         
-        this.props.parentProps(event);
-        this.pickDateTime("right");
-    }
+    //     // this.props.parentProps(event);
+    //     this.pickDateTime("right");
+    // }
     pickDateTime = placement => event => {
         console.log("hoh ho");
         
@@ -34,7 +35,7 @@ class PickDateAndTime extends Component {
         return (
             <div>
                 <div>
-                    <MenuItem onClick={this.onClick}>Pick Date</MenuItem>
+                    <MenuItem onClick={this.pickDateTime('right')}>Pick Date</MenuItem>
                 </div>
 
                 <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
@@ -42,8 +43,8 @@ class PickDateAndTime extends Component {
                         <Fade {...TransitionProps} timeout={350}>
                             <Paper>
                                 <div>
-                                    <ListItem >Pick Date And Time</ListItem>
-                                    <TextField></TextField>
+                                <MenuItem>abckftjtj fde</MenuItem>
+                                {/* <BasicDateTimePicker /> */}
                                     
                                 </div>
                             </Paper>

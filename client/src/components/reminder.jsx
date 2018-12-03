@@ -81,7 +81,7 @@ class Reminder extends Component {
                                         Vashi (West)
                                     </div>
                                     </MenuItem>
-                                    <PickDateAndTime parentProps={this.handelOpen}/>
+                                    <PickDateAndTime/>
                                     <MenuItem >Pick place</MenuItem>
                                 </div>
                             </Paper>

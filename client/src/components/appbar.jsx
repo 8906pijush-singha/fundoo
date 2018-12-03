@@ -14,7 +14,6 @@ const theme = createMuiTheme({
                 top: 66,
                 width: 280,
                 background: "white"
-
             },
             paperAnchorDockedLeft: {
                 borderColor: "white"

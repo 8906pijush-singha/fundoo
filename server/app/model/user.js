@@ -7,6 +7,7 @@
 
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt-nodejs');
+const Schema = mongoose.Schema;
 /**
  * 
  */
@@ -26,10 +27,17 @@ const UserSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+
     password: {
         type: String,
         required: true
     },
+    notes: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'noteSchema'
+        }
+    ],
     resetPasswordToken: String,
     resetPasswordExpires: Date
 })
@@ -109,7 +117,7 @@ userModel.prototype.find = (data, callback) => {
 }
 
 /**
- * to varify the id from the token
+ * to verify the id from the token
  * @param {Object} data 
  * @param {Function} callback 
  */
@@ -185,8 +193,8 @@ userModel.prototype.saveUser = (data, callback) => {
  */
 userModel.prototype.savePassword = (data, callback) => {
     const hash = bcrypt.hash(data.password);
-    console.log("hash................",hash);
-    
+    console.log("hash................", hash);
+
     User.findOneAndUpdate({ email: data.email }, {
         $set: {
             resetPasswordToken: undefined,
@@ -213,31 +221,71 @@ userModel.prototype.savePassword = (data, callback) => {
         }
     })
 }
+/**
+ * @param {String} email 
+ * @param {Function} callback 
+ */
+userModel.prototype.getID = (email, callback) => {
+    User.findOne({ "email": email }, (err, result) => {
+        if (err) {
+            callback(err);
+        }
+        else {
+            const object = {
+                id: result._id
+            }
+            console.log("user id", object.id);
+
+            return callback(null, object.id);
+        }
+    })
+}
+
+userModel.prototype.updateNoteRef = (notes, callback) => {
+    console.log("updateNoteRef");
+
+    User.findOneAndUpdate(
+        { _id: notes.userID }, {
+            $push: {
+                notes:notes._id
+            }
+        }, (err, result) => {
+            if (err) {
+                console.log("updateNoteRefif");
+
+                callback(err);
+            } else {
+                console.log("updateNoteRefelse");
+
+                return callback(null, result)
+            }
+        })
+}
 
 module.exports = new userModel;
 
 
 
 // UserSchema.statics.save1=(data,callback)=>{
-//     User.findOne({"email":data.email},(err, result) => {
-//         if(err) {
-//             callback(err);
-//         } else {
-//             if(result!==null){
-//                 callback("you have already an acouont")
-//             }else{
-//                 const userData = new User(data);
+    // User.findOne({"email":data.email},(err, result) => {
+    //     if(err) {
+    //         callback(err);
+    //     } else {
+    //         if(result!==null){
+    //             callback("you have already an acouont")
+    //         }else{
+    //             const userData = new User(data);
 
-//                 userData.save((err, result) => {
-//                     if(err) {
-//                         callback(err);
-//                     } else {
-//                        return callback(null, result);
-//                     }
-//                 })
-//             }
-//         }
-//     })
+    //             userData.save((err, result) => {
+    //                 if(err) {
+    //                     callback(err);
+    //                 } else {
+    //                    return callback(null, result);
+    //                 }
+    //             })
+    //         }
+    //     }
+    // })
 // }
 
 
