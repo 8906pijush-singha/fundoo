@@ -1,49 +1,48 @@
-import React, { Fragment, PureComponent } from 'react';
-import { DateTimePicker } from 'material-ui-pickers';
+// import React, { Fragment, PureComponent } from 'react';
 
-export default class BasicDateTimePicker extends PureComponent {
-  state = {
-    selectedDate: new Date('2018-01-01T00:00:00.000Z'),
-  };
+// export default class BasicDateTimePicker extends PureComponent {
+//   state = {
+//     selectedDate: new Date('2018-01-01T00:00:00.000Z'),
+//   };
 
-  handleDateChange = date => {
-    this.setState({ selectedDate: date });
-  };
+//   handleDateChange = date => {
+//     this.setState({ selectedDate: date });
+//   };
 
-  render() {
-    const { selectedDate } = this.state;
+//   render() {
+//     const { selectedDate } = this.state;
 
-    return (
-      <Fragment>
-        <div className="picker">
-          <DateTimePicker
-            value={selectedDate}
-            onChange={this.handleDateChange}
-            label="DateTimePicker"
-          />
-        </div>
+//     return (
+//       <Fragment>
+//         <div className="picker">
+//           <DateTimePicker
+//             value={selectedDate}
+//             onChange={this.handleDateChange}
+//             label="DateTimePicker"
+//           />
+//         </div>
 
-        <div className="picker">
-          <DateTimePicker
-            autoOk
-            ampm={false}
-            disableFuture
-            value={selectedDate}
-            onChange={this.handleDateChange}
-            label="24h clock"
-          />
-        </div>
+//         <div className="picker">
+//           <DateTimePicker
+//             autoOk
+//             ampm={false}
+//             disableFuture
+//             value={selectedDate}
+//             onChange={this.handleDateChange}
+//             label="24h clock"
+//           />
+//         </div>
 
-        <div className="picker">
-          <DateTimePicker
-            value={selectedDate}
-            disablePast
-            onChange={this.handleDateChange}
-            label="With Today Button"
-            showTodayButton
-          />
-        </div>
-      </Fragment>
-    );
-  }
-}
+//         <div className="picker">
+//           <DateTimePicker
+//             value={selectedDate}
+//             disablePast
+//             onChange={this.handleDateChange}
+//             label="With Today Button"
+//             showTodayButton
+//           />
+//         </div>
+//       </Fragment>
+//     );
+//   }
+// }

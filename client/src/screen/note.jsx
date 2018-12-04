@@ -30,7 +30,7 @@ class Note extends Component {
             return (window.location.href = "/")
         } else {
             return (
-                <div id="card-layout" onClick={this.handleClick} style={{ height: "800px" }}>
+                <div id="card-layout" onClick={this.handleClick} >
                     <AppBarComp parentProps={this.setCardStyle} />
                     <div className="dashBoard">
                         <CreateNote ref={this.createNoteClick} />

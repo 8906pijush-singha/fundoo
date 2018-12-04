@@ -61,7 +61,8 @@ class AppBarComp extends Component {
         } else {
             return (
                 <MuiThemeProvider theme={theme} >
-                    <AppBar position="static" id="appbar" >
+                    <AppBar position="fixed
+                    " id="appbar" >
                         <Toolbar >
                             <Tooltip title="Menu">
                                 <IconButton onClick={this.handleDrawer}>
