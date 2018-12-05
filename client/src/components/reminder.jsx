@@ -3,6 +3,7 @@ import Popper from '@material-ui/core/Popper';
 import { MenuItem, Paper, Tooltip, ListItem, MuiThemeProvider, createMuiTheme } from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
 import reminder from '../assets/noteReminder.svg'
+import PickDateAndTime from '../components/dateTime';
 const theme = createMuiTheme({
     overrides: {
         MuiMenuItem: {
@@ -80,7 +81,8 @@ class Reminder extends Component {
                                         Vashi (West)
                                     </div>
                                     </MenuItem>
-                                    <MenuItem>Pick Date And Time</MenuItem>
+
+                                    <PickDateAndTime />
                                     <MenuItem >Pick place</MenuItem>
                                 </div>
                             </Paper>

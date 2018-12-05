@@ -200,3 +200,15 @@ div .menuItemReminder{
   display: flex;
   justify-content: space-between;
 }
+.colorPalleteCard{
+  position:absolute;
+  max-width: 116px;
+  padding: 3px;
+  display:flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  z-index: 2;
+}
+.pickDateTimePopper{
+  padding: 10px;
+}

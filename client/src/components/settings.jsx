@@ -3,13 +3,13 @@ import Popper from '@material-ui/core/Popper';
 import { IconButton, MenuItem, Paper, Tooltip } from '@material-ui/core'
 import Fade from '@material-ui/core/Fade';
 import gearIcon from '../assets/gear.png'
-// const obj = [
-//     "Settings",
-//     "Send Feedback",
-//     "Help",
-//     "App Downloads",
-//     "Keyboard Shortcuts"
-// ]
+const obj = [
+    "Settings",
+    "Send Feedback",
+    "Help",
+    "App Downloads",
+    "Keyboard Shortcuts"
+]
 class Settings extends Component {
 
     state = {
@@ -29,11 +29,11 @@ class Settings extends Component {
     };
 
     render() {
-         const { anchorEl, open, placement } = this.state;
-        // // const numbers = [1, 2, 3, 4, 5];
-        // const listItems = obj.map((value) =>
-        //     <MenuItem id="settingsMenuItem">{value}</MenuItem>
-        // );
+        const { anchorEl, open, placement } = this.state;
+        // const numbers = [1, 2, 3, 4, 5];
+        const listItems = obj.map((value) =>
+            <MenuItem id="settingsMenuItem">{value}</MenuItem>
+        );
         return (
             <div>
                 <IconButton >
@@ -50,11 +50,12 @@ class Settings extends Component {
                             <Paper>
                                 <div>
 
-                                   <MenuItem id="settingsMenuItem">Settings</MenuItem>                       
+                                    {listItems}
+                                    {/* <MenuItem id="settingsMenuItem">Settings</MenuItem>                       
                                     <MenuItem id="settingsMenuItem">Send Feedback</MenuItem>
                                     <MenuItem id="settingsMenuItem">Help</MenuItem>
                                     <MenuItem id="settingsMenuItem">App Downloads</MenuItem>
-                                    <MenuItem id="settingsMenuItem">Keyboard Shortcuts</MenuItem>
+                                    <MenuItem id="settingsMenuItem">Keyboard Shortcuts</MenuItem> */}
 
 
                                 </div>
@@ -62,7 +63,7 @@ class Settings extends Component {
                         </Fade>
                     )}
                 </Popper>
-               
+
             </div>
         )
     }
