@@ -64,7 +64,7 @@ exports.login = (req, res, next) => {
                     id: result.id,
                     status: true,
                     message: "login successful",
-                }, 'secret1', { expiresIn: '1h' });
+                }, 'secret1', { expiresIn: '24h' });
                 console.log("token===\n", token);
                 const obj = {
                     token: token,

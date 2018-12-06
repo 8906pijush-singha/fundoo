@@ -8,6 +8,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../auth/isValid')
+const noteAuth=require('../auth/isNoteValid')
 const userController = require('../controller/userController');
 const noteController = require('../controller/noteController');
 // const User=require('../app/model/user');
@@ -39,7 +40,11 @@ router.post('/reset', auth.resetPassValid, userController.resetController)
  * API ROUTES FOR NOTES----------------------------------------
  */
 
-router.post('/createNote',noteController.createNote)
+router.post('/createNote',noteController.createNote);
+
+router.post('/deleteNote',noteAuth.tokenValid)
+router.get('/getNotes',noteAuth.tokenValid,noteController.getNotes)
+router.get('/updateNote', noteAuth.tokenValid,noteController.updateNote)
 
 
 module.exports = router;

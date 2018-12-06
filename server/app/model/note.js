@@ -55,5 +55,56 @@ noteModel.prototype.save = (note, callback) => {
         }
     })
 }
+noteModel.prototype.delete=(data,callback)=>{
+    const id=data.id;
+    Note.deleteOne({_id:id},(err,result)=>{
+        if (err){
+            callback(err)
+        }else{
+            const obj ={
+                status:200,
+                msg:"note is deleted successfully"
+            }
+            return callback(null,result)
+        }
+    })
+}
+
+noteModel.prototype.getNotes=(id,callback)=>{
+    Note.find({userID:id},(err,result)=>{
+        if(err){
+            callback(err)
+        }else{
+            console.log("notes",result)
+            return callback(null,result)
+        }
+    })
+}
+
+
+noteSchema.methods.updateNote = function updateNote (noteID, updateParams, cb) {
+    var updateNote = {}    
+    if(updateParams != null){
+        updateNote.title = updateParams.title;
+        updateNote.description = updateParams.description;
+    }
+    return this.notes.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        updateNote, cb);
+};
+
+
+noteModel.prototype.getNotes=(id,callback)=>{
+    Note.find({userID:id},(err,result)=>{
+        if(err){
+            callback(err)
+        }else{
+            console.log("notes",result)
+            return callback(null,result)
+        }
+    })
+}
 
 module.exports = new noteModel;
