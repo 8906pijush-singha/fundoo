@@ -19,12 +19,18 @@ class ColorPallete extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            open: false
-
+            open: false,
+            color: ""
         }
         this.handleToggle = this.handleToggle.bind(this);
         this.handleMouseEnter = this.handleMouseEnter.bind(this);
         this.handleMouseLeave = this.handleMouseLeave.bind(this);
+        this.handelColor = this.handelColor.bind(this);
+        this.getColor = this.getColor.bind(this);
+
+    }
+    getColor(){
+        return this.state.color
     }
     handleMouseEnter() {
         this.setState({ open: true });
@@ -37,12 +43,17 @@ class ColorPallete extends Component {
     handleToggle() {
         this.setState({ open: !this.state.open });
     }
+    handelColor(e){
+        this.props.ToolsProps(e.target.value);
+    }
     render() {
 
         const changeCardColor = colorCodesAndNames.map((colorKey) =>
 
             <Tooltip title={colorKey.name}>
-                <IconButton style={{ backgroundColor: colorKey.colorCode, "margin": "2px", }}>
+                <IconButton style={{ backgroundColor: colorKey.colorCode, "margin": "2px", }}
+                value={colorKey.colorCode}
+                onClick={this.handelColor}>
                 </IconButton>
             </Tooltip>
         );

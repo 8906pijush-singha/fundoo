@@ -13,14 +13,14 @@ class CreateNote extends Component {
         this.state = {
             title:"",
             description:"",
-            color:"",
+            color:"rgb(255,255,255)",
             reminder: "",
             isPinned: false,
             image:"",
             archive: false,
             isTrashed: false,
             onCreateNoteClick: false,
-            newNote:{}
+            newNote:{},
         }
         this.setOnCreateNoteClickFalse = this.setOnCreateNoteClickFalse.bind(this);
         this.setOnCreateNoteClickTrue = this.setOnCreateNoteClickTrue.bind(this);
@@ -29,7 +29,15 @@ class CreateNote extends Component {
         this.handleTitle=this.handleTitle.bind(this);
         this.handleDescription=this.handleDescription.bind(this)
         this.getNewNote=this.getNewNote.bind(this);
+        this.getColor=this.getColor.bind(this);
+
     }
+    getColor(value){
+        this.setState({
+            color:value   
+        })
+    }
+
     getNewNote(){
         return this.state.newNote;
     }
@@ -56,7 +64,7 @@ class CreateNote extends Component {
     }
     setOnCreateNoteClickFalse(e) {
         e.preventDefault();
-        console.log(e.target)
+        // console.log(e.target)
         if (e.target.id === "card-layout")
             this.setState({ onCreateNoteClick: false });
     }
@@ -66,14 +74,14 @@ class CreateNote extends Component {
         // console.log("Child call");
         return false;
     }
-    handleClick(e){
-        e.preventDefault();
+    handleClick(){
         this.setState({onCreateNoteClick:false});
+        if(this.state.title!==''&&this.state.description!==""){
         const note={
             "email":localStorage.getItem("Email"),
             "title": this.state.title,
             "description": this.state.description,
-            // "color": data.color,
+            "color": this.state.color
             // "reminder": data.reminder,
             // "isPinned": data.isPinned,
             // "image": data.image,
@@ -85,12 +93,20 @@ class CreateNote extends Component {
                 this.setState({
                     newNote:result.data.data
                 })
-                console.log("result",result.data.data)
                 this.props.showCardCall();
             })
             .catch((error) => {
                 alert(error)
             });
+            this.setState({
+                title:"",
+                description:"",
+               
+            })
+        }
+        this.setState({
+            color:"rgb(255,255,255)"
+        })
     }
     render() {
         return (
@@ -103,7 +119,7 @@ class CreateNote extends Component {
                             readOnly={true}
                             disableUnderline={true}
                             onClick={this.setOnCreateNoteClickTrue}
-
+                            value={''}
                         ></Input>
                         <Upload/>
                     </div>
@@ -111,7 +127,7 @@ class CreateNote extends Component {
             </div>
             :
             <div>
-                <Card id="card2">
+                <Card id="card2" style={{backgroundColor:this.state.color}}>
                     <div>
                         <Input
                             className="createNoteInput" 
@@ -137,7 +153,8 @@ class CreateNote extends Component {
 
                         ></Input>
                         <div className="createNoteTools">
-                       <Tools/>
+                       <Tools createNoteProps={this.getColor}
+                       ref={this.createNoteToTools}/>
                        <Button onClick={this.handleClick} >Close</Button></div>
                     </div>
                 </Card>

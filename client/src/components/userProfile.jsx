@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import { IconButton, Fade, Popper, Paper, Tooltip } from '@material-ui/core'
+import { IconButton, Fade, Popper, Paper, Tooltip, Avatar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -42,7 +42,7 @@ class UserProfile extends Component {
     const { anchorEl, open, placement } = this.state;
     const username = localStorage.getItem("UserName")
     const email = localStorage.getItem("Email")
-
+    const initial = username.substring(0, 1);
     if (localStorage.getItem("isAuth") !== "true") {
       return (window.location.href = "/")
     } else {
@@ -56,58 +56,21 @@ class UserProfile extends Component {
 
                   <div className="userProfile"
                     open={open}>
-                    
+
                     <div className="userProfileIconWithDetails">
-                      <AccountCircle style={{ width: "100px", height: "100px", float: "left" ,paddingTop:"20px"}} />
-                      
+                      <Avatar style={{ width: "100px", height: "100px", float: "left", paddingTop: "20px" }} >
+                        {initial}
+                      </Avatar>
+
                       <div className="accountDetails">
                         <div >{username}</div>
                         <div >{email}</div>
                       </div>
-                    
+
                     </div>
-                    
+
                     <div onClick={this.clearLocslStorage} className="logoutButton">Logout</div>
                   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                  {/* <div style={{ width: "300px", height: "150px" }}
-                    open={open}>
-                    <AccountCircle style={{ width: "100px", height: "150px", float: "left" }} />
-                    <div style={{ float: "right", marginRight: "10px", marginLeft: "10px", lineHeight: "1", paddingBottom: "0px 0px " }}>{username}</div>
-                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }}>{email}</div>
-                    <div style={{ float: "right", marginRight: "2px", marginLeft: "10px" }} onClick={this.clearLocslStorage}>Logout</div>
-                  </div> */}
                 </Paper>
               </Fade>
             )}
@@ -121,7 +84,9 @@ class UserProfile extends Component {
               style={{ marginLeft: "100px" }}
               onClick={this.handleClick("bottom-end")}
             >
-              <AccountCircle style={{ width: "30px", height: "30px" }} />
+              <Avatar style={{ width: "30px", height: "30px" }} >
+                {initial}
+              </Avatar>
             </IconButton>
           </Tooltip>
         </div>

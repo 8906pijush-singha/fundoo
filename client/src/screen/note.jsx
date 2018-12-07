@@ -26,7 +26,7 @@ class Note extends Component {
         this.setState({cardStyle:!this.state.cardStyle})
     }
     handleClick(e) {
-        console.log(e.target.id);
+        // console.log(e.target.id);
         if (this.createNoteClick.current.getCreateNoteStatus()) {
             this.createNoteClick.current.setOnCreateNoteClickFalse(e);
         }

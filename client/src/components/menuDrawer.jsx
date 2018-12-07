@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
 import { MenuItem, Drawer } from '@material-ui/core';
 
-
+import EditLabel from "../components/editLabels"
 
 class MenuDrawer extends Component {
+    constructor(){
+        super();
+
+        this.state={
+            open:false
+        }
+
+        this.handleEditLabel=this.handleEditLabel.bind(this);
+    }
+
+    handleEditLabel(){
+        this.setState({open:!this.state.open})
+    }
     render() {
         return (
             <div>
@@ -18,9 +31,9 @@ class MenuDrawer extends Component {
                         <div style={{ fontSize: "85%", marginLeft: "10px", marginTop: "10px", color: "grey", fontFamily: "georgia" }}>
                             LABELS
                                     </div>
-                        <MenuItem style={{ marginBottom: "100px" }}>
+                        <MenuItem style={{ marginBottom: "100px" }} onClick={this.handleEditLabel}>
                             <img src={require('../assets/edit.svg')} alt="edit icon" style={{ marginRight: "55px" }}></img>
-                            Edit labels
+                            Edit Label
                                 </MenuItem>
                     </div>
                     <MenuItem><img src={require('../assets/baseline-archive-24px.svg')} alt="archive icon" style={{ marginRight: "55px" }}></img>Archive</MenuItem>
@@ -28,6 +41,7 @@ class MenuDrawer extends Component {
 
 
                 </Drawer>
+                <EditLabel drawerPropstoEditLabels={this.state.open} handleToggle={this.handleEditLabel}/>
             </div>
         )
     }

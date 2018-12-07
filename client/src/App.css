@@ -39,7 +39,7 @@
   color: #1A237E;
 }
 #appbar{
-  background-color: white;
+  background-color:white;
   box-shadow: 0 0;
   border-bottom: 1px solid lightgrey;
 }
@@ -74,6 +74,9 @@
   height: 5px;
   width: 118px;
   font-size: 14px;
+}
+.settingsPopper{
+  margin-top: 20px;
 }
 /* .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -117,12 +120,21 @@
   margin-left:100px;
   margin-top:100px;
 }
-._cards{
-  width: 200px;
-  height: 100px;
+.cards{
+  width: 240px;
   margin-top: 20px;
   padding: 7px;
   box-shadow: 2px 2px 2px grey;
+  /* visibility: hidden; */
+}
+.cards:hover{
+  box-shadow: 1px 1px 1px 1px grey;
+}
+.cards:hover .noteicons{
+  visibility: visible;
+}
+.noteicons {
+  visibility: hidden;
 }
 .verticalCards{
   height: 100px;
@@ -134,14 +146,19 @@
 }
 .dashBoard{
   margin-left: 310px;
-  max-width: 700px;
+  max-width: 825px;
 }
 .gridCards{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
 }
-
+.pinIcon{
+  visibility: hidden;
+}
+.cards:hover .pinIcon{
+  visibility: visible;
+}
 .noteSVG{
   margin-right: 20px;
 }

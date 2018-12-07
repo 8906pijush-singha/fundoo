@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card } from '@material-ui/core';
 import { getNotes } from '../services/notes';
+import Tools from './Tools';
+import pinIcon from '../assets/pin.svg'
 class Cards extends Component {
     constructor() {
         super();
@@ -8,7 +10,7 @@ class Cards extends Component {
             notes: []
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         getNotes()
             .then((result) => {
                 this.setState({
@@ -20,15 +22,17 @@ class Cards extends Component {
             });
 
     }
-    showCard(){
-        
-        const newCard=this.props.newCard();
-        this.state.notes.push(newCard);
-        console.log("dffgfg",newCard);
+    showCard() {
+
+        const newCard = this.props.newCard();
+        this.setState({
+            notes: [...this.state.notes, newCard]
+        })
     }
-    
+
+
     render() {
-        let changeCardStyle = this.props.parentProps ? "verticalCards" : "_cards";
+        let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         return (
             <div className="gridCards" >
                 {Object.keys(this.state.notes).map((key) => {
@@ -36,14 +40,22 @@ class Cards extends Component {
 
                     return (
                         <div>
-                            <Card className={changeCardStyle}>
+                            <Card className={changeCardStyle} style={{ backgroundColor: this.state.notes[key].color }}>
                                 <div>
-                                    {this.state.notes[key].title}
+                                    <div style={{display:"flex",justifyContent:"space-between"}}>
+                                        <b>{this.state.notes[key].title}</b>
+                                        <img src={pinIcon} className="pinIcon"></img>
+                                    </div>
+                                    <div>
+                                        {this.state.notes[key].description}
+                                    </div>
                                 </div>
-                                <div>
-                                    {this.state.notes[key].description}
+                                <div className="noteicons">
+                                    <Tools />
+
                                 </div>
-                            </Card></div>
+                            </Card>
+                        </div>
 
                     )
                 })}

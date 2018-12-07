@@ -7,10 +7,15 @@ import More from './noteMore';
 import ColorPallete from './colorPallete';
 
 class Tools extends Component{
+    getColor(){
+       return this.toolsToPallete.current.getColor()
+    }
     render(){
         let ampm = parseInt(new Date().getHours())>=8 ? "PM" : "AM";
         return(
-            <div className="cardTools"><Reminder parentProps={ampm}/><AddPerson/><ColorPallete /><Upload/><NoteArchive/><More/></div>
+            <div className="cardTools"><Reminder parentProps={ampm}/><AddPerson/>
+            <ColorPallete ToolsProps={this.props.createNoteProps} />
+            <Upload  /><NoteArchive /><More /></div>
         )
     }
 }

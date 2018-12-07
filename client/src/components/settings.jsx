@@ -47,7 +47,7 @@ class Settings extends Component {
                 <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
                     {({ TransitionProps }) => (
                         <Fade {...TransitionProps} timeout={350}>
-                            <Paper>
+                            <Paper className="settingsPopper">
                                 <div>
 
                                     {listItems}

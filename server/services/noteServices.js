@@ -5,7 +5,7 @@ const user = require('../app/model/user')
  * @param {callback function} callback
  */
 exports.createNote = (data, callback) => {
-    console.log("note Services", data.email);
+    console.log("note Services", data);
     user.getID(data.email, (err, result) => {
         if (err) {
             callback(err)
@@ -14,7 +14,7 @@ exports.createNote = (data, callback) => {
                 "userID": result,
                 "title": data.title,
                 "description": data.description,
-                // "color": data.color,
+                "color": data.color,
                 // "reminder": data.reminder,
                 // "isPinned": data.isPinned,
                 // "image": data.image,
