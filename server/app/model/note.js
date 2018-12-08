@@ -82,17 +82,32 @@ noteModel.prototype.getNotes=(id,callback)=>{
 }
 
 
-noteSchema.methods.updateNote = function updateNote (noteID, updateParams, cb) {
-    var updateNote = {}    
+noteModel.prototype.updateColor=(noteID, updateParams, callback)=> {
+    var updateNote = null    
     if(updateParams != null){
-        updateNote.title = updateParams.title;
-        updateNote.description = updateParams.description;
+        updateNote = updateParams;
+    }else{
+        callback("color not found")
     }
-    return this.notes.findOneAndUpdate(
+    console.log("color found",noteID, updateParams);
+    
+    Note.findOneAndUpdate(
         {
             _id: noteID
         },
-        updateNote, cb);
+        {
+            $set:{
+                color:updateNote
+            }
+        },
+        (err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                console.log("updated note",updateNote)
+                return callback(null,updateNote)
+            }
+        });
 };
 
 

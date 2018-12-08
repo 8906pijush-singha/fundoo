@@ -40,11 +40,11 @@ router.post('/reset', auth.resetPassValid, userController.resetController)
  * API ROUTES FOR NOTES----------------------------------------
  */
 
-router.post('/createNote',noteController.createNote);
+router.post('/createNote',noteAuth.tokenValid,noteController.createNote);
 
 router.post('/deleteNote',noteAuth.tokenValid)
 router.get('/getNotes',noteAuth.tokenValid,noteController.getNotes)
-router.get('/updateNote', noteAuth.tokenValid,noteController.updateNote)
+router.put('/updateColor', noteAuth.tokenValid,noteController.updateColor)
 
 
 module.exports = router;

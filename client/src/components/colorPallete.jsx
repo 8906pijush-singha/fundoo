@@ -44,7 +44,8 @@ class ColorPallete extends Component {
         this.setState({ open: !this.state.open });
     }
     handelColor(e){
-        this.props.ToolsProps(e.target.value);
+        this.props.ToolsProps(e.target.value,this.props.noteId)
+      
     }
     render() {
 
@@ -83,72 +84,3 @@ class ColorPallete extends Component {
     }
 }
 export default ColorPallete;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/*  <IconButton classname="" style={{ backgroundColor: 'rgb(255, 255, 255)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ backgroundColor: 'rgb(215, 174, 251)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(204, 255, 144)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(242, 139, 130)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(167, 255, 235)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(253, 207, 232)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(251, 188, 4)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb(203, 240, 248)' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb()' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb()' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb()' }}>
-                        </IconButton>
-
-                        <IconButton style={{ background: 'rgb()' }}>
-                </IconButton>*/}

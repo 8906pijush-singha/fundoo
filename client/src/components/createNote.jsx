@@ -28,7 +28,6 @@ class CreateNote extends Component {
         this.handleClick=this.handleClick.bind(this);
         this.handleTitle=this.handleTitle.bind(this);
         this.handleDescription=this.handleDescription.bind(this)
-        this.getNewNote=this.getNewNote.bind(this);
         this.getColor=this.getColor.bind(this);
 
     }
@@ -36,10 +35,6 @@ class CreateNote extends Component {
         this.setState({
             color:value   
         })
-    }
-
-    getNewNote(){
-        return this.state.newNote;
     }
 
     handleDescription(e){
@@ -93,7 +88,7 @@ class CreateNote extends Component {
                 this.setState({
                     newNote:result.data.data
                 })
-                this.props.showCardCall();
+                this.props.showCardCall(this.state.newNote);
             })
             .catch((error) => {
                 alert(error)
@@ -138,7 +133,6 @@ class CreateNote extends Component {
                             value={this.state.title}
                             onChange={this.handleTitle}
 
-                        // disabled={onclick}
                         ></Input>
                     </div>
                     <div>
@@ -153,7 +147,7 @@ class CreateNote extends Component {
 
                         ></Input>
                         <div className="createNoteTools">
-                       <Tools createNoteProps={this.getColor}
+                       <Tools getColorProps={this.getColor}
                        ref={this.createNoteToTools}/>
                        <Button onClick={this.handleClick} >Close</Button></div>
                     </div>

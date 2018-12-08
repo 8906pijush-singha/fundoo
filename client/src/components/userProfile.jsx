@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import { IconButton, Fade, Popper, Paper, Tooltip, Avatar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
 

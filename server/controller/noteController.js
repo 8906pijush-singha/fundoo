@@ -1,20 +1,20 @@
-const noteServices=require('../services/noteServices');
+const noteServices = require('../services/noteServices');
 exports.createNote = (req, res, next) => {
     try {
-        console.log("note Controller",req.body);
-        
+        console.log("note Controller", req.body);
+
         var res_result = {};
-        noteServices.createNote(req.body, (err, result) => {
+        noteServices.createNote(req.decoded, req.body, (err, result) => {
             if (err) {
 
-                const errMessage = {                   
+                const errMessage = {
                     status: 400,
                     message: "Bad Request"
                 }
                 next(errMessage);
             }
             else {
-                console.log("note cntl sckt ",result);
+                console.log("note cntl sckt ", result);
                 res_result.status = true;
                 res_result.data = result;
                 res.status(200).send(res_result);
@@ -31,12 +31,12 @@ exports.createNote = (req, res, next) => {
 exports.deleteNote = (req, res, next) => {
     try {
         console.log("note Controller");
-        
+
         var res_result = {};
         noteServices.deleteNote(req.body, (err, result) => {
             if (err) {
 
-                const errMessage = {                   
+                const errMessage = {
                     status: 400,
                     message: "Bad Request"
                 }
@@ -56,13 +56,13 @@ exports.deleteNote = (req, res, next) => {
 
 exports.getNotes = (req, res, next) => {
     try {
-        console.log("note Controller",req.decoded);
-        
+        console.log("note Controller", req.decoded);
+
         var res_result = {};
         noteServices.getNotes(req.decoded, (err, result) => {
             if (err) {
 
-                const errMessage = {                   
+                const errMessage = {
                     status: 400,
                     message: "Bad Request"
                 }
@@ -80,40 +80,42 @@ exports.getNotes = (req, res, next) => {
     }
 }
 
-exports.updateNote = (req, res, next) => {
+exports.updateColor = (req, res, next) => {
     try {
-        var paramData = {};
-        var res_result = {};
-        var noteID = null;
-        if(typeof req.title !== 'undefined'){
-            paramData.title = req.title;
-        }else{
-            throw new Error("Title is mandatory");
-        }
-        if(typeof req.id !== 'undefined'){
-            noteID = req.id;
-        }else{
-            throw new Error("Title is mandatory");
-        }
-        if(typeof req.description !== 'undefined'){
-            paramData.description = req.description;
-        }
+        console.log("in noteController",req.body);
         
-        noteServices.updateNote(noteID, paramData, (err, result) => {
-            if (err) {
+        let color = null;
+        var res_result = {};
+        let noteID = null;
+        // if(typeof req.title !== 'undefined'){
+        //     paramData.title = req.title;
+        // }else{
+        //     throw new Error("Title is mandatory");
+        // }
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else if (typeof req.body.color === 'undefined') {
+            throw new Error("color is mandatory");
+        } else {
+            noteID = req.body.noteID;
+            color = req.body.color;
 
-                const errMessage = {                   
-                    status: 400,
-                    message: "Bad Request"
+            noteServices.updateColor(noteID, color, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
                 }
-                next(errMessage);
-            }
-            else {
-                res_result.status = true;
-                res_result.data = result;
-                res.status(200).send(res_result);
-            }
-        })
+                else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
     }
     catch (error) {
         next(error);

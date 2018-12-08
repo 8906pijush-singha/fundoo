@@ -14,12 +14,11 @@ class Note extends Component {
         this.noteToCardsRef = React.createRef();
         this.handleClick = this.handleClick.bind(this);
         this.setCardStyle=this.setCardStyle.bind(this);
-        this.getCreateNoteProps=this.getCreateNoteProps.bind(this);
         this.showCards=this.showCards.bind(this);
 
     }
-    showCards(){
-        this.noteToCardsRef.current.showCard();
+    showCards(newCard){
+        this.noteToCardsRef.current.showCard(newCard);
     }
 
     setCardStyle(){
@@ -32,10 +31,7 @@ class Note extends Component {
         }
         e.preventDefault();
     }
-    getCreateNoteProps(){
-        const obj= this.createNoteClick.current.getNewNote()
-        return obj;
-    }
+   
     render() {
 
         if (localStorage.getItem("isAuth") !== "true") {
@@ -46,7 +42,7 @@ class Note extends Component {
                     <AppBarComp parentProps={this.setCardStyle} />
                     <div className="dashBoard">
                         <CreateNote ref={this.createNoteClick} showCardCall={this.showCards} />
-                        <Cards parentProps={this.state.cardStyle} newCard={this.getCreateNoteProps} ref={this.noteToCardsRef}/>
+                        <Cards parentProps={this.state.cardStyle} ref={this.noteToCardsRef}/>
                     </div>
                 </div>
             )

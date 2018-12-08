@@ -4,14 +4,14 @@ const user = require('../app/model/user')
  * @param {object} data
  * @param {callback function} callback
  */
-exports.createNote = (data, callback) => {
-    console.log("note Services", data);
-    user.getID(data.email, (err, result) => {
-        if (err) {
-            callback(err)
-        } else {
+exports.createNote = (id,data, callback) => {
+    // console.log("note Services", data);
+    // user.getID(data.email, (err, result) => {
+    //     if (err) {
+    //         callback(err)
+    //     } else {
             const note = {
-                "userID": result,
+                "userID": id,
                 "title": data.title,
                 "description": data.description,
                 "color": data.color,
@@ -38,8 +38,8 @@ exports.createNote = (data, callback) => {
                     })
                 }
             })
-        }
-    })
+        // }
+    // })
 
 }
 
@@ -108,8 +108,10 @@ exports.getNotes = (data, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.updateNote = (paramID, paramData, callback) => {
-    notes.updateNote(paramID, paramData, (err, result) => {
+exports.updateColor = (paramID, paramData, callback) => {
+    console.log("in services",paramID, paramData);
+    
+    notes.updateColor(paramID, paramData, (err, result) => {
         if (err) {
             callback(err);
         } else {
