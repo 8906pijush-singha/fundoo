@@ -110,7 +110,61 @@ noteModel.prototype.updateColor=(noteID, updateParams, callback)=> {
         });
 };
 
+noteModel.prototype.isPinned=(noteID, updateParams, callback)=> {
+    var updateNote = null    
+    if(updateParams != null){
+        updateNote = updateParams;
+    }else{
+        callback("pin status is not found")
+    }
+    console.log("pin found",noteID, updateParams);
+    
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set:{
+                isPinned:updateNote
+            }
+        },
+        (err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                console.log("updated note",updateNote)
+                return callback(null,updateNote)
+            }
+        });
+};
 
+noteModel.prototype.updateImage=(noteID, updateParams, callback)=> {
+    var updateNote = null    
+    if(updateParams != null){
+        updateNote = updateParams;
+    }else{
+        callback("image not found")
+    }
+    console.log("image found",noteID, updateParams);
+    
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set:{
+                image:updateNote
+            }
+        },
+        (err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                console.log("updated note",updateNote)
+                return callback(null,updateNote)
+            }
+        });
+};
 noteModel.prototype.getNotes=(id,callback)=>{
     Note.find({userID:id},(err,result)=>{
         if(err){

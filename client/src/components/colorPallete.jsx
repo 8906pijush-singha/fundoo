@@ -65,7 +65,6 @@ class ColorPallete extends Component {
                 <Tooltip title="Change Color">
                     <img
                         src={require('../assets/noteColor.svg')}
-                        className="noteSVG"
                         alt="change color"
                         onClick={this.handleToggle}
                     />

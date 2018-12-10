@@ -4,6 +4,7 @@ import { Input, Card, Button } from '@material-ui/core';
 import Upload from './upload';
 import Tools from './Tools';
 import { createNote } from '../services/notes';
+import Pin from './editPin';
 
 
 
@@ -11,40 +12,41 @@ class CreateNote extends Component {
     constructor() {
         super();
         this.state = {
-            title:"",
-            description:"",
-            color:"rgb(255,255,255)",
+            title: "",
+            description: "",
+            color: "rgb(255,255,255)",
             reminder: "",
             isPinned: false,
-            image:"",
+            image: "",
             archive: false,
             isTrashed: false,
             onCreateNoteClick: false,
-            newNote:{},
+            newNote: {},
         }
         this.setOnCreateNoteClickFalse = this.setOnCreateNoteClickFalse.bind(this);
         this.setOnCreateNoteClickTrue = this.setOnCreateNoteClickTrue.bind(this);
         this.getCreateNoteStatus = this.getCreateNoteStatus.bind(this);
-        this.handleClick=this.handleClick.bind(this);
-        this.handleTitle=this.handleTitle.bind(this);
-        this.handleDescription=this.handleDescription.bind(this)
-        this.getColor=this.getColor.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleTitle = this.handleTitle.bind(this);
+        this.handleDescription = this.handleDescription.bind(this)
+        this.getColor = this.getColor.bind(this);
+        this.handlePin = this.handlePin.bind(this);
 
     }
-    getColor(value){
+    getColor(value) {
         this.setState({
-            color:value   
+            color: value
         })
     }
 
-    handleDescription(e){
+    handleDescription(e) {
         this.setState({
-            description:e.target.value
+            description: e.target.value
         })
     }
-    handleTitle(event){
+    handleTitle(event) {
         this.setState({
-            title:event.target.value
+            title: event.target.value
         })
     }
 
@@ -69,90 +71,107 @@ class CreateNote extends Component {
         // console.log("Child call");
         return false;
     }
-    handleClick(){
-        this.setState({onCreateNoteClick:false});
-        if(this.state.title!==''&&this.state.description!==""){
-        const note={
-            "email":localStorage.getItem("Email"),
-            "title": this.state.title,
-            "description": this.state.description,
-            "color": this.state.color
-            // "reminder": data.reminder,
-            // "isPinned": data.isPinned,
-            // "image": data.image,
-            // "archive": data.archive,
-            // "isTrashed": data.isTrashed
-        }
-        createNote(note)
-            .then((result) => {
-                this.setState({
-                    newNote:result.data.data
+    handlePin(value) {
+        this.setState({
+            isPinned: value
+        })
+    }
+    handleClick() {
+        this.setState({ onCreateNoteClick: false });
+        if (this.state.title !== '' && this.state.description !== "") {
+            const note = {
+                "email": localStorage.getItem("Email"),
+                "title": this.state.title,
+                "description": this.state.description,
+                "color": this.state.color,
+                "reminder": this.state.reminder,
+                "isPinned": this.state.isPinned,
+                "image": this.state.image,
+                "archive": this.state.archive,
+                "isTrashed": this.state.isTrashed
+            }
+            createNote(note)
+                .then((result) => {
+                    this.setState({
+                        newNote: result.data.data
+                    })
+                    this.props.showCardCall(this.state.newNote);
                 })
-                this.props.showCardCall(this.state.newNote);
-            })
-            .catch((error) => {
-                alert(error)
-            });
+                .catch((error) => {
+                    alert(error)
+                });
             this.setState({
-                title:"",
-                description:"",
-               
+                title: "",
+                description: "",
+                color: "rgb(255,255,255)",
+                reminder: "",
+                isPinned: false,
+                image: "",
+                archive: false,
+                isTrashed: false,
             })
         }
         this.setState({
-            color:"rgb(255,255,255)"
+            color: "rgb(255,255,255)"
+        })
+    }
+    archive(){
+        this.setState({
+            archive:!this.state.archive
         })
     }
     render() {
         return (
-        !this.state.onCreateNoteClick ?
-            <div>
-                <Card id="card1">
-                    <div>
-                        <Input placeholder="Take a note... "
-                            className="createNoteInput"
-                            readOnly={true}
-                            disableUnderline={true}
-                            onClick={this.setOnCreateNoteClickTrue}
-                            value={''}
-                        ></Input>
-                        <Upload/>
-                    </div>
-                </Card>
-            </div>
-            :
-            <div>
-                <Card id="card2" style={{backgroundColor:this.state.color}}>
-                    <div>
-                        <Input
-                            className="createNoteInput" 
-                            placeholder="Title "
-                            readOnly={false}
-                            disableUnderline={true}
-                            onClick={this.disableClick}
-                            value={this.state.title}
-                            onChange={this.handleTitle}
+            !this.state.onCreateNoteClick ?
+                <div>
+                    <Card id="card1">
+                        <div className="createNoteAndUpload">
+                            <Input placeholder="Take a note... "
+                                className="createNoteInput"
+                                readOnly={true}
+                                disableUnderline={true}
+                                onClick={this.setOnCreateNoteClickTrue}
+                                value={''}
+                            ></Input>
+                            <Upload />
+                        </div>
+                    </Card>
+                </div>
+                :
+                <div>
+                    <Card id="card2" style={{ backgroundColor: this.state.color }}>
+                        <div className="titleAndPin">
+                            <Input
+                                className="createNoteInput"
+                                placeholder="Title "
+                                readOnly={false}
+                                disableUnderline={true}
+                                onClick={this.disableClick}
+                                value={this.state.title}
+                                onChange={this.handleTitle}
 
-                        ></Input>
-                    </div>
-                    <div>
-                        <Input
-                            className="createNoteInput"
-                             placeholder="Take a note... "
-                            disableUnderline={true}
-                            // disabled={onclick}                                
-                            onClick={this.disableClick}
-                            value={this.state.description}
-                            onChange={this.handleDescription}
+                            ></Input>
+                            <Pin getPinProps={this.handlePin} />
+                        </div>
+                        <div>
+                            <Input
+                                className="createNoteInput"
+                                placeholder="Take a note... "
+                                disableUnderline={true}
+                                // disabled={onclick}                                
+                                onClick={this.disableClick}
+                                value={this.state.description}
+                                onChange={this.handleDescription}
 
-                        ></Input>
-                        <div className="createNoteTools">
-                       <Tools getColorProps={this.getColor}
-                       ref={this.createNoteToTools}/>
-                       <Button onClick={this.handleClick} >Close</Button></div>
-                    </div>
-                </Card>
-            </div>
+                            ></Input>
+                            <div className="createNoteTools">
+                                <Tools getColorProps={this.getColor}
+                                    ref={this.createNoteToTools}
+                                    archiveProps={this.archive} />
+                                <Button onClick={this.handleClick} >Close</Button></div>
+                        </div>
+                    </Card>
+                </div>
         )
 
     }

@@ -15,13 +15,13 @@ exports.createNote = (id,data, callback) => {
                 "title": data.title,
                 "description": data.description,
                 "color": data.color,
-                // "reminder": data.reminder,
-                // "isPinned": data.isPinned,
-                // "image": data.image,
-                // "archive": data.archive,
-                // "isTrashed": data.isTrashed
+                "reminder": data.reminder,
+                "isPinned": data.isPinned,
+                "image": data.image,
+                "archive": data.archive,
+                "isTrashed": data.isTrashed
             }
-            console.log("save notes");
+            console.log("save notes",note);
 
             notes.save(note, (err, result1) => {
                 if (err) {
@@ -112,6 +112,38 @@ exports.updateColor = (paramID, paramData, callback) => {
     console.log("in services",paramID, paramData);
     
     notes.updateColor(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+
+/**
+ * @param {object} data
+ * @param {callback function} callback
+ */
+exports.isPinned = (paramID, paramData, callback) => {
+    console.log("in services",paramID, paramData);
+    
+    notes.isPinned(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+
+/**
+ * @param {object} data
+ * @param {callback function} callback
+ */
+exports.updateImage = (paramID, paramData, callback) => {
+    console.log("in services",paramID, paramData);
+    
+    notes.updateImage(paramID, paramData, (err, result) => {
         if (err) {
             callback(err);
         } else {

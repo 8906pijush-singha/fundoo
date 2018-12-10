@@ -50,7 +50,7 @@ class Reminder extends Component {
         return (
             <MuiThemeProvider theme={theme}>
                 <Tooltip title="Remind me">
-                    <img src={reminder} alt="Reminder icon" className="noteSVG" onClick={this.handleClick('bottom-start')} ></img>
+                    <img src={reminder} alt="Reminder icon" onClick={this.handleClick('bottom-start')} ></img>
                 </Tooltip>
 
 

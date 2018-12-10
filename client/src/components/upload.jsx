@@ -10,12 +10,12 @@ class Upload extends Component {
         return (
             <span>
                 <img src={require('../assets/notePictures.svg')}
-                    className="noteSVG" alt="upload pic icon"  
+                    alt="upload pic icon"
                     onClick={() => { this.triggerInputFile() }} />
 
-                    <input ref={fileInput => this.fileInput = fileInput}
+                <input ref={fileInput => this.fileInput = fileInput}
                     type="file" style={{ 'display': 'none' }}
-                 
+
                 />
 
             </span>

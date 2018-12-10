@@ -27,7 +27,6 @@ class More extends Component {
             <div>
                 <img src={require('../assets/noteMore.svg')}
                 onClick={this.clickMoreOptions}
-                    className="addPersonIcon"
                     alt="more options icon" />
 
 

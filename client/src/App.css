@@ -116,7 +116,7 @@
 #card2 {
   height: 90px;
   width: 550px;
-  padding: 10px;
+  padding: 20px;
   margin-left:100px;
   margin-top:100px;
 }
@@ -150,7 +150,7 @@
 }
 .gridCards{
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 .pinIcon{
@@ -159,9 +159,9 @@
 .cards:hover .pinIcon{
   visibility: visible;
 }
-.noteSVG{
-  margin-right: 20px;
-}
+/* .noteSVG{
+  
+} */
 /* .listCards{
   display: flex;
   justify-content: space-between;
@@ -177,7 +177,9 @@
   font-size: 12px;
 } */
 .cardTools{
+  width: 235px;
   display: flex;
+  justify-content : space-between;
 }
 
 .createNoteTools{
@@ -228,4 +230,15 @@ div .menuItemReminder{
 }
 .pickDateTimePopper{
   padding: 10px;
+}
+.titleAndPin{
+  display: flex;
+  flex-direction: row;
+}
+.titleAndPin .pinIcon{
+  visibility: visible;
+}
+.createNoteAndUpload{
+  display: flex;
+  flex-direction: row;
 }

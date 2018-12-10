@@ -2,19 +2,19 @@ import React, { Component } from 'react';
 import { Card } from '@material-ui/core';
 import { getNotes } from '../services/notes';
 import Tools from './Tools';
-import pinIcon from '../assets/pin.svg'
 import { updateNotes } from '../services/updateNotes';
+import Pin from './editPin';
 class Cards extends Component {
     constructor() {
         super();
         this.state = {
             notes: []
         }
-        // this.setData = this.setData.bind(this);
-
+        this.getColor=this.getColor.bind(this);
+        this.pinNote=this.pinNote.bind(this)
     }
     componentDidMount() {
-        console.log("this card",this);
+        console.log("this card", this);
 
         getNotes()
             .then((result) => {
@@ -32,15 +32,6 @@ class Cards extends Component {
             notes: [...this.state.notes, newCard]
         })
     }
-
-    // setData(notes) {
-    //     var data = this.getColor();
-    //     console.log("data:", data);
-        
-    //     this.setState({
-    //         notes: notes
-    //     })
-    // }
     getColor(value, noteId) {
         console.log(noteId);
         console.log(value);
@@ -48,15 +39,18 @@ class Cards extends Component {
             noteID: noteId,
             color: value
         }
-        return updateNotes('/updateColor', color)
+        updateNotes('/updateColor', color)
             .then((result) => {
-                console.log("result", this.notes);
-                let newArray = this.notes
+                console.log(result.data.data);
+                
+                let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i]._id === noteId) {
                         newArray[i].color = result.data.data;
-                        console.log("this",this);
-                        
+                        this.setState({
+                            notes: newArray
+                        })
+
                     }
                 }
 
@@ -67,6 +61,32 @@ class Cards extends Component {
             });
     }
 
+    pinNote(status, noteId) {
+        console.log(noteId);
+        console.log(status);
+        const isPinned = {
+            noteID: noteId,
+            isPinned: status
+        }
+        updateNotes('/isPinned',isPinned )
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i]._id === noteId) {
+                        newArray[i].isPinned = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            });
+    }
     render() {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         return (
@@ -80,7 +100,7 @@ class Cards extends Component {
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <b>{this.state.notes[key].title}</b>
-                                        <img src={pinIcon} alt="pinIcon" className="pinIcon"></img>
+                                            <Pin noteId={this.state.notes[key]._id} getPinProps={this.pinNote} pinStatus={this.state.notes[key].isPinned} />
                                     </div>
                                     <div>
                                         {this.state.notes[key].description}

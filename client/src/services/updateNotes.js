@@ -2,6 +2,7 @@ import axios from 'axios'
 
 
 export function updateNotes(url,data) {
+    console.log(data)
     return axios(url, {
         method: "PUT",
         headers: {
@@ -10,8 +11,4 @@ export function updateNotes(url,data) {
         data:data
     })
 }
-export function sendData(array) {
-    console.log("Service:", array);
-    
-    return array;
-}
+
