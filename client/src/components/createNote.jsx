@@ -31,6 +31,7 @@ class CreateNote extends Component {
         this.handleDescription = this.handleDescription.bind(this)
         this.getColor = this.getColor.bind(this);
         this.handlePin = this.handlePin.bind(this);
+        this.archive=this.archive.bind(this);
 
     }
     getColor(value) {
@@ -92,6 +93,8 @@ class CreateNote extends Component {
             }
             createNote(note)
                 .then((result) => {
+                    console.log("data from backend", result.data.data);
+                    
                     this.setState({
                         newNote: result.data.data
                     })
@@ -115,10 +118,12 @@ class CreateNote extends Component {
             color: "rgb(255,255,255)"
         })
     }
-    archive(){
+    archive(value){
         this.setState({
-            archive:!this.state.archive
+            archive:value
         })
+        console.log("archive status" ,value);
+        
     }
     render() {
         return (

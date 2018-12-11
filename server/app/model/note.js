@@ -165,6 +165,62 @@ noteModel.prototype.updateImage=(noteID, updateParams, callback)=> {
             }
         });
 };
+noteModel.prototype.isArchived = (noteID, archiveParams, callback) => {
+    console.log("in model");
+    
+    var archiveNote = null
+    if (archiveParams != null) {
+        archiveNote = archiveParams;
+    } else {
+        callback("Trashed note not found")
+    }
+
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set: {
+                archive: archiveNote
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+
+                return callback(null, archiveNote)
+            }
+        });
+};
+noteModel.prototype.setReminder = (noteID, reminderParams, callback) => {
+    console.log("in model");
+    
+    var reminderNote = null
+    if (reminderParams != null) {
+        reminderNote = reminderParams;
+    } else {
+        callback("Trashed note not found")
+    }
+
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set: {
+                reminder: reminderNote
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+
+                return callback(null, reminderNote)
+            }
+        });
+};
 noteModel.prototype.getNotes=(id,callback)=>{
     Note.find({userID:id},(err,result)=>{
         if(err){
@@ -175,5 +231,6 @@ noteModel.prototype.getNotes=(id,callback)=>{
         }
     })
 }
+
 
 module.exports = new noteModel;

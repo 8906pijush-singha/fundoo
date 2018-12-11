@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card } from '@material-ui/core';
+import { Card, Chip } from '@material-ui/core';
 import { getNotes } from '../services/notes';
 import Tools from './Tools';
 import { updateNotes } from '../services/updateNotes';
@@ -12,6 +12,8 @@ class Cards extends Component {
         }
         this.getColor=this.getColor.bind(this);
         this.pinNote=this.pinNote.bind(this)
+        this.archiveNote=this.archiveNote.bind(this);
+        this.reminderNote=this.reminderNote.bind(this);
     }
     componentDidMount() {
         console.log("this card", this);
@@ -40,9 +42,7 @@ class Cards extends Component {
             color: value
         }
         updateNotes('/updateColor', color)
-            .then((result) => {
-                console.log(result.data.data);
-                
+            .then((result) => {          
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i]._id === noteId) {
@@ -87,6 +87,58 @@ class Cards extends Component {
                 alert(error)
             });
     }
+    archiveNote(status, noteId) {
+        console.log(noteId);
+        console.log(status);
+        const isPinned = {
+            noteID: noteId,
+            archive: status
+        }
+        updateNotes('/isArchived',isPinned )
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i]._id === noteId) {
+                        newArray[i].archive = result.data.data;   
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            });
+    }
+    reminderNote(date, noteId) {
+        console.log(noteId);
+        console.log(date);
+        const reminder = {
+            noteID: noteId,
+            reminder: date
+        }
+        updateNotes('/setReminder',reminder )
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i]._id === noteId) {
+                        newArray[i].reminder = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            });
+    }
     render() {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         return (
@@ -97,6 +149,17 @@ class Cards extends Component {
                     return (
                         <div key={this.state.notes[key]._id}>
                             <Card className={changeCardStyle} style={{ backgroundColor: this.state.notes[key].color }} >
+                                
+                                {this.state.notes[key].pin ? 
+                                <div>
+                                    
+                                </div>    
+                            :null}
+                                
+                                
+                                
+                                
+                                
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <b>{this.state.notes[key].title}</b>
@@ -105,9 +168,21 @@ class Cards extends Component {
                                     <div>
                                         {this.state.notes[key].description}
                                     </div>
+                                    {this.state.notes[key].reminder!==""?
+                                    <Chip
+                                    style={{}}
+                                    label={this.state.notes[key].reminder}
+                                  /> 
+                                    
+                                :null}
                                 </div>
                                 <div className="noteicons">
-                                    <Tools getColorProps={this.getColor} noteId={this.state.notes[key]._id} />
+                                    <Tools getColorProps={this.getColor} 
+                                    note={this.state.notes[key]}
+                                    noteId={this.state.notes[key]._id} 
+                                    archiveProps={this.archiveNote}
+                                    archiveStatus={this.state.notes[key].archive}
+                                    reminder={this.reminderNote}/>
 
                                 </div>
                             </Card>

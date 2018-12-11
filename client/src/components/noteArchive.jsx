@@ -16,19 +16,17 @@ class NoteArchive extends Component {
             this.setState({
                 archive: this.props.archiveStatus
             })
-            console.log("archive status", this.props.archiveStatus);
-
         }
     }
     async handleToggle() {
         await this.setState({
             archive: !this.state.archive
         })
-        this.props.getarchiveProps(this.state.archive, this.props.noteId)
+        this.props.archiveProps(this.state.archive, this.props.noteId)
     }
     render() {
         return (
-            <img src={archive} alt="Archive" className="noteSVG" onClick={this.handleToggle}></img>
+            <img src={archive} alt="Archive" onClick={this.handleToggle}></img>
 
         )
     }

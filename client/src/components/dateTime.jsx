@@ -12,6 +12,7 @@ class PickDateAndTime extends Component {
             date: new Date()
         }
         this.handleDateAndTime = this.handleDateAndTime.bind(this);
+        this.showTime=this.showTime.bind(this);
     }
     handleDateAndTime(event) {
         const { currentTarget } = event
@@ -20,9 +21,12 @@ class PickDateAndTime extends Component {
             open: !this.state.open
         })
     }
+    showTime(){
+        // console.log(this.state.date)
+    }
     onChange = date => this.setState({ date })
 
-    render() {
+    render() { 
         const { anchorEl, open } = this.state;
 
         return (
@@ -34,6 +38,7 @@ class PickDateAndTime extends Component {
                     <Paper className="pickDateTimePopper">
                         <ListItem>Pick date and time</ListItem>
                         <DateTimePicker
+                            onClick={this.showTime}
                             onChange={this.onChange}
                             value={this.state.date}
                             defaultValue="2017-05-24T10:30"

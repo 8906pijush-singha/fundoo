@@ -18,23 +18,14 @@ const theme = createMuiTheme({
     },
 });
 class Reminder extends Component {
-    
+
     state = {
         anchorEl: null,
         open: false,
         placement: null,
     };
-
-    // handelOpen(e){
-    //     console.log("ku6 v");
-    //     const { currentTarget } = e;
-        
-    //     // e.preventDefault();
-            
-    //         this.setState(state => ({anchorEl: currentTarget,open:!state.open}));
-    // }
     handleClick = placement => event => {
-        
+
         const { currentTarget } = event;
 
         this.setState(state => ({
@@ -43,9 +34,35 @@ class Reminder extends Component {
             placement,
         }));
     };
-
+    setTodayReminder(note) {
+        let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
+        console.log("before",note);
+        
+        var date = new Date().toDateString();
+        note.reminder = date+ ", 8 "+ampm;
+        console.log(note.reminder);
+        this.props.reminder(note.reminder,note._id)
+    }
+    setTomorrowReminder(note){
+        let days=["Mon","Tue","Wed","Thus","Fri","Sat","Sun","Mon"]
+        console.log("before",note);
+        var date = new Date().toDateString();
+        date=date.replace(new Date().getDate().toString(),new Date().getDate()+1);
+        date=date.replace(days[new Date().getDay()-1],days[new Date().getDay()]);
+        note.reminder = date+ ", 8 AM" ;
+        console.log(note.reminder);
+        this.props.reminder(note.reminder,note._id)
+    }
+    setWeeklyReminder(note){
+        console.log("before",note);
+        var date = new Date().toDateString();
+        date=date.replace((new Date().getDate()),(new Date().getDate()+7));
+        note.reminder = date+ ", 8 AM" ;
+        console.log(note.reminder);
+        this.props.reminder(note.reminder,note._id)
+    }
     render() {
-        const ampm=this.props.parentProps
+        const ampm = this.props.parentProps
         const { anchorEl, open, placement } = this.state;
         return (
             <MuiThemeProvider theme={theme}>
@@ -61,24 +78,24 @@ class Reminder extends Component {
                                 <div>
 
                                     <ListItem className="reminderIcon">Reminder:</ListItem>
-                                    <MenuItem className="menuItemReminder" ><div>Later today</div>
-                                    <div>
-                                        8:00 {ampm}
+                                    <MenuItem className="menuItemReminder" onClick={() => this.setTodayReminder(this.props.note)} ><div>Later today</div>
+                                        <div>
+                                            8:00 {ampm}
                                         </div>
                                     </MenuItem>
-                                    <MenuItem className="menuItemReminder"><div>Tomorrow</div>
-                                    <div>
-                                        8:00 PM
+                                    <MenuItem className="menuItemReminder" onClick={() =>this.setTomorrowReminder(this.props.note)}><div>Tomorrow</div>
+                                        <div  value={30} >
+                                            8:00 PM
                                         </div>
                                     </MenuItem>
-                                    <MenuItem className="menuItemReminder"><div>Next Week</div>
-                                    <div>
-                                        8:00 PM
+                                    <MenuItem className="menuItemReminder" onClick={() =>this.setWeeklyReminder(this.props.note)}><div>Next Week</div>
+                                        <div>
+                                            8:00 PM
                                         </div>
                                     </MenuItem>
                                     <MenuItem className="menuItemReminder"><div>Home</div>
-                                    <div>
-                                        Vashi (West)
+                                        <div>
+                                            Vashi (West)
                                     </div>
                                     </MenuItem>
 

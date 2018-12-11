@@ -15,8 +15,6 @@ class Pin extends Component {
             this.setState({
                 pin:this.props.pinStatus
             })
-            console.log("pin status",this.props.pinStatus);
-        
         }
     }
    async handleToggle() {

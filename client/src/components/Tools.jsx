@@ -10,10 +10,13 @@ class Tools extends Component {
      render() {
         let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
         return (
-            <div className="cardTools"><Reminder parentProps={ampm} /><AddPerson />
+            <div className="cardTools"><Reminder parentProps={ampm} note={this.props.note} 
+            reminder={this.props.reminder}/><AddPerson />
                 <ColorPallete ToolsProps={this.props.getColorProps} noteId={this.props.noteId}  />
                 <Upload />
-                <NoteArchive />
+                <NoteArchive archiveProps={this.props.archiveProps} 
+                noteId={this.props.noteId}
+                archiveStatus={this.props.archiveStatus}/>
                 <More />
             </div>
         )

@@ -32,7 +32,7 @@ exports.createNote = (id,data, callback) => {
                     user.updateNoteRef(result1, (err, result) => {
                         if (err) {
                             callback(err);
-                        } else {
+                        } else { 
                             return callback(null, result1);
                         }
                     })
@@ -144,6 +144,29 @@ exports.updateImage = (paramID, paramData, callback) => {
     console.log("in services",paramID, paramData);
     
     notes.updateImage(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+
+exports.isArchived = (paramID, paramData, callback) => {
+    console.log("in services",paramID, paramData);
+    
+    notes.isArchived(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+exports.setReminder = (paramID, paramData, callback) => {
+    console.log("in services",paramID, paramData);
+    
+    notes.setReminder(paramID, paramData, (err, result) => {
         if (err) {
             callback(err);
         } else {
