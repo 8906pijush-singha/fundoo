@@ -101,8 +101,8 @@ exports.forgot = (data, callback) => {
                     var smtpTransport = nodemailer.createTransport({
                         service: 'Gmail',
                         auth: {
-                            user: 'mikkusharma420@gmail.com',
-                            pass: 'Pijush@8906'
+                            user: process.env.email,
+                            pass: process.env.password
                         }
                     });
                     /**
@@ -110,7 +110,7 @@ exports.forgot = (data, callback) => {
                      */
                     var mailOptions = {
                         to: person.email,
-                        from: 'mikkusharma420@gmail.com',
+                        from: process.env.email,
                         subject: 'Fundoo Password Reset',
                         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
