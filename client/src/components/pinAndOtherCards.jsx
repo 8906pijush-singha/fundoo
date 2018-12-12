@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Chip } from '@material-ui/core';
+import { Card, Chip, Divider } from '@material-ui/core';
 import Pin from './editPin';
 import Tools from './Tools';
 
@@ -9,8 +9,8 @@ class PinAndOthers extends Component {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         return (
             <div>
-                <div>
-                    <label>Pinned</label>
+                <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>PINNED</label>
+                <div className="gridCards" style={{marginBottom:"30px"}}>
                      {this.props.pinArray().map((key)=>{
                          return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
@@ -43,8 +43,9 @@ class PinAndOthers extends Component {
                      })
                     }    
                 </div>
-                <div>
-                    <label>Others</label>
+               
+                <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>OTHERS</label>
+                <div className="gridCards">
                     {this.props.othersArray().map((key)=>{
                         return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >

@@ -173,8 +173,8 @@ class Cards extends Component {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         return (
             
-            <div className="gridCards" > 
-                {this.pinArray()!==""?
+            <div> 
+                {this.pinArray().length!==0?
                     <PinAndOthers
                     othersArray={this.othersArray}
                     pinArray={this.pinArray}
@@ -184,7 +184,7 @@ class Cards extends Component {
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}/>
                 :
-                <div>
+                <div className="gridCards" >
                     {Object.keys(this.state.notes).map((key) => {
                         // console.log(this.state.notes[key]._id);
                         return (
@@ -200,7 +200,6 @@ class Cards extends Component {
                                             </div>
                                             {this.state.notes[key].reminder !== "" ?
                                                 <Chip
-                                                    style={{}}
                                                     label={this.state.notes[key].reminder}
                                                 />
     

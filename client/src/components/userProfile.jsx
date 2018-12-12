@@ -57,8 +57,8 @@ class UserProfile extends Component {
                     open={open}>
 
                     <div className="userProfileIconWithDetails">
-                      <Avatar style={{ width: "100px", height: "100px", float: "left", paddingTop: "20px" }} >
-                        {initial}
+                      <Avatar style={{ width: "90px", height: "90px" ,marginTop:"10px"}} >
+                        <b style={{fontSize:"33px"}}>{initial}</b>
                       </Avatar>
 
                       <div className="accountDetails">

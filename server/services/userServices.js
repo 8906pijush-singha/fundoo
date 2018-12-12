@@ -65,6 +65,10 @@ exports.forgot = (data, callback) => {
     /**
      * checking for the valid data
      */
+    console.log(process.env.email);
+    console.log(process.env.password);
+    
+    
     user.findEmail(data, (err, result) => {
         if (err) {
             callback(err);
@@ -98,6 +102,7 @@ exports.forgot = (data, callback) => {
                     /**
                      * creating Transporter using creatTranspot method of nodemailer
                      */
+                    
                     var smtpTransport = nodemailer.createTransport({
                         service: 'Gmail',
                         auth: {

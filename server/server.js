@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');              //used parsing request b
 const morgan = require('morgan');                       //used for logging request deatils
 const url = require('./config/dbconfig')                //requires the file to get database address
 const cors = require('cors')                            //used to handle cross domain requests
+require('dotenv').config();
 
 //MONGO DB
 // require('./config/dbconfig')
