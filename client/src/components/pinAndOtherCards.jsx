@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Card, Chip, Divider } from '@material-ui/core';
+import { Card, Chip } from '@material-ui/core';
 import Pin from './editPin';
 import Tools from './Tools';
-
+import ClockIcon from './clockIcon'
 
 class PinAndOthers extends Component {
     render() {
@@ -24,8 +24,10 @@ class PinAndOthers extends Component {
                              </div>
                              {key.reminder !== "" ?
                                  <Chip
+                                 icon={<ClockIcon />}
                                      style={{}}
                                      label={key.reminder}
+                                     onDelete
                                  />
 
                                  : null}
@@ -46,7 +48,7 @@ class PinAndOthers extends Component {
                
                 <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>OTHERS</label>
                 <div className="gridCards">
-                    {this.props.othersArray().map((key)=>{
+                    {this.props.ordinaryCards().map((key)=>{
                         return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
                          <div>
@@ -60,6 +62,7 @@ class PinAndOthers extends Component {
                              {key.reminder !== "" ?
                                  <Chip
                                      style={{}}
+                                     icon={<ClockIcon/>}
                                      label={key.reminder}
                                  />
 

@@ -101,7 +101,7 @@ class AppBarComp extends Component {
 
 
                     </AppBar>
-                    <MenuDrawer parentProps={this.state.open} />
+                    <MenuDrawer parentProps={this.state.open} handleNavigation={this.props.handleNavigation} />
 
                 </MuiThemeProvider>
 

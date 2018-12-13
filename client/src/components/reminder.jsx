@@ -44,7 +44,7 @@ class Reminder extends Component {
         this.props.reminder(note.reminder,note._id)
     }
     setTomorrowReminder(note){
-        let days=["Mon","Tue","Wed","Thus","Fri","Sat","Sun","Mon"]
+        let days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon"]
         console.log("before",note);
         var date = new Date().toDateString();
         date=date.replace(new Date().getDate().toString(),new Date().getDate()+1);
