@@ -32,7 +32,7 @@ class NavigateArchived extends Component {
             <MuiThemeProvider theme={theme}>
                 <div className="gridCards" style={{marginBottom:"30px",paddingTop:"150px"}}>
                 <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>ARCHIVED</label>
-                     {this.props.archivedNotes().map((key)=>{
+                     {this.props.archivedNotes.map((key)=>{
                          return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
                          <div>
@@ -57,7 +57,8 @@ class NavigateArchived extends Component {
                                  noteId={key._id}
                                  archiveProps={this.props.archiveNote}
                                  archiveStatus={key.archive}
-                                 reminder={this.props.reminderNote} />
+                                 reminder={this.props.reminderNote}
+                                 isTrashed={this.props.isTrashed}/>
 
                          </div>
                      </Card>)

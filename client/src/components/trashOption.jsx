@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { MenuItem, Popper, Paper, Fade, ListItem } from '@material-ui/core';
+import { MenuItem, Popper, Fade, Paper } from "@material-ui/core";
 
-
-class More extends Component {
+class TrashOptions extends Component {
     constructor() {
         super();
         this.state = {
@@ -10,8 +9,7 @@ class More extends Component {
             open: false,
             placement: null,
         }
-        this.clickMoreOptions=this.clickMoreOptions.bind(this);
-
+        this.clickMoreOptions = this.clickMoreOptions.bind(this);
     }
     clickMoreOptions(event) {
         const { currentTarget } = event;
@@ -22,15 +20,13 @@ class More extends Component {
 
         }));
     }
-    handleTrashed(value){
-        this.props.isTrashed(value);
-    }
     render() {
         const { anchorEl, open } = this.state;
         return (
             <div>
                 <img src={require('../assets/noteMore.svg')}
-                onClick={this.clickMoreOptions}
+                    onClick={this.clickMoreOptions}
+                    className="moreOptionsIcon"
                     alt="more options icon" />
 
 
@@ -38,19 +34,20 @@ class More extends Component {
                     {({ TransitionProps }) => (
                         <Fade {...TransitionProps} timeout={0}>
                             <Paper className="moreOptionsPopper">
-                                <div className="selectMoreOptions">
-                                    <MenuItem onClick={()=>this.handleTrashed(this.props.noteId)} id="moreOptionsMenu">Delete</MenuItem>
-                                    <MenuItem id="moreOptionsMenu">Add Label</MenuItem>
-                                    <ListItem className="addDrawingOptions">Add Drawing</ListItem>
-                                    <MenuItem id="moreOptionsMenu">Show Checkboxes</MenuItem>
+
+                                <div id="selectMoreOptions">
+
+                                    <MenuItem id="moreOptionsMenu">Restore Note</MenuItem>
+                                    <MenuItem id="moreOptionsMenu">Delete Forever</MenuItem>
 
                                 </div>
                             </Paper>
                         </Fade>
                     )}
                 </Popper>
+
             </div>
         )
     }
 }
-export default More;
+export default TrashOptions;

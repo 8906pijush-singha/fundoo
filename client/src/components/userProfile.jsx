@@ -80,7 +80,7 @@ class UserProfile extends Component {
             <div>{localStorage.getItem("Email")}</div>
           </div>}>
             <IconButton
-              style={{ marginLeft: "100px" }}
+              style={{ marginLeft: "30px" }}
               onClick={this.handleClick("bottom-end")}
             >
               <Avatar style={{ width: "30px", height: "30px" }} >

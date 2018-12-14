@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Card, Chip } from '@material-ui/core';
-import Pin from '../editPin'
-import Tools from '../Tools';
-import ClockIcon from '../clockIcon'
+import { Card } from '@material-ui/core';
 import {createMuiTheme,MuiThemeProvider} from '@material-ui/core'
+import TrashOptions from '../trashOption';
 
 const theme = createMuiTheme({
     overrides: {
@@ -29,35 +27,14 @@ class NavigateTrashed extends Component {
             <MuiThemeProvider theme={theme}>
                 <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>ARCHIVED</label>
                 <div className="gridCards" style={{marginBottom:"30px",paddingTop:"150px"}}>
-                     {this.props.archivedNotes().map((key)=>{
+                     {this.props.trashArray.map((key)=>{
                          return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
-                         <div>
-                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                 <b>{key.title}</b>
-                                 <Pin noteId={key._id} getPinProps={this.props.pinNote} pinStatus={key.isPinned} />
-                             </div>
-                             <div>
-                                 {key.description}
-                             </div>
-                             {key.reminder !== "" ?
-                                 <Chip
-                                     style={{}}
-                                     icon={<ClockIcon/>}
-                                     label={key.reminder}
-                                 />
+                            <div style={{fontSize:"22px",marginBottom:"50px",color:"gray"}}>
+                            <label >Empty Note</label>
+                            </div>
 
-                                 : null}
-                         </div>
-                         <div className="noteicons">
-                             <Tools getColorProps={this.props.getColor}
-                                 note={key}
-                                 noteId={key._id}
-                                 archiveProps={this.props.archiveNote}
-                                 archiveStatus={key.archive}
-                                 reminder={this.props.reminderNote} />
-
-                         </div>
+                            <TrashOptions/>
                      </Card>)
                      })
                     }    

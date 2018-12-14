@@ -125,7 +125,9 @@ noteModel.prototype.isPinned=(noteID, updateParams, callback)=> {
         },
         {
             $set:{
-                isPinned:updateNote
+                isPinned:updateNote,
+                archive:false,
+                isTrashed:false
             }
         },
         (err,result)=>{
@@ -181,7 +183,9 @@ noteModel.prototype.isArchived = (noteID, archiveParams, callback) => {
         },
         {
             $set: {
-                archive: archiveNote
+                archive: archiveNote,
+                isTrashed:false,
+                isPinned:false
             }
         },
         (err, result) => {
@@ -221,6 +225,36 @@ noteModel.prototype.setReminder = (noteID, reminderParams, callback) => {
             }
         });
 };
+noteModel.prototype.isTrashed=(noteID, updateParams, callback)=> {
+    var updateNote = null    
+    if(updateParams != null){
+        updateNote = updateParams.status;
+    }else{
+        callback("trash status is not found")
+    }
+    console.log("trash status is found",noteID, updateParams);
+    
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set:{
+                isTrashed:updateNote,
+                archive:false,
+                isPinned:false
+            }
+        },
+        (err,result)=>{
+            if(err){
+                console.log(err)
+                callback(err)
+            }else{
+                console.log("updated note",updateNote)
+                return callback(null,updateNote)
+            }
+        });
+};
 noteModel.prototype.getNotes=(id,callback)=>{
     Note.find({userID:id},(err,result)=>{
         if(err){
@@ -232,5 +266,15 @@ noteModel.prototype.getNotes=(id,callback)=>{
     })
 }
 
+noteModel.prototype.getTrashStatus=(id,callback)=>{
+    Note.findOne({_id:id},(err,result)=>{
+        if(err){
+            callback(err)
+        }else{
+            console.log("status",result.isTrashed)
+            return callback(null,result.isTrashed)
+        }
+    })
+}
 
 module.exports = new noteModel;

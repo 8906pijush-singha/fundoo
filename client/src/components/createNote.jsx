@@ -143,7 +143,7 @@ class CreateNote extends Component {
                     </Card>
                 </div>
                 :
-                <div>
+                <div><Upload />
                     <Card id="card2" style={{ backgroundColor: this.state.color }}>
                         <div className="titleAndPin">
                             <Input

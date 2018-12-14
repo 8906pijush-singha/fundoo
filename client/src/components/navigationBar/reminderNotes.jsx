@@ -29,7 +29,7 @@ class NavigateReminder extends Component {
             <MuiThemeProvider theme={theme}>
                 <label style={{fontFamily:"georgia",fontSize:"15px",color:"grey"}}>REMINDER NOTES</label>
                 <div className="gridCards" style={{marginBottom:"30px"}}>
-                     {this.props.reminderNotes().map((key)=>{
+                     {this.props.reminderNotes.map((key)=>{
                          return(
                          <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
                          <div>
@@ -56,7 +56,8 @@ class NavigateReminder extends Component {
                                  noteId={key._id}
                                  archiveProps={this.props.archiveNote}
                                  archiveStatus={key.archive}
-                                 reminder={this.props.reminderNote} />
+                                 reminder={this.props.reminderNote} 
+                                 isTrashed={this.props.isTrashed}/>
 
                          </div>
                      </Card>)

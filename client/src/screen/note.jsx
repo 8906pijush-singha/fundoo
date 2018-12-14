@@ -15,7 +15,7 @@ class Note extends Component {
         }
         this.createNoteClick = React.createRef();
         this.noteToCardsRef = React.createRef();
-        this.handleClick = this.handleClick.bind(this);
+        // this.handleClick = this.handleClick.bind(this);
         this.setCardStyle = this.setCardStyle.bind(this);
         this.showCards = this.showCards.bind(this);
         this.handleNavigation = this.handleNavigation.bind(this)
@@ -28,13 +28,13 @@ class Note extends Component {
     setCardStyle() {
         this.setState({ cardStyle: !this.state.cardStyle })
     }
-    handleClick(e) {
-        // console.log(e.target.id);
-        if (this.createNoteClick.current !== null && this.createNoteClick.current.getCreateNoteStatus()) {
-            this.createNoteClick.current.setOnCreateNoteClickFalse(e);
-        }
-        e.preventDefault();
-    }
+    // handleClick(e) {
+    //     // console.log(e.target.id);
+    //     if (this.createNoteClick.current !== null && this.createNoteClick.current.getCreateNoteStatus()) {
+    //         this.createNoteClick.current.setOnCreateNoteClickFalse(e);
+    //     }
+    //     e.preventDefault();
+    // }
 
     handleNavigation(reminder, archive, trash) {
         console.log("handleNAvigation", reminder, archive, trash);

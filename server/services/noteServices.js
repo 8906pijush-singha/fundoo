@@ -108,7 +108,7 @@ exports.getNotes = (data, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.updateColor = (paramID, paramData, callback) => {
+exports.updateColor = (paramID, callback) => {
     console.log("in services",paramID, paramData);
     
     notes.updateColor(paramID, paramData, (err, result) => {
@@ -173,4 +173,40 @@ exports.setReminder = (paramID, paramData, callback) => {
             return callback(null, result)
         }
     })
+}
+exports.isTrashed = (paramID, callback) => {
+    console.log("in services",paramID);
+    notes.getTrashStatus(paramID,(err, status) => {
+        if (err) {
+            callback(err);
+        } else {
+            if(status===true){
+                let data={
+                    status:false
+                }
+                notes.isTrashed(paramID,data, (err, result) => {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        return callback(null, result)
+                    }
+                })
+            }else if(status === false){
+                let data={
+                    status:true
+                }
+                notes.isTrashed(paramID,data, (err, result) => {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        return callback(null, result)
+                    }
+                })
+            }
+            
+            // return callback(null, result)
+        }
+    })
+    
+   
 }

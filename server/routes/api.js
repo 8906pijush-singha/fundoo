@@ -49,6 +49,6 @@ router.put('/updateImage', noteAuth.tokenValid,noteController.updateImage);
 router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);
 router.put('/isArchived',noteAuth.tokenValid,noteController.isArchived);
 router.put('/setReminder',noteAuth.tokenValid,noteController.setReminder);
-
+router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed)
 
 module.exports = router;

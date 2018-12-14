@@ -269,3 +269,37 @@ exports.setReminder = (req, res, next) => {
         next(error);
     }
 }
+
+exports.isTrashed = (req, res, next) => {
+    try {
+        let isTrashed = null;
+        var res_result = {};
+        let noteID = null;
+        console.log("in noteController",req.body);
+
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else {
+            noteID = req.body.noteID;
+            noteServices.isTrashed(noteID, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                }
+                else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    }
+    catch (error) {
+
+        next(error);
+    }
+}

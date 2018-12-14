@@ -10,7 +10,11 @@ import NavigateArchived from './navigationBar/archivedNotes';
 import NavigateTrashed from './navigationBar/trashedNotes';
 import ClockIcon from './clockIcon'
 import {createMuiTheme,MuiThemeProvider} from '@material-ui/core'
-
+import { ordinaryCards,
+    pinArray,
+    othersArray,
+    archivedNotes,
+    reminderNotes,trashArray} from '../services/cardServices'
 const theme = createMuiTheme({
     overrides: {
         MuiChip:{
@@ -40,61 +44,62 @@ class Cards extends Component {
         this.pinNote = this.pinNote.bind(this)
         this.archiveNote = this.archiveNote.bind(this);
         this.reminderNote = this.reminderNote.bind(this);
-        this.pinArray = this.pinArray.bind(this);
-        this.othersArray = this.othersArray.bind(this);
-        this.ordinaryCards = this.ordinaryCards.bind(this);
-        this.archivedNotes = this.archivedNotes.bind(this);
-        this.reminderNotes = this.reminderNotes.bind(this);
+        this.isTrashed=this.isTrashed.bind(this);
+        // this.pinArray = this.pinArray.bind(this);
+        // this.othersArray = this.othersArray.bind(this);
+        // this.ordinaryCards = this.ordinaryCards.bind(this);
+        // this.archivedNotes = this.archivedNotes.bind(this);
+        // this.reminderNotes = this.reminderNotes.bind(this);
     }
-    ordinaryCards() {
-        let ordinaryCards = [];
-        for (let i = 0; i < this.state.notes.length; i++) {
-            if (!this.state.notes[i].isPinned && !this.state.notes[i].archive && !this.state.notes[i].isTrashed) {
-                ordinaryCards.push(this.state.notes[i]);
-            }
-        }
-        return ordinaryCards;
-    }
-    reminderNotes() {
-        let reminderNotes = [];
-        for (let i = 0; i < this.state.notes.length; i++) {
-            if (this.state.notes[i].reminder!=="") {
-                reminderNotes.push(this.state.notes[i]);
-            }
-        }
-        return reminderNotes;
-    }
-    archivedNotes() {
-        let archivedNotes = [];
-        for (let i = 0; i < this.state.notes.length; i++) {
-            if (this.state.notes[i].archive) {
-                archivedNotes.push(this.state.notes[i]);
-            }
-        }
-        return archivedNotes;
-    }
-    othersArray() {
-        let othersArray = []
+    // ordinaryCards() {
+    //     let ordinaryCards = [];
+    //     for (let i = 0; i < this.state.notes.length; i++) {
+    //         if (!this.state.notes[i].isPinned && !this.state.notes[i].archive && !this.state.notes[i].isTrashed) {
+    //             ordinaryCards.push(this.state.notes[i]);
+    //         }
+    //     }
+    //     return ordinaryCards;
+    // }
+    // reminderNotes() {
+    //     let reminderNotes = [];
+    //     for (let i = 0; i < this.state.notes.length; i++) {
+    //         if (this.state.notes[i].reminder!=="") {
+    //             reminderNotes.push(this.state.notes[i]);
+    //         }
+    //     }
+    //     return reminderNotes;
+    // }
+    // archivedNotes() {
+    //     let archivedNotes = [];
+    //     for (let i = 0; i < this.state.notes.length; i++) {
+    //         if (this.state.notes[i].archive) {
+    //             archivedNotes.push(this.state.notes[i]);
+    //         }
+    //     }
+    //     return archivedNotes;
+    // }
+    // othersArray() {
+    //     let othersArray = []
 
-        for (let i = 0; i < this.state.notes.length; i++) {
-            if (!this.state.notes[i].isPinned && !this.state.notes[i].archive) {
-                othersArray.push(this.state.notes[i])
-            }
-        }
-        return othersArray
+    //     for (let i = 0; i < this.state.notes.length; i++) {
+    //         if (!this.state.notes[i].isPinned && !this.state.notes[i].archive) {
+    //             othersArray.push(this.state.notes[i])
+    //         }
+    //     }
+    //     return othersArray
 
-    }
-    pinArray() {
-        let pinArray = []
+    // }
+    // pinArray() {
+    //     let pinArray = []
 
-        for (let i = 0; i < this.state.notes.length; i++) {
-            if (this.state.notes[i].isPinned) {
-                pinArray.push(this.state.notes[i])
-            }
-        }
-        return pinArray
+    //     for (let i = 0; i < this.state.notes.length; i++) {
+    //         if (this.state.notes[i].isPinned) {
+    //             pinArray.push(this.state.notes[i])
+    //         }
+    //     }
+    //     return pinArray
 
-    }
+    // }
     componentDidMount() {
 
         getNotes()
@@ -222,78 +227,111 @@ class Cards extends Component {
                 alert(error)
             });
     }
+    isTrashed( noteId) {
+        console.log(noteId);
+        
+        const trash = {
+            noteID: noteId,
+            
+        }
+        updateNotes('/isTrashed', trash)
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i]._id === noteId) {
+                        newArray[i].isTrashed = result.data.data;
+                        console.log(newArray);
+                        
+                        this.setState({
+                            notes: newArray
+                        })
+                    }
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            });
+    }
     render() {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
-
+        
         if (this.props.navigateReminder) {
             return (
                 <NavigateReminder
-                    reminderNotes={this.reminderNotes}
-                    othersArray={this.othersArray}
-                    pinArray={this.pinArray}
+                    reminderNotes={reminderNotes(this.state.notes)}
+                    othersArray={othersArray(this.state.notes)}
+                    pinArray={pinArray(this.state.notes)}
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
-                    parentProps={this.props.parentProps} />
+                    parentProps={this.props.parentProps}
+                    isTrashed={this.isTrashed} />
             )
         } else if (this.props.navigateArchive) {
             return (
                 <NavigateArchived
-                    archivedNotes={this.archivedNotes}
-                    othersArray={this.othersArray}
-                    pinArray={this.pinArray}
+                    archivedNotes={archivedNotes(this.state.notes)}
+                    othersArray={othersArray(this.state.notes)}
+                    pinArray={pinArray(this.state.notes)}
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
-                    parentProps={this.props.parentProps} />
+                    parentProps={this.props.parentProps} 
+                    isTrashed={this.isTrashed}/>
             )
         } else if (this.props.navigateTrashed) {
             return (
                 <NavigateTrashed
                     
-                    othersArray={this.othersArray}
-                    pinArray={this.pinArray}
+                    othersArray={othersArray(this.state.notes)}
+                    pinArray={pinArray(this.state.notes)}
+                    trashArray={trashArray(this.state.notes)}
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
-                    parentProps={this.props.parentProps} />
+                    parentProps={this.props.parentProps} 
+                    isTrashed={this.isTrashed}/>
             )
         }
-        else
+        else{
+            let ordinaryCard=ordinaryCards(this.state.notes);
             return (
 
                 <MuiThemeProvider theme={theme}>
-                    {this.pinArray().length !== 0 ?
+                    {pinArray(this.state.notes).length !== 0 ?
                         <PinAndOthers
-                            ordinaryCards={this.ordinaryCards}
-                            pinArray={this.pinArray}
+                            ordinaryCards={ordinaryCards(this.state.notes)}
+                            pinArray={pinArray(this.state.notes)}
                             pinNote={this.pinNote}
                             getColor={this.getColor}
                             archiveNote={this.archiveNote}
                             reminderNote={this.reminderNote}
-                            parentProps={this.props.parentProps} />
+                            parentProps={this.props.parentProps} 
+                            isTrashed={this.isTrashed}/>
                         :
                         <div className="gridCards" >
-                            {Object.keys(this.ordinaryCards()).map((key) => {
+                        
+                            {Object.keys(ordinaryCard).map((key) => {
                                 // console.log(this.state.notes[key]._id);
                                 return (
-                                    <div key={this.state.notes[key]._id}>
-                                        <Card className={changeCardStyle} style={{ backgroundColor: this.state.notes[key].color }} >
+                                    <div key={ordinaryCard[key]._id}>
+                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].color }} >
                                             <div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                    <b>{this.state.notes[key].title}</b>
-                                                    <Pin noteId={this.state.notes[key]._id} getPinProps={this.pinNote} pinStatus={this.state.notes[key].isPinned} />
+                                                    <b>{ordinaryCard[key].title}</b>
+                                                    <Pin noteId={ordinaryCard[key]._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].isPinned} />
                                                 </div>
                                                 <div>
-                                                    {this.state.notes[key].description}
+                                                    {ordinaryCard[key].description}
                                                 </div>
-                                                {this.state.notes[key].reminder !== "" ?
+                                                {ordinaryCard[key].reminder !== "" ?
                                                     <Chip
                                                         icon={<ClockIcon/>}
-                                                        label={this.state.notes[key].reminder}
+                                                        label={ordinaryCard[key].reminder}
                                                         onDelete
                                                     />
 
@@ -301,11 +339,12 @@ class Cards extends Component {
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}
-                                                    note={this.state.notes[key]}
-                                                    noteId={this.state.notes[key]._id}
+                                                    note={ordinaryCard[key]}
+                                                    noteId={ordinaryCard[key]._id}
                                                     archiveProps={this.archiveNote}
-                                                    archiveStatus={this.state.notes[key].archive}
-                                                    reminder={this.reminderNote} />
+                                                    archiveStatus={ordinaryCard[key].archive}
+                                                    reminder={this.reminderNote}
+                                                    isTrashed={this.isTrashed} />
 
                                             </div>
                                         </Card>
@@ -317,7 +356,7 @@ class Cards extends Component {
                     }
 
                 </MuiThemeProvider>
-            )
+            )}
     }
 
 }
