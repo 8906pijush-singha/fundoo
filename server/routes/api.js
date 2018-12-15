@@ -11,6 +11,7 @@ const auth = require('../auth/isValid')
 const noteAuth=require('../auth/isNoteValid')
 const userController = require('../controller/userController');
 const noteController = require('../controller/noteController');
+const collabControler=require('../controller/collabController')
 // const User=require('../app/model/user');
 
 // User.methods(['get','put','post','delete']);
@@ -50,5 +51,11 @@ router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);
 router.put('/isArchived',noteAuth.tokenValid,noteController.isArchived);
 router.put('/setReminder',noteAuth.tokenValid,noteController.setReminder);
 router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed)
+
+/**
+ * API ROUTES FOR COLLABORATOR----------------------------------------
+ */
+router.post('/saveCollab',noteAuth.tokenValid,collabControler.saveCollab);
+
 
 module.exports = router;

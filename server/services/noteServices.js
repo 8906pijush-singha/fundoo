@@ -32,7 +32,8 @@ exports.createNote = (id,data, callback) => {
                     user.updateNoteRef(result1, (err, result) => {
                         if (err) {
                             callback(err);
-                        } else { 
+                        } else {
+                             
                             return callback(null, result1);
                         }
                     })
@@ -99,6 +100,7 @@ exports.getNotes = (data, callback) => {
             callback(err);
         } else {
             return callback(null, result)
+            
         }
     })
 }
