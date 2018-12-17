@@ -53,11 +53,11 @@ exports.deleteNote = (req, res, next) => {
 exports.getNotes = (req, res, next) => {
     try {
         // console.log("note Controller", req.body);
-        const token = req.headers['user-id'];
-        console.log(token);
+        // const token = req.headers['user-id'];
+        // console.log(token);
 
         var res_result = {};
-        noteServices.getNotes(token, (err, result) => {
+        noteServices.getNotes(req.decoded, (err, result) => {
             if (err) {
 
                 const errMessage = {

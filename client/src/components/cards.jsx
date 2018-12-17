@@ -104,10 +104,11 @@ class Cards extends Component {
 
         getNotes()
             .then((result) => {
+                
                 this.setState({
                     notes: result
                 })
-                console.log("this card", this.state.notes);
+                console.log("this card", result);
             })
             .catch((error) => {
                 alert(error)

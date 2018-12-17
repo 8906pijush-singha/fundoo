@@ -7,14 +7,10 @@ const theme = createMuiTheme({
         MuiDialog: {
             paperWidthSm: {
                 width: "600px",
-                height: "200px",
-                paddingLeft: "20px",
-                paddingRight: "10px",
                 margin: "0px",
                 borderBottomLeftRadius: "20px",
-                borderBottomRightRadiusRadius: "20px",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px"
+                borderTopRightRadius: "20px",
+                overflowY:"hidden"
             }
         }
     }

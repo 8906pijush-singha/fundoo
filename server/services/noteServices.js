@@ -174,6 +174,8 @@ exports.getNotes = (data, callback) => {
                                     //             result.push(resultAsync[j]);
                                     //     }
                                     // }
+                                    console.log("final result ",finalResult);
+                                    
                                     callback(null, finalResult)
                                 }
                             })
