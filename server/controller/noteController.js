@@ -12,16 +12,14 @@ exports.createNote = (req, res, next) => {
                     message: "Bad Request"
                 }
                 next(errMessage);
-            }
-            else {
+            } else {
                 console.log("note cntl sckt ", result);
                 res_result.status = true;
                 res_result.data = result;
                 res.status(200).send(res_result);
             }
         })
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
@@ -41,25 +39,25 @@ exports.deleteNote = (req, res, next) => {
                     message: "Bad Request"
                 }
                 next(errMessage);
-            }
-            else {
+            } else {
                 res_result.status = true;
                 res_result.data = result;
                 res.status(200).send(res_result);
             }
         })
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
 
 exports.getNotes = (req, res, next) => {
     try {
-        console.log("note Controller", req.decoded);
+        // console.log("note Controller", req.body);
+        const token = req.headers['user-id'];
+        console.log(token);
 
         var res_result = {};
-        noteServices.getNotes(req.decoded, (err, result) => {
+        noteServices.getNotes(token, (err, result) => {
             if (err) {
 
                 const errMessage = {
@@ -67,23 +65,21 @@ exports.getNotes = (req, res, next) => {
                     message: "Bad Request"
                 }
                 next(errMessage);
-            }
-            else {
+            } else {
                 res_result.status = true;
                 res_result.data = result;
                 res.status(200).send(res_result);
             }
         })
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
 
 exports.updateColor = (req, res, next) => {
     try {
-        console.log("in noteController",req.body);
-        
+        console.log("in noteController", req.body);
+
         let color = null;
         var res_result = {};
         let noteID = null;
@@ -108,22 +104,20 @@ exports.updateColor = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
 exports.isPinned = (req, res, next) => {
     try {
-        console.log("in noteController",req.body);
+        console.log("in noteController", req.body);
         let isPinned = null;
         var res_result = {};
         let noteID = null;
@@ -143,24 +137,22 @@ exports.isPinned = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
 
 exports.updateImage = (req, res, next) => {
     try {
-        console.log("in noteController",req.body);
-        
+        console.log("in noteController", req.body);
+
         let image = null;
         var res_result = {};
         let noteID = null;
@@ -180,16 +172,14 @@ exports.updateImage = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
         next(error);
     }
 }
@@ -199,7 +189,7 @@ exports.isArchived = (req, res, next) => {
         let archive = null;
         var res_result = {};
         let noteID = null;
-        console.log("in noteController",req.body);
+        console.log("in noteController", req.body);
 
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
@@ -217,16 +207,14 @@ exports.isArchived = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
 
         next(error);
     }
@@ -237,7 +225,7 @@ exports.setReminder = (req, res, next) => {
         let reminder = null;
         var res_result = {};
         let noteID = null;
-        console.log("in noteController",req.body);
+        console.log("in noteController", req.body);
 
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
@@ -255,16 +243,14 @@ exports.setReminder = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
 
         next(error);
     }
@@ -275,7 +261,7 @@ exports.isTrashed = (req, res, next) => {
         let isTrashed = null;
         var res_result = {};
         let noteID = null;
-        console.log("in noteController",req.body);
+        console.log("in noteController", req.body);
 
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
@@ -289,16 +275,14 @@ exports.isTrashed = (req, res, next) => {
                         message: "Bad Request"
                     }
                     next(errMessage);
-                }
-                else {
+                } else {
                     res_result.status = true;
                     res_result.data = result;
                     res.status(200).send(res_result);
                 }
             })
         }
-    }
-    catch (error) {
+    } catch (error) {
 
         next(error);
     }

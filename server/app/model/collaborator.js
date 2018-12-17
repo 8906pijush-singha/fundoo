@@ -10,15 +10,15 @@ const Schema = mongoose.Schema;
 const collabSchema = mongoose.Schema({
     userID: {
         type: Schema.Types.ObjectId,
-        ref: "UserSchema"
+        ref: "fundoo_user"
     },
     noteID: {
         type: Schema.Types.ObjectId,
-        ref: "noteSchema"
+        ref: "notes"
     },
     collabUserID: {
         type: Schema.Types.ObjectId,
-        ref: "UserSchema"
+        ref: "fundoo_user"
     },
 
 })
@@ -39,6 +39,30 @@ collabModel.prototype.saveCollab = (collabData, callback) => {
             callback(err);
         } else {
             return callback(null, result);
+        }
+    })
+}
+
+collabModel.prototype.getCollabNotesUserId = (userID, callback) => {
+    // console.log("ultimate save", collabData);
+    Collab.find({collabUserID: userID},(err, result) => {
+        if(err){
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}
+
+collabModel.prototype.getDataByNoteId = (noteID, callback) => {
+    // console.log("ultimate save", noteID);
+    Collab.find({noteID: noteID}).populate('userID',{password: 0}).populate('collabUserID',{password: 0}).populate('noteID').exec(function (err, result) {
+        // console.log(err);
+        // console.log(result);
+        if(err){
+            callback(err);
+        } else {
+            callback(null, result);
         }
     })
 }

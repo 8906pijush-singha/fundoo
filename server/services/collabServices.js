@@ -13,3 +13,13 @@ exports.saveCollab = (collabData, callback) => {
         }
     })
 }
+
+exports.getCollabNotesUserId = (userId, callback) => {
+    collabModel.getCollabNotesUserId(userId, (err, result) => {
+        if(err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}

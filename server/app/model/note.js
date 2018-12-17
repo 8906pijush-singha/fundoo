@@ -75,7 +75,7 @@ noteModel.prototype.getNotes=(id,callback)=>{
         if(err){
             callback(err)
         }else{
-            console.log("notes",result)
+            // console.log("notes",result)
             return callback(null,result)
         }
     })
@@ -273,6 +273,16 @@ noteModel.prototype.getTrashStatus=(id,callback)=>{
         }else{
             console.log("status",result.isTrashed)
             return callback(null,result.isTrashed)
+        }
+    })
+}
+
+noteModel.prototype.getNoteByNoteId=(id,callback)=>{
+    Note.findOne({_id:id},(err,result)=>{
+        if(err){
+            callback(err)
+        }else{
+            return callback(null,result)
         }
     })
 }

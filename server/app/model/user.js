@@ -262,6 +262,20 @@ userModel.prototype.updateNoteRef = (notes, callback) => {
         })
 }
 
+
+userModel.prototype.findByUserId = (data, callback) => {
+    /**
+     * finding the id of the mongo document
+     */
+    User.findOne({ "_id": data }, { password: 0 }, (err, result) => {
+        if (err) {
+            callback(err);
+        }
+        else
+            return callback(null, result);
+    })
+}
+
 module.exports = new userModel;
 
 

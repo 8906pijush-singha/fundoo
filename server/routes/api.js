@@ -44,7 +44,7 @@ router.post('/reset', auth.resetPassValid, userController.resetController)
 router.post('/createNote',noteAuth.tokenValid,noteController.createNote);
 
 router.post('/deleteNote',noteAuth.tokenValid)
-router.get('/getNotes',noteAuth.tokenValid,noteController.getNotes);
+router.get('/getNotes',noteController.getNotes);
 router.put('/updateColor', noteAuth.tokenValid,noteController.updateColor);
 router.put('/updateImage', noteAuth.tokenValid,noteController.updateImage);
 router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);
@@ -55,7 +55,7 @@ router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed)
 /**
  * API ROUTES FOR COLLABORATOR----------------------------------------
  */
-router.post('/saveCollab',noteAuth.tokenValid,collabControler.saveCollab);
+router.post('/saveCollab', collabControler.saveCollab);
 
 
 module.exports = router;
