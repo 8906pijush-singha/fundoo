@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import archive from '../assets/noteArchive.svg'
-
+import UnArchive from '../assets/unarchive.svg'
 
 class NoteArchive extends Component {
     constructor() {
@@ -26,7 +26,10 @@ class NoteArchive extends Component {
     }
     render() {
         return (
+            !this.state.archive?
             <img src={archive} alt="Archive" onClick={this.handleToggle}></img>
+            :
+            <img src={UnArchive} alt="UnArchive" onClick={this.handleToggle}></img>
 
         )
     }

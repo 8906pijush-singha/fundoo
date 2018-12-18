@@ -118,20 +118,10 @@ exports.getNotes = (data, callback) => {
                         if (errorCollab) {
                             callback(errorCollab);
                         } else {
-                            // console.log(resultCollab);
                             var operations = [];
                             for (var i = 0; i < resultCollab.length; i++) {
                                 operations.push((function (collabData) {
-                                    // console.log("112 : ", collabData);
-
                                     return function (callback) {
-                                        // notes.getNoteByNoteId(collabData.noteID, (errorGetNote, resultGetNote) => {
-                                        //     if (errorGetNote) {
-                                        //         callback(errorGetNote)
-                                        //     } else {
-                                        //         callback(null, resultGetNote)
-                                        //     }
-                                        // })
                                         collabService.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
                                             console.log("123 : ", resultNote);
 
@@ -157,25 +147,9 @@ exports.getNotes = (data, callback) => {
                                 })(resultCollab[i]))
                             }
                             async.series(operations, (errorAsync, resultAsync) => {
-                                console.log(resultAsync);
-
                                 if (errorAsync) {
                                     callback(errorAsync);
                                 } else {
-                                    // for (var i = 0; i < result.length; i++) {
-                                    // for (var j = 0; j < resultAsync.length; j++) {
-                                    // if(result[i]._id != resultAsync[j]._id && result[i].userID != resultAsync[j].userID){
-                                    // result.push(resultAsync[j]);
-                                    // }
-                                    // }
-                                    // }
-                                    // if(result.length == 0){
-                                    //     for (var j = 0; j < resultAsync.length; j++) {
-                                    //             result.push(resultAsync[j]);
-                                    //     }
-                                    // }
-                                    console.log("final result ",finalResult);
-                                    
                                     callback(null, finalResult)
                                 }
                             })
@@ -192,7 +166,7 @@ exports.getNotes = (data, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.updateColor = (paramID, callback) => {
+exports.updateColor = (paramID,paramData, callback) => {
     console.log("in services", paramID, paramData);
 
     notes.updateColor(paramID, paramData, (err, result) => {

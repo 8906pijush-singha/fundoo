@@ -45,13 +45,15 @@ class ColorPallete extends Component {
     }
     handelColor(e){
         this.props.ToolsProps(e.target.value,this.props.noteId)
-      
+        this.setState({
+            open:false
+        })
     }
     render() {
 
         const changeCardColor = colorCodesAndNames.map((colorKey) =>
 
-            <Tooltip title={colorKey.name}>
+            <Tooltip title={colorKey.name} key ={colorKey.colorCode}>
                 <IconButton style={{ backgroundColor: colorKey.colorCode, "margin": "2px", }}
                 value={colorKey.colorCode}
                 onClick={this.handelColor}>

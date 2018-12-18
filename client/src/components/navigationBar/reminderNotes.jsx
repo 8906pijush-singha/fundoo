@@ -31,31 +31,31 @@ class NavigateReminder extends Component {
                 <div className="gridCards" style={{marginBottom:"30px"}}>
                      {this.props.reminderNotes.map((key)=>{
                          return(
-                         <Card className={changeCardStyle} style={{ backgroundColor:key.color }} >
+                         <Card className={changeCardStyle} style={{ backgroundColor:key.note.color }} >
                          <div>
                              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                 <b>{key.title}</b>
-                                 <Pin noteId={key._id} getPinProps={this.props.pinNote} pinStatus={key.isPinned} />
+                                 <b>{key.note.title}</b>
+                                 <Pin noteId={key.note._id} getPinProps={this.props.pinNote} pinStatus={key.note.isPinned} />
                              </div>
                              <div>
-                                 {key.description}
+                                 {key.note.description}
                              </div>
-                             {key.reminder !== "" ?
+                             {key.note.reminder !== "" ?
                                  <Chip
                                      style={{}}
                                      icon={<ClockIcon/>}
-                                     label={key.reminder}
-                                     onDelete
+                                     label={key.note.reminder}
+                                     onDelete={()=>this.props.reminderNote("",key.note._id)}
                                  />
 
                                  : null}
                          </div>
                          <div className="noteicons">
                              <Tools getColorProps={this.props.getColor}
-                                 note={key}
-                                 noteId={key._id}
+                                 note={key.note}
+                                 noteId={key.note._id}
                                  archiveProps={this.props.archiveNote}
-                                 archiveStatus={key.archive}
+                                 archiveStatus={key.note.archive}
                                  reminder={this.props.reminderNote} 
                                  isTrashed={this.props.isTrashed}/>
 

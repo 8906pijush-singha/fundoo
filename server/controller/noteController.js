@@ -14,8 +14,13 @@ exports.createNote = (req, res, next) => {
                 next(errMessage);
             } else {
                 console.log("note cntl sckt ", result);
+                var userNote = {
+                    note: result,
+
+                    collab: []
+                }
                 res_result.status = true;
-                res_result.data = result;
+                res_result.data = userNote;
                 res.status(200).send(res_result);
             }
         })

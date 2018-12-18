@@ -45,61 +45,9 @@ class Cards extends Component {
         this.archiveNote = this.archiveNote.bind(this);
         this.reminderNote = this.reminderNote.bind(this);
         this.isTrashed=this.isTrashed.bind(this);
-        // this.pinArray = this.pinArray.bind(this);
-        // this.othersArray = this.othersArray.bind(this);
-        // this.ordinaryCards = this.ordinaryCards.bind(this);
-        // this.archivedNotes = this.archivedNotes.bind(this);
-        // this.reminderNotes = this.reminderNotes.bind(this);
+      
     }
-    // ordinaryCards() {
-    //     let ordinaryCards = [];
-    //     for (let i = 0; i < this.state.notes.length; i++) {
-    //         if (!this.state.notes[i].isPinned && !this.state.notes[i].archive && !this.state.notes[i].isTrashed) {
-    //             ordinaryCards.push(this.state.notes[i]);
-    //         }
-    //     }
-    //     return ordinaryCards;
-    // }
-    // reminderNotes() {
-    //     let reminderNotes = [];
-    //     for (let i = 0; i < this.state.notes.length; i++) {
-    //         if (this.state.notes[i].reminder!=="") {
-    //             reminderNotes.push(this.state.notes[i]);
-    //         }
-    //     }
-    //     return reminderNotes;
-    // }
-    // archivedNotes() {
-    //     let archivedNotes = [];
-    //     for (let i = 0; i < this.state.notes.length; i++) {
-    //         if (this.state.notes[i].archive) {
-    //             archivedNotes.push(this.state.notes[i]);
-    //         }
-    //     }
-    //     return archivedNotes;
-    // }
-    // othersArray() {
-    //     let othersArray = []
-
-    //     for (let i = 0; i < this.state.notes.length; i++) {
-    //         if (!this.state.notes[i].isPinned && !this.state.notes[i].archive) {
-    //             othersArray.push(this.state.notes[i])
-    //         }
-    //     }
-    //     return othersArray
-
-    // }
-    // pinArray() {
-    //     let pinArray = []
-
-    //     for (let i = 0; i < this.state.notes.length; i++) {
-    //         if (this.state.notes[i].isPinned) {
-    //             pinArray.push(this.state.notes[i])
-    //         }
-    //     }
-    //     return pinArray
-
-    // }
+   
     componentDidMount() {
 
         getNotes()
@@ -120,6 +68,7 @@ class Cards extends Component {
             notes: [...this.state.notes, newCard]
         })
     }
+    
     getColor(value, noteId) {
         console.log(noteId);
         console.log(value);
@@ -131,8 +80,9 @@ class Cards extends Component {
             .then((result) => {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i]._id === noteId) {
-                        newArray[i].color = result.data.data;
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.color = result.data.data;
+                        
                         this.setState({
                             notes: newArray
                         })
@@ -158,8 +108,10 @@ class Cards extends Component {
             .then((result) => {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i]._id === noteId) {
-                        newArray[i].isPinned = result.data.data;
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.isPinned = result.data.data;
+                        newArray[i].note.archive=false;
+                        newArray[i].note.isTrashed=false;
                         this.setState({
                             notes: newArray
                         })
@@ -183,10 +135,16 @@ class Cards extends Component {
         }
         updateNotes('/isArchived', isPinned)
             .then((result) => {
+                
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i]._id === noteId) {
-                        newArray[i].archive = result.data.data;
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.archive = result.data.data;
+                        newArray[i].note.isPinned=false;
+                        newArray[i].note.isTrashed=false;
+                        console.log("Result archive",result.data);
+
+                        console.log("Result archive",newArray);
                         this.setState({
                             notes: newArray
                         })
@@ -201,19 +159,19 @@ class Cards extends Component {
                 alert(error)
             });
     }
-    reminderNote(date, noteId) {
+    reminderNote(data, noteId) {
         console.log(noteId);
-        console.log(date);
+        console.log(data);
         const reminder = {
             noteID: noteId,
-            reminder: date
+            reminder: data
         }
         updateNotes('/setReminder', reminder)
             .then((result) => {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i]._id === noteId) {
-                        newArray[i].reminder = result.data.data;
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.reminder = result.data.data;
                         this.setState({
                             notes: newArray
                         })
@@ -239,8 +197,10 @@ class Cards extends Component {
             .then((result) => {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
-                    if (newArray[i]._id === noteId) {
-                        newArray[i].isTrashed = result.data.data;
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.isTrashed = result.data.data;
+                        newArray[i].note.isPinned=false;
+                        newArray[i].note.archive=false;
                         console.log(newArray);
                         
                         this.setState({
@@ -319,31 +279,31 @@ class Cards extends Component {
                             {Object.keys(ordinaryCard).map((key) => {
                                 // console.log(this.state.notes[key]._id);
                                 return (
-                                    <div key={ordinaryCard[key]._id}>
-                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].color }} >
+                                    <div key={ordinaryCard[key].note._id}>
+                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color }} >
                                             <div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                    <b>{ordinaryCard[key].title}</b>
-                                                    <Pin noteId={ordinaryCard[key]._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].isPinned} />
+                                                    <b>{ordinaryCard[key].note.title}</b>
+                                                    <Pin noteId={ordinaryCard[key].note._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].note.isPinned} />
                                                 </div>
                                                 <div>
-                                                    {ordinaryCard[key].description}
+                                                    {ordinaryCard[key].note.description}
                                                 </div>
-                                                {ordinaryCard[key].reminder !== "" ?
+                                                {ordinaryCard[key].note.reminder !== "" ?
                                                     <Chip
                                                         icon={<ClockIcon/>}
-                                                        label={ordinaryCard[key].reminder}
-                                                        onDelete
+                                                        label={ordinaryCard[key].note.reminder}
+                                                        onDelete={()=>this.reminderNote("",ordinaryCard[key].note._id)}
                                                     />
 
                                                     : null}
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}
-                                                    note={ordinaryCard[key]}
-                                                    noteId={ordinaryCard[key]._id}
+                                                    note={ordinaryCard[key].note}
+                                                    noteId={ordinaryCard[key].note._id}
                                                     archiveProps={this.archiveNote}
-                                                    archiveStatus={ordinaryCard[key].archive}
+                                                    archiveStatus={ordinaryCard[key].note.archive}
                                                     reminder={this.reminderNote}
                                                     isTrashed={this.isTrashed} />
 

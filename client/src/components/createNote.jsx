@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
-import { Input, Card, Button } from '@material-ui/core';
+import { Input, Card, Button, Chip, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
 import Upload from './upload';
 import Tools from './Tools';
 import { createNote } from '../services/notes';
 import Pin from './editPin';
 
-
+const theme = createMuiTheme({
+    overrides: {
+        MuiChip: {
+            root: {
+                marginTop: "20px",
+                backgroundColor: "rgb(0,0,0,0.10)",
+                height: "20px",
+                fontSize: "12px",
+                padding: "2px"
+            },
+            deleteIcon: {
+                width: "20px",
+                height: "20px"
+            }
+        }
+    }
+})
 
 class CreateNote extends Component {
     constructor() {
@@ -31,8 +47,8 @@ class CreateNote extends Component {
         this.handleDescription = this.handleDescription.bind(this)
         this.getColor = this.getColor.bind(this);
         this.handlePin = this.handlePin.bind(this);
-        this.archive=this.archive.bind(this);
-
+        this.archive = this.archive.bind(this);
+        this.handleReminder = this.handleReminder.bind(this);
     }
     getColor(value) {
         this.setState({
@@ -66,13 +82,21 @@ class CreateNote extends Component {
         if (e.target.id === "card-layout")
             this.setState({ onCreateNoteClick: false });
     }
-    disableClick(e) {
-        e.preventDefault();
-        console.log(e.target.id);
-        // console.log("Child call");
-        return false;
+    // disableClick(e) {
+    //     e.preventDefault();
+    //     console.log(e.target.id);
+    //     // console.log("Child call");
+    //     return false;
+    // }
+    async handleReminder(value) {
+        await this.setState({
+            reminder: value
+        })
+        console.log("value", value);
     }
+
     handlePin(value) {
+
         this.setState({
             isPinned: value
         })
@@ -94,7 +118,7 @@ class CreateNote extends Component {
             createNote(note)
                 .then((result) => {
                     console.log("data from backend", result.data.data);
-                    
+
                     this.setState({
                         newNote: result.data.data
                     })
@@ -118,16 +142,17 @@ class CreateNote extends Component {
             color: "rgb(255,255,255)"
         })
     }
-    archive(value){
+    archive(value) {
         this.setState({
-            archive:value
+            archive: value
         })
-        console.log("archive status" ,value);
-        
+        console.log("archive status", value);
+
     }
     render() {
         return (
-            !this.state.onCreateNoteClick ?
+            <MuiThemeProvider theme={theme}>
+               { !this.state.onCreateNoteClick ?
                 <div>
                     <Card id="card1">
                         <div className="createNoteAndUpload">
@@ -169,14 +194,24 @@ class CreateNote extends Component {
                                 onChange={this.handleDescription}
 
                             ></Input>
+                            {this.state.reminder !== "" ?
+                                <div>
+                                    <Chip label={this.state.reminder} />
+                                </div>
+                                : null
+                            }
                             <div className="createNoteTools">
                                 <Tools getColorProps={this.getColor}
+                                    reminder={this.handleReminder}
+                                    note={this.state}
                                     ref={this.createNoteToTools}
                                     archiveProps={this.archive} />
                                 <Button onClick={this.handleClick} >Close</Button></div>
                         </div>
                     </Card>
                 </div>
+            }
+            </MuiThemeProvider>
         )
 
     }

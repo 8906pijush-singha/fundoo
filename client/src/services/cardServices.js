@@ -4,7 +4,7 @@
 function ordinaryCards(cardsData) {
     let ordinaryCards = [];
     for (let i = 0; i < cardsData.length; i++) {
-        if (!cardsData[i].isPinned && !cardsData[i].archive && !cardsData[i].isTrashed) {
+        if (!cardsData[i].note.isPinned && !cardsData[i].note.archive && !cardsData[i].note.isTrashed) {
             ordinaryCards.push(cardsData[i]);
         }
     }
@@ -13,7 +13,7 @@ function ordinaryCards(cardsData) {
 function reminderNotes(cardsData) {
     let reminderNotes = [];
     for (let i = 0; i < cardsData.length; i++) {
-        if (cardsData[i].reminder!=="" && !cardsData[i].isTrashed) {
+        if (cardsData[i].note.reminder!=="" && !cardsData[i].note.isTrashed) {
             reminderNotes.push(cardsData[i]);
         }
     }
@@ -22,7 +22,7 @@ function reminderNotes(cardsData) {
 function archivedNotes(cardsData) {
     let archivedNotes = [];
     for (let i = 0; i < cardsData.length; i++) {
-        if (cardsData[i].archive) {
+        if (cardsData[i].note.archive) {
             archivedNotes.push(cardsData[i]);
         }
     }
@@ -32,7 +32,7 @@ function othersArray(cardsData) {
     let othersArray = []
 
     for (let i = 0; i < cardsData.length; i++) {
-        if (!cardsData[i].isPinned && !cardsData[i].archive) {
+        if (!cardsData[i].note.isPinned && !cardsData[i].note.archive) {
             othersArray.push(cardsData[i])
         }
     }
@@ -43,7 +43,7 @@ function pinArray(cardsData) {
     let pinArray = []
 
     for (let i = 0; i < cardsData.length; i++) {
-        if (cardsData[i].isPinned) {
+        if (cardsData[i].note.isPinned) {
             pinArray.push(cardsData[i])
         }
     }
@@ -54,7 +54,7 @@ function trashArray(cardsData) {
     let trashArray = []
 
     for (let i = 0; i < cardsData.length; i++) {
-        if (cardsData[i].isTrashed) {
+        if (cardsData[i].note.isTrashed) {
             trashArray.push(cardsData[i])
         }
     }

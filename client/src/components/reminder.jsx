@@ -24,6 +24,13 @@ class Reminder extends Component {
         open: false,
         placement: null,
     };
+    handlePoppers=()=>{
+        this.setState(
+            state=>({
+                open:false
+            })
+        )
+    }
     handleClick = placement => event => {
 
         const { currentTarget } = event;
@@ -35,6 +42,7 @@ class Reminder extends Component {
         }));
     };
     setTodayReminder(note) {
+        this.handlePoppers();
         let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
         console.log("before",note);
         
@@ -44,6 +52,7 @@ class Reminder extends Component {
         this.props.reminder(note.reminder,note._id)
     }
     setTomorrowReminder(note){
+        this.handlePoppers();
         let days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon"]
         console.log("before",note);
         var date = new Date().toDateString();
@@ -54,6 +63,7 @@ class Reminder extends Component {
         this.props.reminder(note.reminder,note._id)
     }
     setWeeklyReminder(note){
+        this.handlePoppers();
         console.log("before",note);
         var date = new Date().toDateString();
         date=date.replace((new Date().getDate()),(new Date().getDate()+7));
