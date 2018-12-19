@@ -44,7 +44,7 @@ class NavigateTrashed extends Component {
                             <div>
                                 {key.note.description}
                             </div>
-                            <TrashOptions restore={this.props.isTrashed} noteID={key.note._id}/>
+                            <TrashOptions restore={this.props.isTrashed} noteID={key.note._id} deleteNote={this.props.deleteNote}/>
                         </div>
                     </Card>)
                      })

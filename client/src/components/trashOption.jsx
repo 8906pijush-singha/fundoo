@@ -38,7 +38,7 @@ class TrashOptions extends Component {
                                 <div id="selectMoreOptions">
 
                                     <MenuItem id="moreOptionsMenu" onClick={()=>this.props.restore(this.props.noteID)}>Restore Note</MenuItem>
-                                    <MenuItem id="moreOptionsMenu">Delete Forever</MenuItem>
+                                    <MenuItem id="moreOptionsMenu" onClick={()=>this.props.deleteNote(this.props.noteID)}>Delete Forever</MenuItem>
 
                                 </div>
                             </Paper>

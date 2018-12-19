@@ -22,3 +22,12 @@ export function createNote(data) {
         data:data
     })
 }
+export function deleteNoteForever(url,data) {
+    return axios(url, {
+        method: "POST",
+        headers: {
+            "access-token": localStorage.getItem("token")
+        },
+        data:data
+    })
+}

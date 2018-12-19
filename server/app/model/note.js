@@ -55,8 +55,10 @@ noteModel.prototype.save = (note, callback) => {
         }
     })
 }
-noteModel.prototype.delete=(data,callback)=>{
-    const id=data.id;
+noteModel.prototype.deleteNote=(data,callback)=>{
+    const id=data;
+    console.log("id",id);
+    
     Note.deleteOne({_id:id},(err,result)=>{
         if (err){
             callback(err)
@@ -65,7 +67,7 @@ noteModel.prototype.delete=(data,callback)=>{
                 status:200,
                 msg:"note is deleted successfully"
             }
-            return callback(null,result)
+            return callback(null,obj)
         }
     })
 }

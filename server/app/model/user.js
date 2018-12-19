@@ -247,7 +247,7 @@ userModel.prototype.updateNoteRef = (notes, callback) => {
     User.findOneAndUpdate(
         { _id: notes.userID }, {
             $push: {
-                notes:notes._id
+                notes: notes._id
             }
         }, (err, result) => {
             if (err) {
@@ -275,7 +275,65 @@ userModel.prototype.findByUserId = (data, callback) => {
             return callback(null, result);
     })
 }
+userModel.prototype.getNoteArray = (data, callback) => {
+    /**
+     * finding the id of the mongo document
+     */
+    User.findOne({ "_id": data }, (err, result) => {
+        if (err) {
+            callback(err);
+        }
+        else
+            console.log("array length", result.notes.length);
 
+        return callback(null, result.notes);
+    })
+}
+
+
+userModel.prototype.setNoteArray = (userID, updateParams, callback) => {
+    var updateUser = null
+    if (updateParams != null) {
+        updateUser = updateParams;
+    } else {
+        callback("user not found")
+    }
+    console.log("user found", userID, updateParams.length);
+
+    User.findOneAndUpdate(
+        {
+            _id: userID
+        },
+        {
+            $set: {
+                notes: updateUser
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+                console.log("updated User", updateUser.length)
+                return callback(null, updateUser)
+            }
+        });
+};
+
+userModel.prototype.getUserDetails = (callback) => {
+    console.log("ultimate save");
+    User.find({},
+         { notes:0, password: 0 ,__v:0,resetPasswordExpires:0,resetPasswordToken:0}
+        // ,{}, {},  {} 
+        ,function (err, result) {
+        // console.log(err);
+        // console.log(result);
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}
 module.exports = new userModel;
 
 

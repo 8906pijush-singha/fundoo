@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Chip } from '@material-ui/core';
-import { getNotes } from '../services/notes';
+import { getNotes,deleteNoteForever } from '../services/notes';
 import Tools from './Tools';
 import { updateNotes } from '../services/updateNotes';
 import Pin from './editPin';
@@ -45,6 +45,7 @@ class Cards extends Component {
         this.archiveNote = this.archiveNote.bind(this);
         this.reminderNote = this.reminderNote.bind(this);
         this.isTrashed=this.isTrashed.bind(this);
+        this.deleteNote=this.deleteNote.bind(this);
       
     }
    
@@ -214,6 +215,30 @@ class Cards extends Component {
                 alert(error)
             });
     }
+    deleteNote( noteId) {
+        console.log(noteId);
+        
+        const obj = {
+            noteID: noteId,
+            
+        }
+        deleteNoteForever('/deleteNote',obj )
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === obj.noteID) {
+                        newArray.splice(i,1);
+                        this.setState({
+                            notes: newArray
+                        })
+                    }
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                alert(error)
+            });
+    }
     render() {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
         
@@ -255,7 +280,8 @@ class Cards extends Component {
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps} 
-                    isTrashed={this.isTrashed}/>
+                    isTrashed={this.isTrashed}
+                    deleteNote={this.deleteNote}/>
             )
         }
         else{

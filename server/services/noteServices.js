@@ -7,11 +7,7 @@ const async = require('async');
  * @param {callback function} callback
  */
 exports.createNote = (id, data, callback) => {
-    // console.log("note Services", data);
-    // user.getID(data.email, (err, result) => {
-    //     if (err) {
-    //         callback(err)
-    //     } else {
+
     const note = {
         "userID": id,
         "title": data.title,
@@ -40,8 +36,7 @@ exports.createNote = (id, data, callback) => {
             })
         }
     })
-    // }
-    // })
+
 
 }
 
@@ -50,39 +45,43 @@ exports.createNote = (id, data, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.deleteNote = (data, callback) => {
-    console.log("note Services", data.email);
-    user.getID(data.email, (err, result) => {
+exports.deleteNote = (noteID, userID, callback) => {
+    console.log("note Services", noteID.noteID, userID);
+    user.getNoteArray(userID, (err, result) => {
         if (err) {
             callback(err)
         } else {
-            const note = {
-                "userID": result,
-                "title": data.title,
-                "description": data.description,
-                "color": data.color,
-                "reminder": data.reminder,
-                "isPinned": data.isPinned,
-                "image": data.image,
-                "archive": data.archive,
-                "isTrashed": data.isTrashed
-            }
-            console.log("save notes");
+            abc();
+            async function abc() {
+                await def();
+                function def() {
+                    console.log("result[i]", result[70]);
 
-            notes.save(note, (err, result) => {
-                if (err) {
+                    for (let i = 0; i < result.length; i++) {                 
+                        if (noteID.noteID == result[i]) {
 
-                    callback(err);
-                } else {
-                    user.updateNoteRef(result, (err, result) => {
-                        if (err) {
-                            callback(err);
-                        } else {
-                            return callback(null, result);
+                           let a= result.splice(i, 1);
+                           
                         }
-                    })
+                    }
                 }
-            })
+                console.log("updated array", result.length);
+                user.setNoteArray(userID, result, (err, user) => {
+
+                    if (err) {
+                        callback(err)
+                    } else {
+                        notes.deleteNote(noteID.noteID, (err, result) => {
+                            if (err) {
+                                callback(err)
+                            } else {
+                                return callback(null, result)
+                            }
+                        })
+                    }
+                })
+            }
+
         }
     })
 
@@ -166,7 +165,7 @@ exports.getNotes = (data, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.updateColor = (paramID,paramData, callback) => {
+exports.updateColor = (paramID, paramData, callback) => {
     console.log("in services", paramID, paramData);
 
     notes.updateColor(paramID, paramData, (err, result) => {
@@ -268,3 +267,4 @@ exports.isTrashed = (paramID, callback) => {
 
 
 }
+

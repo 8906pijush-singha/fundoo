@@ -45,8 +45,8 @@ collabModel.prototype.saveCollab = (collabData, callback) => {
 
 collabModel.prototype.getCollabNotesUserId = (userID, callback) => {
     // console.log("ultimate save", collabData);
-    Collab.find({collabUserID: userID},(err, result) => {
-        if(err){
+    Collab.find({ collabUserID: userID }, (err, result) => {
+        if (err) {
             callback(err);
         } else {
             callback(null, result);
@@ -56,16 +56,19 @@ collabModel.prototype.getCollabNotesUserId = (userID, callback) => {
 
 collabModel.prototype.getDataByNoteId = (noteID, callback) => {
     // console.log("ultimate save", noteID);
-    Collab.find({noteID: noteID}).populate('userID',{password: 0}).populate('collabUserID',{password: 0}).populate('noteID').exec(function (err, result) {
+    Collab.find({ noteID: noteID }).populate('userID', { password: 0 }).populate('collabUserID', { password: 0 }).populate('noteID').exec(function (err, result) {
         // console.log(err);
         // console.log(result);
-        if(err){
+        if (err) {
             callback(err);
         } else {
             callback(null, result);
         }
     })
 }
+
+
+
 
 
 module.exports = new collabModel;

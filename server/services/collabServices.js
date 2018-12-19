@@ -1,5 +1,5 @@
 const collabModel = require('../app/model/collaborator')
-
+const userModel = require('../app/model/user')
 
 
 exports.saveCollab = (collabData, callback) => {
@@ -16,6 +16,20 @@ exports.saveCollab = (collabData, callback) => {
 
 exports.getCollabNotesUserId = (userId, callback) => {
     collabModel.getCollabNotesUserId(userId, (err, result) => {
+        if(err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}
+
+
+
+exports.getCollabDetails = (callback) => {
+    console.log("30");
+
+    userModel.getUserDetails((err, result) => {
         if(err) {
             callback(err);
         } else {
