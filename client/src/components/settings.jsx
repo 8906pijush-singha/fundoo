@@ -51,12 +51,6 @@ class Settings extends Component {
                                 <div>
 
                                     {listItems}
-                                    {/* <MenuItem id="settingsMenuItem">Settings</MenuItem>                       
-                                    <MenuItem id="settingsMenuItem">Send Feedback</MenuItem>
-                                    <MenuItem id="settingsMenuItem">Help</MenuItem>
-                                    <MenuItem id="settingsMenuItem">App Downloads</MenuItem>
-                                    <MenuItem id="settingsMenuItem">Keyboard Shortcuts</MenuItem> */}
-
 
                                 </div>
                             </Paper>

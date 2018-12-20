@@ -31,3 +31,26 @@ export function deleteNoteForever(url,data) {
         data:data
     })
 }
+
+export function getCollabDetails(url) {
+    console.log(url);
+    
+    return axios(url, {
+        method: "GET",
+        headers: {
+            "access-token": localStorage.getItem("token")
+        },
+    })
+}
+
+export function saveCollabs(url,data) {
+    console.log(url,data);
+    
+    return axios(url, {
+        method: "POST",
+        headers: {
+            "access-token": localStorage.getItem("token")
+        },
+        data:data
+    })
+}

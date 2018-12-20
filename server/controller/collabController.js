@@ -9,7 +9,7 @@ exports.saveCollab = (req, res, next) => {
 
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
-        } else if (typeof req.body.userID === 'undefined') {
+        } else if (typeof req.decoded === 'undefined') {
             throw new Error("userID is mandatory");
         } else if (typeof req.body.collabID === 'undefined') {
             throw new Error("collabID is mandatory");

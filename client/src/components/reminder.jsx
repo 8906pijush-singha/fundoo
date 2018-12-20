@@ -23,11 +23,12 @@ class Reminder extends Component {
         anchorEl: null,
         open: false,
         placement: null,
+        menuState: false
     };
     handlePoppers=()=>{
         this.setState(
             state=>({
-                open:false
+                menuState:false
             })
         )
     }
@@ -37,7 +38,7 @@ class Reminder extends Component {
 
         this.setState(state => ({
             anchorEl: currentTarget,
-            open: state.placement !== placement || !state.open,
+            menuState: state.placement !== placement || !state.menuState,
             placement,
         }));
     };
@@ -71,53 +72,85 @@ class Reminder extends Component {
         console.log(note.reminder);
         this.props.reminder(note.reminder,note._id)
     }
+
+
+    /**
+     * 
+     */
+    toggleDropdown() {
+        console.log("state", this.state.menuState)
+        this.setState({ open: !this.state.menuState });
+        if(this.state.menuState){
+            this.handlePoppers();
+        }
+    }
+
+    /**
+     * 
+     * @param {Object} e Event type object for active element 
+     */
+    onBlur(e) {
+        var currentTarget = e.currentTarget;
+        console.log("e", document.activeElement)
+        setTimeout(function() {
+            if (!currentTarget.contains(document.activeElement)) {
+                console.log('component officially blurred');
+            }
+        }, 0);
+    }
+    handlerOnBlur(e){
+        console.log(e)
+    }
+
     render() {
         const ampm = this.props.parentProps
-        const { anchorEl, open, placement } = this.state;
+        const { anchorEl, open, placement, menuState } = this.state;
         return (
-            <MuiThemeProvider theme={theme}>
-                <Tooltip title="Remind me">
-                    <img src={reminder} alt="Reminder icon" onClick={this.handleClick('bottom-start')} ></img>
-                </Tooltip>
+            <div 
+                onBlur={() => this.toggleDropdown()}>
+                <MuiThemeProvider theme={theme} >
+                    <Tooltip title="Remind me">
+                        <img src={reminder} alt="Reminder icon" onClick={this.handleClick('bottom-start')} ></img>
+                    </Tooltip>
 
 
-                <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
-                    {({ TransitionProps }) => (
-                        <Fade {...TransitionProps} timeout={350}>
-                            <Paper >
-                                <div>
+                    <Popper  open={menuState} anchorEl={anchorEl} placement={placement} transition>
+                        {({ TransitionProps }) => (
+                            <Fade {...TransitionProps} timeout={350}>
+                                <Paper >
+                                    <div>
 
-                                    <ListItem className="reminderIcon">Reminder:</ListItem>
-                                    <MenuItem className="menuItemReminder" onClick={() => this.setTodayReminder(this.props.note)} ><div>Later today</div>
-                                        <div>
-                                            8:00 {ampm}
+                                        <ListItem className="reminderIcon">Reminder:</ListItem>
+                                        <MenuItem className="menuItemReminder" onClick={() => this.setTodayReminder(this.props.note)} ><div>Later today</div>
+                                            <div>
+                                                8:00 {ampm}
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem className="menuItemReminder" onClick={() =>this.setTomorrowReminder(this.props.note)}><div>Tomorrow</div>
+                                            <div  value={30} >
+                                                8:00 PM
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem className="menuItemReminder" onClick={() =>this.setWeeklyReminder(this.props.note)}><div>Next Week</div>
+                                            <div>
+                                                8:00 PM
+                                            </div>
+                                        </MenuItem>
+                                        <MenuItem className="menuItemReminder"><div>Home</div>
+                                            <div>
+                                                Vashi (West)
                                         </div>
-                                    </MenuItem>
-                                    <MenuItem className="menuItemReminder" onClick={() =>this.setTomorrowReminder(this.props.note)}><div>Tomorrow</div>
-                                        <div  value={30} >
-                                            8:00 PM
-                                        </div>
-                                    </MenuItem>
-                                    <MenuItem className="menuItemReminder" onClick={() =>this.setWeeklyReminder(this.props.note)}><div>Next Week</div>
-                                        <div>
-                                            8:00 PM
-                                        </div>
-                                    </MenuItem>
-                                    <MenuItem className="menuItemReminder"><div>Home</div>
-                                        <div>
-                                            Vashi (West)
+                                        </MenuItem>
+
+                                        <PickDateAndTime />
+                                        <MenuItem >Pick place</MenuItem>
                                     </div>
-                                    </MenuItem>
-
-                                    <PickDateAndTime />
-                                    <MenuItem >Pick place</MenuItem>
-                                </div>
-                            </Paper>
-                        </Fade>
-                    )}
-                </Popper>
-
-            </MuiThemeProvider>
+                                </Paper>
+                            </Fade>
+                        )}
+                    </Popper>
+                </MuiThemeProvider>
+            </div>
         )
     }
 }

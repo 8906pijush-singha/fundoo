@@ -56,7 +56,7 @@ router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed)
  * API ROUTES FOR COLLABORATOR----------------------------------------
  */
 router.post('/saveCollab',noteAuth.tokenValid, collabControler.saveCollab);
-router.get('/getCollabDetails',collabControler.getCollabDetails)
+router.get('/getCollabDetails',noteAuth.tokenValid,collabControler.getCollabDetails)
 
 
 module.exports = router;

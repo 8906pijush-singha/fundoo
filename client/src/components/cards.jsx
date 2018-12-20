@@ -323,6 +323,8 @@ class Cards extends Component {
                                                     />
 
                                                     : null}
+
+                                                    
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}

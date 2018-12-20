@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
   * @param {callback} next 
   */
 exports.tokenValid = (req, res, next) => {
-    console.log(req.body);
+    console.log("body",req.body);
     
     const token = req.headers['access-token'];
 

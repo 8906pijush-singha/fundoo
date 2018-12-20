@@ -7,19 +7,20 @@ import More from './noteMore';
 import ColorPallete from './colorPallete';
 
 class Tools extends Component {
-     render() {
-        
+    render() {
+
         let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
         return (
-            <div className="cardTools"><Reminder parentProps={ampm} note={this.props.note} 
-            reminder={this.props.reminder}/><AddPerson />
-                <ColorPallete ToolsProps={this.props.getColorProps} noteId={this.props.noteId}  />
+            <div className="cardTools"><Reminder parentProps={ampm} note={this.props.note}
+                reminder={this.props.reminder} />
+                <AddPerson noteId={this.props.noteId} />
+                <ColorPallete ToolsProps={this.props.getColorProps} noteId={this.props.noteId} />
                 <Upload />
-                <NoteArchive archiveProps={this.props.archiveProps} 
-                noteId={this.props.noteId}
-                archiveStatus={this.props.archiveStatus}/>
+                <NoteArchive archiveProps={this.props.archiveProps}
+                    noteId={this.props.noteId}
+                    archiveStatus={this.props.archiveStatus} />
                 {/* { console.log("jiefklnbiofhgbkoj",this.props.isTrashed)} */}
-                <More isTrashed={this.props.isTrashed} noteId={this.props.noteId}/>
+                <More isTrashed={this.props.isTrashed} noteId={this.props.noteId} />
             </div>
         )
     }

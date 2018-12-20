@@ -11,7 +11,8 @@ class Note extends Component {
             cardStyle: false,
             reminder: false,
             archive: false,
-            trash: false
+            trash: false,
+            show: false
         }
         this.createNoteClick = React.createRef();
         this.noteToCardsRef = React.createRef();
@@ -56,18 +57,50 @@ class Note extends Component {
         }
     }
 
+
+    // handleChange = (font) => () => {
+    //     this.setState({ value: font, show: false });
+    // }
+
+    // handleToggle = (e) => {
+    //     e.target.focus();
+    //     this.setState({ show: !this.state.show });
+    // }
+
+    // handleBlur = (e) => {
+    //     // firefox onBlur issue workaround
+    //     if (e.nativeEvent.explicitOriginalTarget &&
+    //         e.nativeEvent.explicitOriginalTarget === e.nativeEvent.originalTarget) {
+    //         return;
+    //     }
+
+    //     if (this.state.show) {
+    //         timer = setTimeout(() => {
+    //         this.setState({ show: false });
+    //         }, 200);
+    //     }
+    // }
+
+
     render() {
 
         if (localStorage.getItem("isAuth") !== "true") {
             return (window.location.href = "/")
         } else {
             return (
-                <div id="card-layout" onClick={this.handleClick} >
+                <div id="card-layout" >
                     <AppBarComp parentProps={this.setCardStyle} handleNavigation={this.handleNavigation} />
                     <div className="dashBoard">
                         {(this.state.archive || this.state.trash) ? null :
                             <CreateNote ref={this.createNoteClick} showCardCall={this.showCards} />}
-                        <Cards parentProps={this.state.cardStyle}
+                        <Cards 
+                            
+                            // show={this.state.show}
+                            // // value={this.state.value}
+                            // handleToggle={this.handleToggle}
+                            // handleBlur={this.handleBlur}
+                            // handleChange={this.handleChange}
+                            parentProps={this.state.cardStyle}
                             ref={this.noteToCardsRef}
                             navigateReminder={this.state.reminder}
                             navigateArchive={this.state.archive}
