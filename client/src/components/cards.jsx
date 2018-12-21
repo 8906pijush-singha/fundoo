@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Chip } from '@material-ui/core';
-import { getNotes,deleteNoteForever } from '../services/notes';
+import { getNotes, deleteNoteForever } from '../services/notes';
 import Tools from './Tools';
 import { updateNotes } from '../services/updateNotes';
 import Pin from './editPin';
@@ -9,25 +9,28 @@ import NavigateReminder from './navigationBar/reminderNotes';
 import NavigateArchived from './navigationBar/archivedNotes';
 import NavigateTrashed from './navigationBar/trashedNotes';
 import ClockIcon from './clockIcon'
-import {createMuiTheme,MuiThemeProvider} from '@material-ui/core'
-import { ordinaryCards,
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core'
+import SearchedNotes from '../components/searchBar/searchedNotes'
+import {
+    ordinaryCards,
     pinArray,
     othersArray,
     archivedNotes,
-    reminderNotes,trashArray} from '../services/cardServices'
+    reminderNotes, trashArray
+} from '../services/cardServices'
 const theme = createMuiTheme({
     overrides: {
-        MuiChip:{
-            root:{
-                marginTop:"20px",
-                backgroundColor:"rgb(0,0,0,0.10)",
-                height:"20px",
-                fontSize:"12px",
-                padding:"2px"
+        MuiChip: {
+            root: {
+                marginTop: "20px",
+                backgroundColor: "rgb(0,0,0,0.10)",
+                height: "20px",
+                fontSize: "12px",
+                padding: "2px"
             },
-            deleteIcon:{
-                width:"20px",
-                height:"20px"
+            deleteIcon: {
+                width: "20px",
+                height: "20px"
             }
         }
     }
@@ -37,23 +40,24 @@ class Cards extends Component {
     constructor() {
         super();
         this.state = {
-            notes: []
+            notes: [],
+            // searchNote: ""
         }
 
         this.getColor = this.getColor.bind(this);
         this.pinNote = this.pinNote.bind(this)
         this.archiveNote = this.archiveNote.bind(this);
         this.reminderNote = this.reminderNote.bind(this);
-        this.isTrashed=this.isTrashed.bind(this);
-        this.deleteNote=this.deleteNote.bind(this);
-      
+        this.isTrashed = this.isTrashed.bind(this);
+        this.deleteNote = this.deleteNote.bind(this);
+        // this.getSearchNote=this.getSearchNote.bind(this);
     }
-   
+
     componentDidMount() {
 
         getNotes()
             .then((result) => {
-                
+
                 this.setState({
                     notes: result
                 })
@@ -69,7 +73,12 @@ class Cards extends Component {
             notes: [...this.state.notes, newCard]
         })
     }
-    
+    // getSearchNote(value) {
+
+
+    //     console.log(value);
+
+    // }
     getColor(value, noteId) {
         console.log(noteId);
         console.log(value);
@@ -83,7 +92,7 @@ class Cards extends Component {
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
                         newArray[i].note.color = result.data.data;
-                        
+
                         this.setState({
                             notes: newArray
                         })
@@ -111,8 +120,8 @@ class Cards extends Component {
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
                         newArray[i].note.isPinned = result.data.data;
-                        newArray[i].note.archive=false;
-                        newArray[i].note.isTrashed=false;
+                        newArray[i].note.archive = false;
+                        newArray[i].note.isTrashed = false;
                         this.setState({
                             notes: newArray
                         })
@@ -136,16 +145,16 @@ class Cards extends Component {
         }
         updateNotes('/isArchived', isPinned)
             .then((result) => {
-                
+
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
                         newArray[i].note.archive = result.data.data;
-                        newArray[i].note.isPinned=false;
-                        newArray[i].note.isTrashed=false;
-                        console.log("Result archive",result.data);
+                        newArray[i].note.isPinned = false;
+                        newArray[i].note.isTrashed = false;
+                        console.log("Result archive", result.data);
 
-                        console.log("Result archive",newArray);
+                        console.log("Result archive", newArray);
                         this.setState({
                             notes: newArray
                         })
@@ -187,12 +196,12 @@ class Cards extends Component {
                 alert(error)
             });
     }
-    isTrashed( noteId) {
+    isTrashed(noteId) {
         console.log(noteId);
-        
+
         const trash = {
             noteID: noteId,
-            
+
         }
         updateNotes('/isTrashed', trash)
             .then((result) => {
@@ -200,10 +209,10 @@ class Cards extends Component {
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
                         newArray[i].note.isTrashed = result.data.data;
-                        newArray[i].note.isPinned=false;
-                        newArray[i].note.archive=false;
+                        newArray[i].note.isPinned = false;
+                        newArray[i].note.archive = false;
                         console.log(newArray);
-                        
+
                         this.setState({
                             notes: newArray
                         })
@@ -215,19 +224,19 @@ class Cards extends Component {
                 alert(error)
             });
     }
-    deleteNote( noteId) {
+    deleteNote(noteId) {
         console.log(noteId);
-        
+
         const obj = {
             noteID: noteId,
-            
+
         }
-        deleteNoteForever('/deleteNote',obj )
+        deleteNoteForever('/deleteNote', obj)
             .then((result) => {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === obj.noteID) {
-                        newArray.splice(i,1);
+                        newArray.splice(i, 1);
                         this.setState({
                             notes: newArray
                         })
@@ -241,8 +250,47 @@ class Cards extends Component {
     }
     render() {
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
-        
-        if (this.props.navigateReminder) {
+
+
+        if (this.props.searchNote !== "") {
+
+            this.state.notes.filter(data => {
+                console.log(data);
+                console.log(data.note);
+                
+                
+                // var isContains = false;
+                Object.keys(data.note).forEach(key => {
+                    console.log("key",data.note[key]);
+                    
+                    if (data.note[key] == 'title' || data.note[key] == 'description') {
+                        var matchedSearch = data[key].toString().toLowerCase().includes(this.state.searchText.trim().toLowerCase());
+                        console.log("matchedSearch", matchedSearch);
+                        
+                        if (matchedSearch) {
+                            // isContains = matchedSearch;
+                        }
+                    }
+                })
+                // return isContains;
+            })
+            return (
+                <div></div>
+                // <SearchedNotes
+                //      searchedNotes={searchedNotes}
+                //     pinNote={this.pinNote}
+                //     getColor={this.getColor}
+                //     archiveNote={this.archiveNote}
+                //     reminderNote={this.reminderNote}
+                //     parentProps={this.props.parentProps}
+                //     isTrashed={this.isTrashed}
+                // />
+            )
+        }
+
+
+
+        else if (this.props.navigateReminder) {
             return (
                 <NavigateReminder
                     reminderNotes={reminderNotes(this.state.notes)}
@@ -265,13 +313,13 @@ class Cards extends Component {
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
-                    parentProps={this.props.parentProps} 
-                    isTrashed={this.isTrashed}/>
+                    parentProps={this.props.parentProps}
+                    isTrashed={this.isTrashed} />
             )
         } else if (this.props.navigateTrashed) {
             return (
                 <NavigateTrashed
-                    
+
                     othersArray={othersArray(this.state.notes)}
                     pinArray={pinArray(this.state.notes)}
                     trashArray={trashArray(this.state.notes)}
@@ -279,13 +327,13 @@ class Cards extends Component {
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
                     reminderNote={this.reminderNote}
-                    parentProps={this.props.parentProps} 
+                    parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed}
-                    deleteNote={this.deleteNote}/>
+                    deleteNote={this.deleteNote} />
             )
         }
-        else{
-            let ordinaryCard=ordinaryCards(this.state.notes);
+        else {
+            let ordinaryCard = ordinaryCards(this.state.notes);
             return (
 
                 <MuiThemeProvider theme={theme}>
@@ -297,11 +345,11 @@ class Cards extends Component {
                             getColor={this.getColor}
                             archiveNote={this.archiveNote}
                             reminderNote={this.reminderNote}
-                            parentProps={this.props.parentProps} 
-                            isTrashed={this.isTrashed}/>
+                            parentProps={this.props.parentProps}
+                            isTrashed={this.isTrashed} />
                         :
                         <div className="gridCards" >
-                        
+
                             {Object.keys(ordinaryCard).map((key) => {
                                 // console.log(this.state.notes[key]._id);
                                 return (
@@ -317,14 +365,14 @@ class Cards extends Component {
                                                 </div>
                                                 {ordinaryCard[key].note.reminder !== "" ?
                                                     <Chip
-                                                        icon={<ClockIcon/>}
+                                                        icon={<ClockIcon />}
                                                         label={ordinaryCard[key].note.reminder}
-                                                        onDelete={()=>this.reminderNote("",ordinaryCard[key].note._id)}
+                                                        onDelete={() => this.reminderNote("", ordinaryCard[key].note._id)}
                                                     />
 
                                                     : null}
 
-                                                    
+
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}
@@ -345,7 +393,8 @@ class Cards extends Component {
                     }
 
                 </MuiThemeProvider>
-            )}
+            )
+        }
     }
 
 }

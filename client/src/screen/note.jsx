@@ -12,17 +12,36 @@ class Note extends Component {
             reminder: false,
             archive: false,
             trash: false,
-            show: false
+            show: false,
+            searchNote:""
         }
         this.createNoteClick = React.createRef();
         this.noteToCardsRef = React.createRef();
+        this.noteToAppbarRef = React.createRef();
+
         // this.handleClick = this.handleClick.bind(this);
         this.setCardStyle = this.setCardStyle.bind(this);
         this.showCards = this.showCards.bind(this);
-        this.handleNavigation = this.handleNavigation.bind(this)
+        this.handleNavigation = this.handleNavigation.bind(this);
+        this.getSearchNote = this.getSearchNote.bind(this);
+
 
     }
+
+    getSearchNote(value){
+        this.setState({
+            searchNote:value
+        })  
+    }
+
+    // getSearchNote(value) {
+    //     if(this.noteToCardsRef.current!==null){
+    //         this.noteToCardsRef.current.getSearchNote(value);
+    //     }
+    // }
+
     showCards(newCard) {
+
         this.noteToCardsRef.current.showCard(newCard);
     }
 
@@ -89,17 +108,19 @@ class Note extends Component {
         } else {
             return (
                 <div id="card-layout" >
-                    <AppBarComp parentProps={this.setCardStyle} handleNavigation={this.handleNavigation} />
+                    <AppBarComp parentProps={this.setCardStyle} handleNavigation={this.handleNavigation} getSearchNote={this.getSearchNote} />
                     <div className="dashBoard">
                         {(this.state.archive || this.state.trash) ? null :
                             <CreateNote ref={this.createNoteClick} showCardCall={this.showCards} />}
-                        <Cards 
-                            
+                        <Cards
+
                             // show={this.state.show}
                             // // value={this.state.value}
                             // handleToggle={this.handleToggle}
                             // handleBlur={this.handleBlur}
                             // handleChange={this.handleChange}
+
+                            searchNote={this.state.searchNote}
                             parentProps={this.state.cardStyle}
                             ref={this.noteToCardsRef}
                             navigateReminder={this.state.reminder}

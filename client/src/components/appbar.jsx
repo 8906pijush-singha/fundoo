@@ -38,11 +38,14 @@ class AppBarComp extends Component {
     constructor() {
         super();
         this.state = {
-            open: false
+            open: false,
+            searchNote:""
         }
         this.handleDrawer = this.handleDrawer.bind(this);
         this.setView = this.setView.bind(this);
         this.handelRefresh = this.handelRefresh.bind(this);
+        this.handleSearchNote = this.handleSearchNote.bind(this);
+       
     }
     handleDrawer() {
         this.setState({ open: !this.state.open })
@@ -54,6 +57,13 @@ class AppBarComp extends Component {
         e.preventDefault();
         window.location.reload();
     }
+    handleSearchNote(e) {
+        this.setState({
+            searchNote:e.target.value
+        })
+        this.props.getSearchNote(e.target.value);
+
+    }
 
     render() {
         if (localStorage.getItem("isAuth") !== "true") {
@@ -62,7 +72,7 @@ class AppBarComp extends Component {
             return (
                 <MuiThemeProvider theme={theme} >
                     <AppBar position="fixed"
-                     id="appbar" >
+                        id="appbar" >
                         <Toolbar >
                             <Tooltip title="Menu">
                                 <IconButton onClick={this.handleDrawer}>
@@ -81,6 +91,8 @@ class AppBarComp extends Component {
 
                                 <InputBase placeholder="Search...."
                                     style={{ marginLeft: "1px", padding: "11px 16px 11px 16px" }}
+                                    value={this.state.searchNote}
+                                    onChange={this.handleSearchNote}
                                 >
                                 </InputBase>
                             </div>
