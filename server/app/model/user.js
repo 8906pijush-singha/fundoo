@@ -298,7 +298,7 @@ userModel.prototype.setNoteArray = (userID, updateParams, callback) => {
     } else {
         callback("user not found")
     }
-    console.log("user found", userID, updateParams.length);
+    // console.log("user found", userID, updateParams.length);
 
     User.findOneAndUpdate(
         {
@@ -313,7 +313,7 @@ userModel.prototype.setNoteArray = (userID, updateParams, callback) => {
             if (err) {
                 callback(err)
             } else {
-                console.log("updated User", updateUser.length)
+                // console.log("updated User", updateUser.length)
                 return callback(null, updateUser)
             }
         });

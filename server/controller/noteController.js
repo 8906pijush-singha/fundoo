@@ -238,7 +238,6 @@ exports.setReminder = (req, res, next) => {
 
 exports.isTrashed = (req, res, next) => {
     try {
-        let isTrashed = null;
         var res_result = {};
         let noteID = null;
         console.log("in noteController", req.body);

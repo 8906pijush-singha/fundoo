@@ -10,12 +10,12 @@ exports.saveCollab = (req, res, next) => {
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
         } else if (typeof req.decoded === 'undefined') {
-            throw new Error("userID is mandatory");
+            throw new Error("userID is mandatory",req.decoded);
         } else if (typeof req.body.collabID === 'undefined') {
             throw new Error("collabID is mandatory");
         } else {
             const collabData = {
-                userID: req.body.userID,
+                userID: req.decoded,
                 noteID: req.body.noteID,
                 collabUserID: req.body.collabID
             }

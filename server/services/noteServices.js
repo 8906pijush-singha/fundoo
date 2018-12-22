@@ -60,7 +60,7 @@ exports.deleteNote = (noteID, userID, callback) => {
                     for (let i = 0; i < result.length; i++) {                 
                         if (noteID.noteID == result[i]) {
 
-                           let a= result.splice(i, 1);
+                           result.splice(i, 1);
                            
                         }
                     }
@@ -105,10 +105,11 @@ exports.getNotes = (data, callback) => {
                 if (errorUser) {
                     callback(errorUser);
                 } else {
+                    const noteOwner=resultUser.email
                     for (var i = 0; i < result.length; i++) {
                         var userNote = {
                             note: result[i],
-                            owner: resultUser,
+                            owner: noteOwner,
                             collab: []
                         }
                         finalResult.push(userNote);
@@ -117,6 +118,9 @@ exports.getNotes = (data, callback) => {
                         if (errorCollab) {
                             callback(errorCollab);
                         } else {
+                            // if()
+                            console.log("resultCollab",resultCollab);
+                            
                             var operations = [];
                             for (var i = 0; i < resultCollab.length; i++) {
                                 operations.push((function (collabData) {

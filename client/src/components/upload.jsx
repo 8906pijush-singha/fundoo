@@ -6,9 +6,9 @@ class Upload extends Component {
         console.log("galat hai")
         this.fileInput.click();
     }
-    handlerclick(event){
-        console.log(event);
-    }
+    // handlerclick(event){
+    //     console.log(event);
+    // }
     render() {
         return (
             <div>

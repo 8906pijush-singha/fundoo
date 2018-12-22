@@ -26,7 +26,9 @@ class UserProfile extends Component {
     open: false,
     placement: null,
   };
-
+  triggerInputFile() {
+    this.fileInput.click();
+  }
   handleClick = placement => event => {
     const { currentTarget } = event;
     this.setState((state) => ({
@@ -57,8 +59,13 @@ class UserProfile extends Component {
                     open={open}>
 
                     <div className="userProfileIconWithDetails">
-                      <Avatar style={{ width: "90px", height: "90px" ,marginTop:"10px"}} >
-                        <b style={{fontSize:"33px"}}>{initial}</b>
+                      <Avatar style={{ width: "90px", height: "90px", marginTop: "10px" }}
+                        onClick={() => { this.triggerInputFile() }}
+                      >
+                        <input ref={fileInput => this.fileInput = fileInput}
+                          type="file" style={{ 'display': 'none' }}
+                        />
+                        <b style={{ fontSize: "33px" }}>{initial}</b>
                       </Avatar>
 
                       <div className="accountDetails">

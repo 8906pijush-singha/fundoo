@@ -54,14 +54,14 @@ app.use((error, req, res, next) => {
 })
 
 //start server
-server = app.listen(3001, () => {               //server runs on port 3001
+ app.listen(3001, () => {               //server runs on port 3001
     console.log("server is connected to 3001 ");
 });
 startMongo(url);                           //call for db connection
 
 
 /* MONGODB CONNECTION */
-function startMongo() {
+function startMongo(url) {
     const mongoose = require('mongoose');         //requiring mongoose framework for connection
     mongoose.connect(url, { useCreateIndex: true, useNewUrlParser: true }); //used to establish connection with database
     const db = mongoose.connection;               //used to perform mongoose connection events

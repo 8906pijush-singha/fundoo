@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Chip } from '@material-ui/core';
+import { Card, Chip, Avatar, Tooltip } from '@material-ui/core';
 import { getNotes, deleteNoteForever } from '../services/notes';
 import Tools from './Tools';
 import { updateNotes } from '../services/updateNotes';
@@ -254,37 +254,19 @@ class Cards extends Component {
 
         if (this.props.searchNote !== "") {
 
-            this.state.notes.filter(data => {
-                console.log(data);
-                console.log(data.note);
-                
-                
-                // var isContains = false;
-                Object.keys(data.note).forEach(key => {
-                    console.log("key",data.note[key]);
-                    
-                    if (data.note[key] == 'title' || data.note[key] == 'description') {
-                        var matchedSearch = data[key].toString().toLowerCase().includes(this.state.searchText.trim().toLowerCase());
-                        console.log("matchedSearch", matchedSearch);
-                        
-                        if (matchedSearch) {
-                            // isContains = matchedSearch;
-                        }
-                    }
-                })
-                // return isContains;
-            })
+            let searchedNotes = this.state.notes.filter(obj => obj.note.title.includes(this.props.searchNote) ||
+                obj.note.description.includes(this.props.searchNote))
             return (
-                <div></div>
-                // <SearchedNotes
-                //      searchedNotes={searchedNotes}
-                //     pinNote={this.pinNote}
-                //     getColor={this.getColor}
-                //     archiveNote={this.archiveNote}
-                //     reminderNote={this.reminderNote}
-                //     parentProps={this.props.parentProps}
-                //     isTrashed={this.isTrashed}
-                // />
+
+                <SearchedNotes
+                    searchedNotes={searchedNotes}
+                    pinNote={this.pinNote}
+                    getColor={this.getColor}
+                    archiveNote={this.archiveNote}
+                    reminderNote={this.reminderNote}
+                    parentProps={this.props.parentProps}
+                    isTrashed={this.isTrashed}
+                />
             )
         }
 
@@ -363,6 +345,29 @@ class Cards extends Component {
                                                 <div>
                                                     {ordinaryCard[key].note.description}
                                                 </div>
+                                                {ordinaryCard[key].collab.length > 0 ?
+                                                    ordinaryCard[key].collab.map((collabKey) => {
+                                                        if (collabKey.email !== localStorage.getItem('Email') && ordinaryCard[key].owner.fname !== "") {
+                                                            return (
+                                                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                                                    <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
+                                                                        <Avatar>
+                                                                            {collabKey.fname.substring(0, 1)}
+                                                                        </Avatar>
+                                                                    </Tooltip>
+
+                                                                    <Tooltip title={ordinaryCard[key].owner.fname + " " + ordinaryCard[key].owner.lname + " (" + ordinaryCard[key].owner.email + ")"}>
+                                                                        <Avatar>
+                                                                            {ordinaryCard[key].owner.fname.substring(0, 1)}
+                                                                        </Avatar>
+                                                                    </Tooltip>
+                                                                </div>
+                                                            )
+                                                        }
+
+                                                    })
+                                                    : null
+                                                }
                                                 {ordinaryCard[key].note.reminder !== "" ?
                                                     <Chip
                                                         icon={<ClockIcon />}

@@ -22,23 +22,16 @@ class Reminder extends Component {
     state = {
         anchorEl: null,
         open: false,
-        placement: null,
-        menuState: false
+        placement: null
     };
-    handlePoppers=()=>{
-        this.setState(
-            state=>({
-                menuState:false
-            })
-        )
-    }
+   
     handleClick = placement => event => {
 
         const { currentTarget } = event;
 
         this.setState(state => ({
             anchorEl: currentTarget,
-            menuState: state.placement !== placement || !state.menuState,
+            open: state.placement !== placement || !state.open,
             placement,
         }));
     };
@@ -74,37 +67,37 @@ class Reminder extends Component {
     }
 
 
-    /**
-     * 
-     */
-    toggleDropdown() {
-        console.log("state", this.state.menuState)
-        this.setState({ open: !this.state.menuState });
-        if(this.state.menuState){
-            this.handlePoppers();
-        }
-    }
-
-    /**
-     * 
-     * @param {Object} e Event type object for active element 
-     */
-    onBlur(e) {
-        var currentTarget = e.currentTarget;
-        console.log("e", document.activeElement)
-        setTimeout(function() {
-            if (!currentTarget.contains(document.activeElement)) {
-                console.log('component officially blurred');
-            }
-        }, 0);
-    }
-    handlerOnBlur(e){
-        console.log(e)
-    }
+    //// /**
+    ////  * 
+    ////  */
+    //// toggleDropdown() {
+    ////     console.log("state", this.state.open)
+    ////     this.setState({ open: !this.state.open });
+    ////     if(this.state.open){
+    ////         this.handlePoppers();
+    ////     }
+    //// }
+//
+    //// /**
+    ////  * 
+    ////  * @param {Object} e Event type object for active element 
+    ////  */
+    //// onBlur(e) {
+    ////     var currentTarget = e.currentTarget;
+    ////     console.log("e", document.activeElement)
+    ////     setTimeout(function() {
+    ////         if (!currentTarget.contains(document.activeElement)) {
+    ////             console.log('component officially blurred');
+    ////         }
+    ////     }, 0);
+    //// }
+    //// handlerOnBlur(e){
+    ////     console.log(e)
+    //// }
 
     render() {
         const ampm = this.props.parentProps
-        const { anchorEl, open, placement, menuState } = this.state;
+        const { anchorEl,  placement, open } = this.state;
         return (
             <div 
                 onBlur={() => this.toggleDropdown()}>
@@ -114,7 +107,7 @@ class Reminder extends Component {
                     </Tooltip>
 
 
-                    <Popper  open={menuState} anchorEl={anchorEl} placement={placement} transition>
+                    <Popper  open={open} anchorEl={anchorEl} placement={placement} transition>
                         {({ TransitionProps }) => (
                             <Fade {...TransitionProps} timeout={350}>
                                 <Paper >

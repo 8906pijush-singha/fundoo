@@ -56,7 +56,7 @@ collabModel.prototype.getCollabNotesUserId = (userID, callback) => {
 
 collabModel.prototype.getDataByNoteId = (noteID, callback) => {
     // console.log("ultimate save", noteID);
-    Collab.find({ noteID: noteID }).populate('userID', { password: 0 }).populate('collabUserID', { password: 0 }).populate('noteID').exec(function (err, result) {
+    Collab.find({ noteID: noteID }).populate('userID',  { notes:0, password: 0 ,__v:0,resetPasswordExpires:0,resetPasswordToken:0}).populate('collabUserID',  { notes:0, password: 0 ,__v:0,resetPasswordExpires:0,resetPasswordToken:0}).populate('noteID').exec(function (err, result) {
         // console.log(err);
         // console.log(result);
         if (err) {
