@@ -57,11 +57,11 @@ exports.deleteNote = (noteID, userID, callback) => {
                 function def() {
                     console.log("result[i]", result[70]);
 
-                    for (let i = 0; i < result.length; i++) {                 
+                    for (let i = 0; i < result.length; i++) {
                         if (noteID.noteID == result[i]) {
 
-                           result.splice(i, 1);
-                           
+                            result.splice(i, 1);
+
                         }
                     }
                 }
@@ -105,7 +105,12 @@ exports.getNotes = (data, callback) => {
                 if (errorUser) {
                     callback(errorUser);
                 } else {
-                    const noteOwner=resultUser.email
+                    const noteOwner ={
+                        fname:resultUser.fname,
+                        lname:resultUser.lname,
+                        email:resultUser.email,
+                        _id:resultUser._id
+                    }
                     for (var i = 0; i < result.length; i++) {
                         var userNote = {
                             note: result[i],
@@ -114,19 +119,40 @@ exports.getNotes = (data, callback) => {
                         }
                         finalResult.push(userNote);
                     }
+
+                    collabService.getCollabOwnerUserId(data, (errorCollab, resultOwnerCollab) => {
+                        if (errorCollab) {
+                            callback(errorCollab);
+                        } else {
+                            // console.log("resultOwnerCollab.................", resultOwnerCollab)
+                            for (var i = 0; i < finalResult.length; i++) {
+                                for (var j = 0; j < resultOwnerCollab.length; j++) {
+                                    
+                                    if (finalResult[i].note._id.equals(resultOwnerCollab[j].noteID)) {
+                                        
+                                        finalResult[i].collab.push(resultOwnerCollab[j].collabUserID)
+                                        // console.log("....................resultOwnerCollab.................", resultOwnerCollab[j].collabUserID)
+                                    }
+                                }
+                            }
+                        }
+                    })
+
                     collabService.getCollabNotesUserId(data, (errorCollab, resultCollab) => {
+
                         if (errorCollab) {
                             callback(errorCollab);
                         } else {
                             // if()
-                            console.log("resultCollab",resultCollab);
-                            
+                            // console.log("resultCollab", resultCollab);
+
                             var operations = [];
                             for (var i = 0; i < resultCollab.length; i++) {
                                 operations.push((function (collabData) {
                                     return function (callback) {
+
                                         collabService.getDataByNoteId(collabData.noteID, (errorNote, resultNote) => {
-                                            console.log("123 : ", resultNote);
+                                            // console.log("123 : ", resultNote);
 
                                             if (errorNote) {
                                                 callback(errorNote)

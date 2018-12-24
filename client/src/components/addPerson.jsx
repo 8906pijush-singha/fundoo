@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import notePerson from '../assets/notePerson.svg';
-import { Avatar, Tooltip, Dialog, DialogTitle, createMuiTheme, Button, Divider, Input, MuiThemeProvider} from '@material-ui/core';
+import { Avatar, Tooltip, Dialog, DialogTitle, createMuiTheme, Button, Divider, Input, MuiThemeProvider } from '@material-ui/core';
 import { getCollabDetails, saveCollabs } from '../services/notes';
 
 const theme = createMuiTheme({
@@ -30,6 +30,7 @@ class AddPerson extends Component {
         this.handleColab = this.handleColab.bind(this);
         this.handleInputCollab = this.handleInputCollab.bind(this);
         this.saveCollab = this.saveCollab.bind(this);
+        // this.collabList=this.collabList.bind(this);
     }
 
     saveCollab() {
@@ -43,16 +44,16 @@ class AddPerson extends Component {
             collabSelection: newArray,
             inputCollab: ""
         });
-        const data={
-            noteID:this.props.noteId,
-            collabID:collabData[0]._id
+        const data = {
+            noteID: this.props.noteId,
+            collabID: collabData[0]._id
         }
-        saveCollabs('/saveCollab',data)
-        .then((result)=>{
-            console.log(result);
-        }).catch((err)=>{
-            console.log(err)
-        })
+        saveCollabs('/saveCollab', data)
+            .then((result) => {
+                console.log(result);
+            }).catch((err) => {
+                console.log(err)
+            })
     }
     handleColab() {
         this.setState({
@@ -63,8 +64,8 @@ class AddPerson extends Component {
         this.setState({
             inputCollab: e.target.value
         })
-        let collabData=this.state.collabs.filter(obj => obj.email===(this.state.inputCollab))
-        if(collabData){
+        let collabData = this.state.collabs.filter(obj => obj.email === (this.state.inputCollab))
+        if (collabData) {
             this.setState({
                 collabSuggestions: collabData
             })
@@ -73,12 +74,29 @@ class AddPerson extends Component {
     }
     componentDidMount() {
         getCollabDetails('/getCollabDetails')
-            .then((result) => {
+            .then(async (result) => {
                 this.setState({
                     collabs: result.data.data
                 })
-                console.log("collabs", result.data.data);
 
+                if (this.props.collabs !== undefined && this.props.collabs.length > 0) {
+                    let newArray = [];
+                    let owner={
+                        _id:this.props.owner._id,
+                        fname:this.props.owner.fname,
+                        lname:this.props.owner.lname +" (Owner)",
+                        email:this.props.owner.email
+                    }
+                    newArray.push(owner)
+                    for (let i = 0; i < this.props.collabs.length; i++) {
+                        if (this.props.collabs[i].email !== this.props.owner) {
+                            newArray.push(this.props.collabs[i])
+                        }
+                    }
+                    this.setState({
+                        collabSelection: newArray
+                    })
+                }
             }).catch((err) => {
                 console.log(err);
                 alert(err);
@@ -89,13 +107,10 @@ class AddPerson extends Component {
         const mailId = localStorage.getItem('Email');
         const initial = userDetails.substring(0, 1);
         let collaborators = this.state.collabSelection;
-
-
-
-
-
         let collabDetails = collaborators.map((key) =>
+
             <div style={{ display: "flex", flexDirection: "row", paddingLeft: "10px", paddingTop: "10px", width: "530px" }}>
+
                 <Avatar>{key.fname.substring(0, 1)}</Avatar>
 
                 <div style={{ display: "flex", flexDirection: "column", paddingLeft: "18px", paddingTop: "8px" }}>
@@ -129,22 +144,23 @@ class AddPerson extends Component {
                         >
                             Collaborators</DialogTitle>
                         <Divider />
+                        {this.props.collabs.length === 0 ?
+                            <div style={{ display: "flex", flexDirection: "row", paddingLeft: "10px", paddingTop: "10px", width: "530px" }}>
+                                <Avatar>{initial}</Avatar>
 
-                        <div style={{ display: "flex", flexDirection: "row", paddingLeft: "10px", paddingTop: "10px", width: "530px" }}>
-                            <Avatar>{initial}</Avatar>
+                                <div style={{ display: "flex", flexDirection: "column", paddingLeft: "18px", paddingTop: "8px" }}>
 
-                            <div style={{ display: "flex", flexDirection: "column", paddingLeft: "18px", paddingTop: "8px" }}>
+                                    <div style={{ fontSize: "13px", fontFamily: "'Roboto',arial,sans-serif", fontWeight: "700" }}>
+                                        {userDetails}
+                                    </div>
 
-                                <div style={{ fontSize: "13px", fontFamily: "'Roboto',arial,sans-serif", fontWeight: "700" }}>
-                                    {userDetails}
+                                    <div style={{ fontSize: "13px", fontFamily: "'Roboto',arial,sans-serif", color: "gray" }}>
+                                        {mailId}
+                                    </div>
+
                                 </div>
-
-                                <div style={{ fontSize: "13px", fontFamily: "'Roboto',arial,sans-serif", color: "gray" }}>
-                                    {mailId}
-                                </div>
-
                             </div>
-                        </div>
+                            : null}
                         {collabDetails}
                         <div style={{ paddingLeft: "10px", paddingTop: "12px", paddingBottom: "10px", display: "flex", flexDirection: "row" }}>
                             <Avatar style={{ backgroundColor: "transparent", border: "1px solid grey" }}>

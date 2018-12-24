@@ -80,7 +80,7 @@ class AppBarComp extends Component {
                                 </IconButton>
                             </Tooltip>
                             <img src={require('../assets/keepIcon.svg')} alt="keep logo"></img>
-                            <div style={{ color: "gray", marginLeft: "30px", fontSize: "25px", fontFamily: "TimesNewRoman" }}>Fundoo Notes</div>
+                            <div style={{ color: "gray", marginLeft: "30px", fontSize: "25px", fontFamily: "TimesNewRoman" }}>fundooNotes</div>
 
                             <div style={{ marginLeft: "50px", border: "1px solid lightgrey", borderTopRightRadius: "10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "10px", borderBottomLeftRadius: "10px" }} id="abcde">
                                 <Tooltip title="Search">

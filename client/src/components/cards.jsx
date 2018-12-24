@@ -343,31 +343,39 @@ class Cards extends Component {
                                                     <Pin noteId={ordinaryCard[key].note._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].note.isPinned} />
                                                 </div>
                                                 <div>
+                                                    {console.log(ordinaryCard[key])
+                                                    }
                                                     {ordinaryCard[key].note.description}
                                                 </div>
-                                                {ordinaryCard[key].collab.length > 0 ?
-                                                    ordinaryCard[key].collab.map((collabKey) => {
-                                                        if (collabKey.email !== localStorage.getItem('Email') && ordinaryCard[key].owner.fname !== "") {
-                                                            return (
-                                                                <div style={{ display: "flex", flexDirection: "row" }}>
-                                                                    <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
-                                                                        <Avatar>
-                                                                            {collabKey.fname.substring(0, 1)}
-                                                                        </Avatar>
-                                                                    </Tooltip>
+                                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                                    {ordinaryCard[key].collab.length > 0 ?
+                                                        // eslint-disable-next-line
+                                                        ordinaryCard[key].collab.map((collabKey) => {
+                                                            if (ordinaryCard[key].owner.fname !== "") {
 
-                                                                    <Tooltip title={ordinaryCard[key].owner.fname + " " + ordinaryCard[key].owner.lname + " (" + ordinaryCard[key].owner.email + ")"}>
-                                                                        <Avatar>
-                                                                            {ordinaryCard[key].owner.fname.substring(0, 1)}
-                                                                        </Avatar>
-                                                                    </Tooltip>
-                                                                </div>
-                                                            )
-                                                        }
+                                                                return (
+                                                                    <div style={{margin:"3px"}}>
+                                                                        {collabKey.email !== localStorage.getItem('Email') && ordinaryCard[key].owner !== undefined ?
+                                                                            <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
+                                                                                <Avatar style={{height:"30px" ,width:"30px",backgroundColor:"rgb(0,0,0,.10)"}}>
+                                                                                    {collabKey.fname.substring(0, 1)}
+                                                                                </Avatar>
+                                                                            </Tooltip>
+                                                                            : <Tooltip title={ordinaryCard[key].owner.fname + " " + ordinaryCard[key].owner.lname + " (" + ordinaryCard[key].owner.email + ")"}>
+                                                                                <Avatar style={{height:"30px" ,width:"30px",backgroundColor:"rgb(0,0,0,.10)"}}>
+                                                                                    {ordinaryCard[key].owner.fname.substring(0, 1)}
 
-                                                    })
-                                                    : null
-                                                }
+                                                                                </Avatar>
+                                                                            </Tooltip>
+                                                                        }
+                                                                    </div>
+                                                                )
+                                                            }
+
+                                                        })
+                                                        : null
+                                                    }
+                                                </div>
                                                 {ordinaryCard[key].note.reminder !== "" ?
                                                     <Chip
                                                         icon={<ClockIcon />}
@@ -381,6 +389,8 @@ class Cards extends Component {
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}
+                                                    collab={ordinaryCard[key].collab}
+                                                    owner={ordinaryCard[key].owner}
                                                     note={ordinaryCard[key].note}
                                                     noteId={ordinaryCard[key].note._id}
                                                     archiveProps={this.archiveNote}

@@ -24,7 +24,7 @@ exports.tokenValid = (req, res, next) => {
                 console.log("not verified")
                 callback(err)
             } else {
-                console.log(decoded)
+                console.log('decoded', decoded)
                 req.decoded=decoded.id
                 next();
             }

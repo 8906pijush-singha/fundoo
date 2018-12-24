@@ -137,12 +137,18 @@
   visibility: hidden;
 }
 .verticalCards{
-  height: 100px;
+  
   width: 550px;
   padding: 7px;
   margin-left:100px;
   margin-top: 50px;
   box-shadow: 2px 2px 2px grey;
+}
+.verticalCards:hover .noteicons{
+  visibility: visible;
+}
+.verticalCards:hover .pinIcon{
+  visibility: visible;
 }
 .dashBoard{
   margin-left: 310px;

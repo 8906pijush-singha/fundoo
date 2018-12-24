@@ -68,7 +68,21 @@ collabModel.prototype.getDataByNoteId = (noteID, callback) => {
 }
 
 
-
+collabModel.prototype.getCollabOwnerUserId = (ownerUserId, callback) => {
+    // console.log("ultimate save", noteID);
+    Collab.find({ userID: ownerUserId }).populate('collabUserID',  { notes:0, password: 0 ,__v:0,resetPasswordExpires:0,resetPasswordToken:0}).exec(function (err, result) {
+        // console.log(err);
+        // console.log(result);
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, result);
+        }
+    })
+}
 
 
 module.exports = new collabModel;
+
+
+//populate('noteID', {__v:0,userID:0,title:0, description:0, color:0,reminder:0, isPinned:0, image:0, archive: 0, isTrashed:0}

@@ -35,6 +35,13 @@ class Reminder extends Component {
             placement,
         }));
     };
+    handlePoppers=()=>{
+        this.setState(state => ({
+            
+            open:!state.open
+          
+        }));
+    }
     setTodayReminder(note) {
         this.handlePoppers();
         let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
