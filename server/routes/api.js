@@ -50,8 +50,14 @@ router.put('/updateImage', noteAuth.tokenValid,noteController.updateImage);
 router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);
 router.put('/isArchived',noteAuth.tokenValid,noteController.isArchived);
 router.put('/setReminder',noteAuth.tokenValid,noteController.setReminder);
-router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed)
+router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed);
+router.put('/editTitle',noteAuth.tokenValid,noteController.editTitle)
+router.put('/editDescription',noteAuth.tokenValid,noteController.editDescription)
+/**
+ * API ROUTES FOR LABELS---------------------------------------------------------------------
+ */
 
+// router.post('/addLabel',labelController.addLabel)
 /**
  * API ROUTES FOR COLLABORATOR----------------------------------------
  */

@@ -297,3 +297,76 @@ exports.deleteNote = (req, res, next) => {
         next(error);
     }
 }
+
+
+exports.editTitle = (req, res, next) => {
+    try {
+        let title = null;
+        var res_result = {};
+        let noteID = null;
+
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else if (typeof req.body.title === 'undefined') {
+            throw new Error("Title is mandatory");
+        } else {
+            noteID = req.body.noteID;
+            title = req.body.title;
+
+            noteServices.editTitle(noteID, title, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                }
+                else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    }
+    catch (error) {
+        next(error);
+    }
+}
+
+exports.editDescription = (req, res, next) => {
+    try {
+        let description = null;
+        var res_result = {};
+        let noteID = null;
+
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else if (typeof req.body.description === 'undefined') {
+            throw new Error("Description is mandatory");
+        } else {
+            noteID = req.body.noteID;
+            description = req.body.description;
+
+            noteServices.editDescription(noteID, description, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                }
+                else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    }
+    catch (error) {
+        next(error);
+    }
+}

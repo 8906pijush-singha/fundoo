@@ -79,13 +79,13 @@ class AddPerson extends Component {
                     collabs: result.data.data
                 })
 
-                if (this.props.collabs !== undefined && this.props.collabs.length > 0) {
+                if (this.props.collabs !== undefined && this.props.collabs.length > 0 && this.props.owner !== undefined) {
                     let newArray = [];
-                    let owner={
-                        _id:this.props.owner._id,
-                        fname:this.props.owner.fname,
-                        lname:this.props.owner.lname +" (Owner)",
-                        email:this.props.owner.email
+                    let owner = {
+                        _id: this.props.owner._id,
+                        fname: this.props.owner.fname,
+                        lname: this.props.owner.lname + " (Owner)",
+                        email: this.props.owner.email
                     }
                     newArray.push(owner)
                     for (let i = 0; i < this.props.collabs.length; i++) {

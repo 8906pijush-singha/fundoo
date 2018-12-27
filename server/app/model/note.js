@@ -288,5 +288,57 @@ noteModel.prototype.getNoteByNoteId=(id,callback)=>{
         }
     })
 }
+noteModel.prototype.editTitle = (noteID, titleParams, callback) => {
+    var noteTitle = null;
+    if (titleParams != null) {
+        noteTitle = titleParams;
+    } else {
+        callback("title not found")
+    }
 
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set: {
+                title: noteTitle,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+
+                return callback(null, noteTitle)
+            }
+        });
+};
+
+noteModel.prototype.editDescription = (noteID, descParams, callback) => {
+    var noteDesc = null;
+    if (descParams != null) {
+        noteDesc = descParams;
+    } else {
+        callback("Description not found")
+    }
+
+    Note.findOneAndUpdate(
+        {
+            _id: noteID
+        },
+        {
+            $set: {
+                description: noteDesc,
+            }
+        },
+        (err, result) => {
+            if (err) {
+                callback(err)
+            } else {
+
+                return callback(null, noteDesc)
+            }
+        });
+};
 module.exports = new noteModel;

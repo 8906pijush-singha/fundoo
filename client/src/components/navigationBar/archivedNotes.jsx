@@ -85,6 +85,7 @@ class NavigateArchived extends Component {
                                 <div className="noteicons">
                                     <Tools getColorProps={this.props.getColor}
                                         collab={key.collab}
+                                        owner={key.owner}
                                         note={key.note}
                                         noteId={key.note._id}
                                         archiveProps={this.props.archiveNote}

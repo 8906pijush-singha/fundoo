@@ -298,3 +298,25 @@ exports.isTrashed = (paramID, callback) => {
 
 }
 
+exports.editTitle = (paramID, paramData, callback) => {
+    console.log("in services", paramID, paramData);
+
+    notes.editTitle(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+exports.editDescription = (paramID, paramData, callback) => {
+    console.log("in services", paramID, paramData);
+
+    notes.editDescription(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}

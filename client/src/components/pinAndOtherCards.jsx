@@ -24,6 +24,36 @@ class PinAndOthers extends Component {
                                         <div>
                                             {key.note.description}
                                         </div>
+                                        <div style={{ display: "flex", flexDirection: "row" }}>
+                                            {key.collab.length > 0 ?
+                                                // eslint-disable-next-line
+                                                key.collab.map((collabKey) => {
+                                                    if (key.owner.fname !== "") {
+
+                                                        return (
+                                                            <div style={{ margin: "3px" }}>
+                                                                {collabKey.email !== localStorage.getItem('Email') && key.owner !== undefined ?
+                                                                    <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
+                                                                        <Avatar style={{ height: "30px", width: "30px", backgroundColor: "rgb(0,0,0,.10)" }}>
+                                                                            {collabKey.fname.substring(0, 1)}
+                                                                        </Avatar>
+                                                                    </Tooltip>
+                                                                    : <Tooltip title={key.owner.fname + " " + key.owner.lname + " (" + key.owner.email + ")"}>
+                                                                        <Avatar style={{ height: "30px", width: "30px", backgroundColor: "rgb(0,0,0,.10)" }}>
+                                                                            {key.owner.fname.substring(0, 1)}
+
+                                                                        </Avatar>
+                                                                    </Tooltip>
+                                                                }
+                                                            </div>
+                                                        )
+                                                    }
+
+                                                })
+                                                : null
+                                            }
+
+                                        </div>
                                         {key.note.reminder !== "" ?
                                             <Chip
                                                 icon={<ClockIcon />}
@@ -37,6 +67,7 @@ class PinAndOthers extends Component {
                                     <div className="noteicons">
                                         <Tools getColorProps={this.props.getColor}
                                             collab={key.collab}
+                                            owner={key.owner}
                                             note={key.note}
                                             noteId={key.note._id}
                                             archiveProps={this.props.archiveNote}
@@ -108,6 +139,7 @@ class PinAndOthers extends Component {
                                     <div className="noteicons">
                                         <Tools getColorProps={this.props.getColor}
                                             collab={key.collab}
+                                            owner={key.owner}
                                             note={key.note}
                                             noteId={key.note._id}
                                             archiveProps={this.props.archiveNote}

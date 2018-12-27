@@ -18,6 +18,7 @@ import {
     archivedNotes,
     reminderNotes, trashArray
 } from '../services/cardServices'
+import DialogBox from './Dialog';
 const theme = createMuiTheme({
     overrides: {
         MuiChip: {
@@ -40,19 +41,32 @@ class Cards extends Component {
     constructor() {
         super();
         this.state = {
-            notes: [],
+            open:false,
+            notes: []
             // searchNote: ""
         }
-
+        this.cardsToDialogBox=React.createRef();
+        this.handleClick = this.handleClick.bind(this);
         this.getColor = this.getColor.bind(this);
         this.pinNote = this.pinNote.bind(this)
         this.archiveNote = this.archiveNote.bind(this);
         this.reminderNote = this.reminderNote.bind(this);
         this.isTrashed = this.isTrashed.bind(this);
         this.deleteNote = this.deleteNote.bind(this);
+        this.editTitle = this.editTitle.bind(this);
+        this.editDescription = this.editDescription.bind(this);
+        this.closeEditBox=this.closeEditBox.bind(this);
         // this.getSearchNote=this.getSearchNote.bind(this);
     }
+    async handleClick(note) {
+        await this.setState({ open: true })
+        console.log("sssssss", this.cardsToDialogBox);
 
+        this.cardsToDialogBox.current.getData(note);
+    }
+    closeEditBox() {
+        this.setState({ open: false })
+    }
     componentDidMount() {
 
         getNotes()
@@ -79,6 +93,51 @@ class Cards extends Component {
     //     console.log(value);
 
     // }
+    editTitle(value, noteId) {
+        const title = {
+            noteID: noteId,
+            title: value
+        }
+
+        updateNotes('/editTitle', title)
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.title = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+
+            })
+
+
+    }
+
+    editDescription(value, noteId) {
+        const description = {
+            noteID: noteId,
+            description: value
+        }
+        updateNotes('/editDescription', description)
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.description = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+            })
+    }
+
+
     getColor(value, noteId) {
         console.log(noteId);
         console.log(value);
@@ -339,10 +398,20 @@ class Cards extends Component {
                                         <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color }} >
                                             <div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
-                                                    <b>{ordinaryCard[key].note.title}</b>
+                                                    <b onClick={() => this.handleClick(ordinaryCard[key].note)}>{ordinaryCard[key].note.title}</b>
                                                     <Pin noteId={ordinaryCard[key].note._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].note.isPinned} />
                                                 </div>
-                                                <div>
+
+                                                <DialogBox
+                                                    ref={this.cardsToDialogBox}
+                                                    parentProps={this.state.open}
+                                                    handleEdit={this.handleClick}
+                                                    closeEditBox={this.closeEditBox}
+                                                    note={ordinaryCard[key].note}
+                                                    editTitle={this.editTitle}
+                                                    editDescription={this.editDescription}
+                                                />
+                                                <div onClick={this.handleClick}>
                                                     {console.log(ordinaryCard[key])
                                                     }
                                                     {ordinaryCard[key].note.description}
