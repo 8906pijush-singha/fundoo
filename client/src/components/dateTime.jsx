@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MenuItem, Popper, Paper, ListItem } from '@material-ui/core';
+import { MenuItem, Popper, Paper, ListItem, Input } from '@material-ui/core';
 
 
 import DateTimePicker from 'react-datetime-picker'
@@ -37,12 +37,13 @@ class PickDateAndTime extends Component {
                 <Popper open={open} placement={"right"} anchorEl={anchorEl}>
                     <Paper className="pickDateTimePopper">
                         <ListItem>Pick date and time</ListItem>
-                        <DateTimePicker
+                        <input type ="date"></input>
+                        {/* <DateTimePicker
                             onClick={this.showTime}
                             onChange={this.onChange}
                             value={this.state.date}
                             defaultValue="2017-05-24T10:30"
-                        />
+                        /> */}
                     </Paper>
                 </Popper>
             </div>

@@ -41,9 +41,6 @@ class More extends Component {
                                 <div className="selectMoreOptions">
                                     <MenuItem onClick={()=>this.handleTrashed(this.props.noteId)} id="moreOptionsMenu">Delete</MenuItem>
                                     <MenuItem id="moreOptionsMenu">Add Label</MenuItem>
-                                    <ListItem className="addDrawingOptions">Add Drawing</ListItem>
-                                    <MenuItem id="moreOptionsMenu">Show Checkboxes</MenuItem>
-
                                 </div>
                             </Paper>
                         </Fade>

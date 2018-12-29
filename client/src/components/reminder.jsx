@@ -43,7 +43,7 @@ class Reminder extends Component {
         }));
     }
     setTodayReminder(note) {
-        this.handlePoppers();
+        // this.handlePoppers();
         let ampm = parseInt(new Date().getHours()) >= 8 ? "PM" : "AM";
         console.log("before",note);
         
@@ -53,7 +53,7 @@ class Reminder extends Component {
         this.props.reminder(note.reminder,note._id)
     }
     setTomorrowReminder(note){
-        this.handlePoppers();
+        // this.handlePoppers();
         let days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun","Mon"]
         console.log("before",note);
         var date = new Date().toDateString();
@@ -64,7 +64,7 @@ class Reminder extends Component {
         this.props.reminder(note.reminder,note._id)
     }
     setWeeklyReminder(note){
-        this.handlePoppers();
+        // this.handlePoppers();
         console.log("before",note);
         var date = new Date().toDateString();
         date=date.replace((new Date().getDate()),(new Date().getDate()+7));
@@ -72,42 +72,11 @@ class Reminder extends Component {
         console.log(note.reminder);
         this.props.reminder(note.reminder,note._id)
     }
-
-
-    //// /**
-    ////  * 
-    ////  */
-    //// toggleDropdown() {
-    ////     console.log("state", this.state.open)
-    ////     this.setState({ open: !this.state.open });
-    ////     if(this.state.open){
-    ////         this.handlePoppers();
-    ////     }
-    //// }
-//
-    //// /**
-    ////  * 
-    ////  * @param {Object} e Event type object for active element 
-    ////  */
-    //// onBlur(e) {
-    ////     var currentTarget = e.currentTarget;
-    ////     console.log("e", document.activeElement)
-    ////     setTimeout(function() {
-    ////         if (!currentTarget.contains(document.activeElement)) {
-    ////             console.log('component officially blurred');
-    ////         }
-    ////     }, 0);
-    //// }
-    //// handlerOnBlur(e){
-    ////     console.log(e)
-    //// }
-
     render() {
         const ampm = this.props.parentProps
         const { anchorEl,  placement, open } = this.state;
         return (
-            <div 
-                onBlur={() => this.toggleDropdown()}>
+            <div >
                 <MuiThemeProvider theme={theme} >
                     <Tooltip title="Remind me">
                         <img src={reminder} alt="Reminder icon" onClick={this.handleClick('bottom-start')} ></img>
@@ -136,14 +105,8 @@ class Reminder extends Component {
                                                 8:00 PM
                                             </div>
                                         </MenuItem>
-                                        <MenuItem className="menuItemReminder"><div>Home</div>
-                                            <div>
-                                                Vashi (West)
-                                        </div>
-                                        </MenuItem>
 
                                         <PickDateAndTime />
-                                        <MenuItem >Pick place</MenuItem>
                                     </div>
                                 </Paper>
                             </Fade>
