@@ -12,6 +12,8 @@ const noteAuth=require('../auth/isNoteValid')
 const userController = require('../controller/userController');
 const noteController = require('../controller/noteController');
 const collabControler=require('../controller/collabController')
+const cache = require('express-redis-cache')();
+
 // const User=require('../app/model/user');
 
 // User.methods(['get','put','post','delete']);
@@ -44,7 +46,11 @@ router.post('/reset', auth.resetPassValid, userController.resetController)
 router.post('/createNote',noteAuth.tokenValid,noteController.createNote);
 
 router.post('/deleteNote',noteAuth.tokenValid,noteController.deleteNote)
-router.get('/getNotes',noteAuth.tokenValid,noteController.getNotes);
+
+router.get('/getNotes',noteAuth.tokenValid,
+cache.route({ expire : 600 }),
+noteController.getNotes);
+
 router.put('/updateColor', noteAuth.tokenValid,noteController.updateColor);
 router.put('/updateImage', noteAuth.tokenValid,noteController.updateImage);
 router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);

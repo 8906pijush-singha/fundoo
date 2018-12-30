@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');              //used parsing request b
 const morgan = require('morgan');                       //used for logging request deatils
 const url = require('./config/dbconfig')                //requires the file to get database address
 const cors = require('cors')                            //used to handle cross domain requests
+const cache = require('express-redis-cache')();
+
 require('dotenv').config();
 
 //MONGO DB
@@ -39,6 +41,18 @@ app.use('/', router);                                 //routes to root file
 /**
  * @param {function} callback
  */
+cache.on('error', function (error) {
+    throw new Error('Cache error!');
+});
+cache.on('message', function (message) {
+    console.log("message: ",message)
+});
+cache.on('connected', function () {
+    console.log("cache connected")
+});
+cache.on('disconnected', function () {
+    console.log("cache connected")
+});
 app.use((error, req, res, next) => {
     if (error.message == "Internal Server Error") {
         const obj = {
@@ -54,7 +68,7 @@ app.use((error, req, res, next) => {
 })
 
 //start server
- app.listen(3001, () => {               //server runs on port 3001
+app.listen(3001, () => {               //server runs on port 3001
     console.log("server is connected to 3001 ");
 });
 startMongo(url);                           //call for db connection
