@@ -79,9 +79,18 @@ class NavigateReminder extends Component {
                                         />
 
                                         : null}
+                                    {key.note.label.length > 0 ?
+                                        key.note.label.map((key1) =>
+                                            <Chip
+                                                label={key1}
+                                                onDelete={() => this.props.deleteLabelFromNote(key1, key.note._id)} />
+                                        )
+                                        :
+                                        null}
                                 </div>
                                 <div className="noteicons">
                                     <Tools getColorProps={this.props.getColor}
+                                        addLabelToNote={this.props.addLabelToNote}
                                         collab={key.collab}
                                         owner={key.owner}
                                         note={key.note}

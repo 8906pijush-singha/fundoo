@@ -19,7 +19,7 @@ class Tools extends Component {
                     noteId={this.props.noteId}
                     archiveStatus={this.props.archiveStatus} />
                 {/* { console.log("jiefklnbiofhgbkoj",this.props.isTrashed)} */}
-                <More isTrashed={this.props.isTrashed} noteId={this.props.noteId} />
+                <More isTrashed={this.props.isTrashed} noteId={this.props.noteId} addLabelToNote={this.props.addLabelToNote} />
             </div>
         )
     }

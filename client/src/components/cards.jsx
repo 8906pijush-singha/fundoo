@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Chip, Avatar, Tooltip } from '@material-ui/core';
-import { getNotes, deleteNoteForever } from '../services/notes';
+import { getNotes, deleteNoteForever, saveLabel } from '../services/notes';
 import Tools from './Tools';
 import { updateNotes } from '../services/updateNotes';
 import Pin from './editPin';
@@ -41,11 +41,12 @@ class Cards extends Component {
     constructor() {
         super();
         this.state = {
-            open:false,
-            notes: []
+            open: false,
+            notes: [],
+            label:false
             // searchNote: ""
         }
-        this.cardsToDialogBox=React.createRef();
+        this.cardsToDialogBox = React.createRef();
         this.handleClick = this.handleClick.bind(this);
         this.getColor = this.getColor.bind(this);
         this.pinNote = this.pinNote.bind(this)
@@ -55,8 +56,10 @@ class Cards extends Component {
         this.deleteNote = this.deleteNote.bind(this);
         this.editTitle = this.editTitle.bind(this);
         this.editDescription = this.editDescription.bind(this);
-        this.closeEditBox=this.closeEditBox.bind(this);
-        // this.getSearchNote=this.getSearchNote.bind(this);
+        this.closeEditBox = this.closeEditBox.bind(this);
+        this.addLabelToNote=this.addLabelToNote.bind(this);
+        this.deleteLabelFromNote=this.deleteLabelFromNote.bind(this);
+        this.closeLabelOption=this.closeLabelOption.bind(this);
     }
     async handleClick(note) {
         await this.setState({ open: true })
@@ -66,6 +69,11 @@ class Cards extends Component {
     }
     closeEditBox() {
         this.setState({ open: false })
+    }
+    closeLabelOption(){
+        this.setState({
+            label:false
+        })
     }
     componentDidMount() {
 
@@ -87,12 +95,9 @@ class Cards extends Component {
             notes: [...this.state.notes, newCard]
         })
     }
-    // getSearchNote(value) {
-
-
-    //     console.log(value);
-
-    // }
+    displayLabelledCards() {
+        this.setState({ label: true })
+    }
     editTitle(value, noteId) {
         const title = {
             noteID: noteId,
@@ -307,14 +312,72 @@ class Cards extends Component {
                 alert(error)
             });
     }
+    addLabelToNote(noteId, value) {
+        const addLabel = {
+            noteID: noteId,
+            label: value
+        }
+        saveLabel('/saveLabelToNote', addLabel)
+            .then((result) => {
+
+
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.label = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+                        console.log("add label array", result.data.data);
+
+                    }
+                }
+            })
+            .catch((error) => {
+                alert(error)
+            });
+    }
+    deleteLabelFromNote(value, noteId) {
+        console.log("deleted label array", value, noteId);
+        const deleteLabel = {
+            pull: true,
+            value: value,
+            noteID: noteId
+        }
+        saveLabel('/saveLabelToNote', deleteLabel)
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.label = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+                        console.log("add label array", result.data.data);
+
+                    }
+                }
+            })
+    }
     render() {
+        
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
+        console.log("for labels", this.props.searchNote,"  kjoj");
 
+        if (this.props.searchNote !== "" || this.state.label ) {
 
-        if (this.props.searchNote !== "") {
+            let searchedNotes;
+            if (this.props.searchNote !== "") {
+                searchedNotes = this.state.notes.filter(
+                    obj => obj.note.title.includes(this.props.searchNote) ||
+                        obj.note.description.includes(this.props.searchNote)
+                )
+            } else {
+                console.log("for labels", this.props.labelValue);
 
-            let searchedNotes = this.state.notes.filter(obj => obj.note.title.includes(this.props.searchNote) ||
-                obj.note.description.includes(this.props.searchNote))
+                searchedNotes = this.state.notes.filter(
+                    obj => obj.note.label.length > 0 && obj.note.label.find((item) => item === this.props.labelValue))
+            }
             return (
 
                 <SearchedNotes
@@ -322,16 +385,16 @@ class Cards extends Component {
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
+                    addLabelToNote={this.addLabelToNote}
+                    deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed}
                 />
             )
         }
-
-
-
         else if (this.props.navigateReminder) {
+            
             return (
                 <NavigateReminder
                     reminderNotes={reminderNotes(this.state.notes)}
@@ -340,6 +403,8 @@ class Cards extends Component {
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
+                    addLabelToNote={this.addLabelToNote}
+                    deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed} />
@@ -353,6 +418,8 @@ class Cards extends Component {
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
+                    addLabelToNote={this.addLabelToNote}
+                    deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed} />
@@ -367,6 +434,8 @@ class Cards extends Component {
                     pinNote={this.pinNote}
                     getColor={this.getColor}
                     archiveNote={this.archiveNote}
+                    addLabelToNote={this.addLabelToNote}
+                    deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed}
@@ -374,15 +443,17 @@ class Cards extends Component {
             )
         }
         else {
+            console.log("jkdnvjkdnbvkn0");
             let ordinaryCard = ordinaryCards(this.state.notes);
             return (
-
                 <MuiThemeProvider theme={theme}>
                     {pinArray(this.state.notes).length !== 0 ?
                         <PinAndOthers
                             ordinaryCards={ordinaryCards(this.state.notes)}
                             pinArray={pinArray(this.state.notes)}
                             pinNote={this.pinNote}
+                            deleteLabelFromNote={this.deleteLabelFromNote}
+                            addLabelToNote={this.addLabelToNote}
                             getColor={this.getColor}
                             archiveNote={this.archiveNote}
                             reminderNote={this.reminderNote}
@@ -412,8 +483,7 @@ class Cards extends Component {
                                                     editDescription={this.editDescription}
                                                 />
                                                 <div onClick={this.handleClick}>
-                                                    {console.log(ordinaryCard[key])
-                                                    }
+
                                                     {ordinaryCard[key].note.description}
                                                 </div>
                                                 <div style={{ display: "flex", flexDirection: "row" }}>
@@ -423,15 +493,15 @@ class Cards extends Component {
                                                             if (ordinaryCard[key].owner.fname !== "") {
 
                                                                 return (
-                                                                    <div style={{margin:"3px"}}>
+                                                                    <div style={{ margin: "3px" }}>
                                                                         {collabKey.email !== localStorage.getItem('Email') && ordinaryCard[key].owner !== undefined ?
                                                                             <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
-                                                                                <Avatar style={{height:"30px" ,width:"30px",backgroundColor:"rgb(0,0,0,.10)"}}>
+                                                                                <Avatar style={{ height: "30px", width: "30px", backgroundColor: "rgb(0,0,0,.10)" }}>
                                                                                     {collabKey.fname.substring(0, 1)}
                                                                                 </Avatar>
                                                                             </Tooltip>
                                                                             : <Tooltip title={ordinaryCard[key].owner.fname + " " + ordinaryCard[key].owner.lname + " (" + ordinaryCard[key].owner.email + ")"}>
-                                                                                <Avatar style={{height:"30px" ,width:"30px",backgroundColor:"rgb(0,0,0,.10)"}}>
+                                                                                <Avatar style={{ height: "30px", width: "30px", backgroundColor: "rgb(0,0,0,.10)" }}>
                                                                                     {ordinaryCard[key].owner.fname.substring(0, 1)}
 
                                                                                 </Avatar>
@@ -453,8 +523,14 @@ class Cards extends Component {
                                                     />
 
                                                     : null}
-
-
+                                                {ordinaryCard[key].note.label.length > 0 ?
+                                                    ordinaryCard[key].note.label.map((key1) =>
+                                                        <Chip
+                                                            label={key1}
+                                                            onDelete={() => this.deleteLabelFromNote(key1, ordinaryCard[key].note._id)}/>
+                                                    )
+                                                    :
+                                                    null}
                                             </div>
                                             <div className="noteicons">
                                                 <Tools getColorProps={this.getColor}
@@ -462,6 +538,7 @@ class Cards extends Component {
                                                     owner={ordinaryCard[key].owner}
                                                     note={ordinaryCard[key].note}
                                                     noteId={ordinaryCard[key].note._id}
+                                                    addLabelToNote={this.addLabelToNote}
                                                     archiveProps={this.archiveNote}
                                                     archiveStatus={ordinaryCard[key].note.archive}
                                                     reminder={this.reminderNote}

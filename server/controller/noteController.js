@@ -370,3 +370,65 @@ exports.editDescription = (req, res, next) => {
         next(error);
     }
 }
+
+exports.saveLabelToNote = (req, res, next) => {
+    try {
+        var res_result = {};
+        console.log("in noteController", req.body,req.decoded);
+
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else {
+           
+            noteServices.saveLabelToNote(req.body, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                } else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    } catch (error) {
+
+        next(error);
+    }
+}
+
+
+exports.deleteLabelToNote = (req, res, next) => {
+    try {
+        var res_result = {};
+        let noteID = null;
+        console.log("in noteController", req.body,req.decoded);
+
+        if (typeof req.body.noteID === 'undefined') {
+            throw new Error("noteID is mandatory");
+        } else {
+            noteID = req.body.noteID;
+            noteServices.deleteLabelToNote(req.body, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                } else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    } catch (error) {
+
+        next(error);
+    }
+}

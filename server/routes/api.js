@@ -8,10 +8,11 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../auth/isValid')
-const noteAuth=require('../auth/isNoteValid')
+const noteAuth = require('../auth/isNoteValid')
 const userController = require('../controller/userController');
 const noteController = require('../controller/noteController');
-const collabControler=require('../controller/collabController')
+const collabController = require('../controller/collabController')
+const labelController = require('../controller/labelController')
 const cache = require('express-redis-cache')();
 
 // const User=require('../app/model/user');
@@ -43,32 +44,46 @@ router.post('/reset', auth.resetPassValid, userController.resetController)
  * API ROUTES FOR NOTES----------------------------------------
  */
 
-router.post('/createNote',noteAuth.tokenValid,noteController.createNote);
+router.post('/createNote', noteAuth.tokenValid, noteController.createNote);
 
-router.post('/deleteNote',noteAuth.tokenValid,noteController.deleteNote)
+router.post('/deleteNote', noteAuth.tokenValid, noteController.deleteNote)
 
-router.get('/getNotes',noteAuth.tokenValid,
-cache.route({ expire : 600 }),
-noteController.getNotes);
+router.get('/getNotes', noteAuth.tokenValid,
+    // cache.route({ expire : 600 }),
+    noteController.getNotes);
 
-router.put('/updateColor', noteAuth.tokenValid,noteController.updateColor);
-router.put('/updateImage', noteAuth.tokenValid,noteController.updateImage);
-router.put('/isPinned', noteAuth.tokenValid,noteController.isPinned);
-router.put('/isArchived',noteAuth.tokenValid,noteController.isArchived);
-router.put('/setReminder',noteAuth.tokenValid,noteController.setReminder);
-router.put('/isTrashed',noteAuth.tokenValid,noteController.isTrashed);
-router.put('/editTitle',noteAuth.tokenValid,noteController.editTitle)
-router.put('/editDescription',noteAuth.tokenValid,noteController.editDescription)
+router.put('/updateColor', noteAuth.tokenValid, noteController.updateColor);
+router.put('/updateImage', noteAuth.tokenValid, noteController.updateImage);
+router.put('/isPinned', noteAuth.tokenValid, noteController.isPinned);
+router.put('/isArchived', noteAuth.tokenValid, noteController.isArchived);
+router.put('/setReminder', noteAuth.tokenValid, noteController.setReminder);
+router.put('/isTrashed', noteAuth.tokenValid, noteController.isTrashed);
+router.put('/editTitle', noteAuth.tokenValid, noteController.editTitle)
+router.put('/editDescription', noteAuth.tokenValid, noteController.editDescription)
+router.post(
+    '/saveLabelToNote',
+    noteAuth.tokenValid,
+    noteController.saveLabelToNote
+)
+
+router.post(
+    '/deleteLabelToNote',
+    noteAuth.tokenValid,
+    noteController.deleteLabelToNote
+)
+
+/**
+ * API ROUTES FOR COLLABORATOR----------------------------------------
+ */
+router.post('/saveCollab', noteAuth.tokenValid, collabController.saveCollab);
+router.get('/getCollabDetails', noteAuth.tokenValid, collabController.getCollabDetails)
 /**
  * API ROUTES FOR LABELS---------------------------------------------------------------------
  */
 
-// router.post('/addLabel',labelController.addLabel)
-/**
- * API ROUTES FOR COLLABORATOR----------------------------------------
- */
-router.post('/saveCollab',noteAuth.tokenValid, collabControler.saveCollab);
-router.get('/getCollabDetails',noteAuth.tokenValid,collabControler.getCollabDetails)
-
+router.post('/addLabel', noteAuth.tokenValid, labelController.addLabel)
+router.get('/getLabels', noteAuth.tokenValid, labelController.getLabels)
+router.post('/deleteLabel', noteAuth.tokenValid, labelController.deleteLabel)
+router.put('/updateLabel', noteAuth.tokenValid, labelController.updateLabel)
 
 module.exports = router;

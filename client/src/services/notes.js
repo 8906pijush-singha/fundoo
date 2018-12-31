@@ -54,3 +54,12 @@ export function saveCollabs(url,data) {
         data:data
     })
 }
+export function saveLabel(url,data) {
+    return axios(url, {
+        method: "POST",
+        headers: {
+            "access-token": localStorage.getItem("token")
+        },
+        data:data
+    })
+}

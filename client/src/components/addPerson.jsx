@@ -30,11 +30,10 @@ class AddPerson extends Component {
         this.handleColab = this.handleColab.bind(this);
         this.handleInputCollab = this.handleInputCollab.bind(this);
         this.saveCollab = this.saveCollab.bind(this);
-        // this.collabList=this.collabList.bind(this);
     }
 
     saveCollab() {
-
+        if(this.state.inputCollab!==""){
         let collabData = this.state.collabs.filter(obj => obj.email === this.state.inputCollab);
         console.log("collabData", collabData);
 
@@ -54,6 +53,13 @@ class AddPerson extends Component {
             }).catch((err) => {
                 console.log(err)
             })
+        }else{
+            this.setState({
+                open:false
+            })
+            console.log("no new entry");
+            
+        }
     }
     handleColab() {
         this.setState({
@@ -164,7 +170,7 @@ class AddPerson extends Component {
                         {collabDetails}
                         <div style={{ paddingLeft: "10px", paddingTop: "12px", paddingBottom: "10px", display: "flex", flexDirection: "row" }}>
                             <Avatar style={{ backgroundColor: "transparent", border: "1px solid grey" }}>
-                                <img src={require('../assets/addColabIcon.svg')} alt="colabIcon" />
+                                <img src={notePerson} alt="colabIcon" />
                             </Avatar>
                             <Input
                                 placeholder="Person or email to share with"

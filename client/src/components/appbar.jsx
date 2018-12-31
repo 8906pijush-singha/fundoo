@@ -39,13 +39,13 @@ class AppBarComp extends Component {
         super();
         this.state = {
             open: false,
-            searchNote:""
+            searchNote: ""
         }
         this.handleDrawer = this.handleDrawer.bind(this);
         this.setView = this.setView.bind(this);
         this.handelRefresh = this.handelRefresh.bind(this);
         this.handleSearchNote = this.handleSearchNote.bind(this);
-       
+
     }
     handleDrawer() {
         this.setState({ open: !this.state.open })
@@ -59,12 +59,14 @@ class AppBarComp extends Component {
     }
     handleSearchNote(e) {
         this.setState({
-            searchNote:e.target.value
+            searchNote: e.target.value
         })
         this.props.getSearchNote(e.target.value);
 
     }
-
+    searchLabels(value) {
+        this.props.searchLabels(value)
+    }
     render() {
         if (localStorage.getItem("isAuth") !== "true") {
             return (window.location.href = "/")
@@ -113,7 +115,8 @@ class AppBarComp extends Component {
 
 
                     </AppBar>
-                    <MenuDrawer parentProps={this.state.open} handleNavigation={this.props.handleNavigation} />
+                        
+                    <MenuDrawer closeLabelOption={this.props.closeLabelOption} parentProps={this.state.open} handleNavigation={this.props.handleNavigation} searchLabels={(value)=>this.searchLabels(value)}/>
 
                 </MuiThemeProvider>
 

@@ -13,25 +13,37 @@ class Note extends Component {
             archive: false,
             trash: false,
             show: false,
-            searchNote:""
+            searchNote: "",
+            label: ""
         }
         this.createNoteClick = React.createRef();
         this.noteToCardsRef = React.createRef();
         this.noteToAppbarRef = React.createRef();
 
-        // this.handleClick = this.handleClick.bind(this);
+        this.closeLabelOption = this.closeLabelOption.bind(this);
         this.setCardStyle = this.setCardStyle.bind(this);
         this.showCards = this.showCards.bind(this);
         this.handleNavigation = this.handleNavigation.bind(this);
         this.getSearchNote = this.getSearchNote.bind(this);
+        this.searchLabels = this.searchLabels.bind(this);
 
 
     }
 
-    getSearchNote(value){
+    searchLabels(value) {
+        this.setState({ label: value });
+        console.log("search labels", value);
+        this.noteToCardsRef.current.displayLabelledCards();
+    }
+
+    getSearchNote(value) {
         this.setState({
-            searchNote:value
-        })  
+            searchNote: value
+        })
+    }
+
+    closeLabelOption() {
+        this.noteToCardsRef.current.closeLabelOption();
     }
 
     // getSearchNote(value) {
@@ -75,32 +87,6 @@ class Note extends Component {
             })
         }
     }
-
-
-    // handleChange = (font) => () => {
-    //     this.setState({ value: font, show: false });
-    // }
-
-    // handleToggle = (e) => {
-    //     e.target.focus();
-    //     this.setState({ show: !this.state.show });
-    // }
-
-    // handleBlur = (e) => {
-    //     // firefox onBlur issue workaround
-    //     if (e.nativeEvent.explicitOriginalTarget &&
-    //         e.nativeEvent.explicitOriginalTarget === e.nativeEvent.originalTarget) {
-    //         return;
-    //     }
-
-    //     if (this.state.show) {
-    //         timer = setTimeout(() => {
-    //         this.setState({ show: false });
-    //         }, 200);
-    //     }
-    // }
-
-
     render() {
 
         if (localStorage.getItem("isAuth") !== "true") {
@@ -108,18 +94,18 @@ class Note extends Component {
         } else {
             return (
                 <div id="card-layout" >
-                    <AppBarComp parentProps={this.setCardStyle} handleNavigation={this.handleNavigation} getSearchNote={this.getSearchNote} />
+                    <AppBarComp
+                        closeLabelOption={this.closeLabelOption}
+                        parentProps={this.setCardStyle}
+                        handleNavigation={this.handleNavigation}
+                        getSearchNote={this.getSearchNote}
+                        searchLabels={this.searchLabels}
+                    />
                     <div className="dashBoard">
                         {(this.state.archive || this.state.trash) ? null :
                             <CreateNote ref={this.createNoteClick} showCardCall={this.showCards} />}
                         <Cards
-
-                            // show={this.state.show}
-                            // // value={this.state.value}
-                            // handleToggle={this.handleToggle}
-                            // handleBlur={this.handleBlur}
-                            // handleChange={this.handleChange}
-
+                            labelValue={this.state.label}
                             searchNote={this.state.searchNote}
                             parentProps={this.state.cardStyle}
                             ref={this.noteToCardsRef}

@@ -143,9 +143,6 @@ exports.getNotes = (data, callback) => {
                         if (errorCollab) {
                             callback(errorCollab);
                         } else {
-                            // if()
-                            // console.log("resultCollab", resultCollab);
-
                             var operations = [];
                             for (var i = 0; i < resultCollab.length; i++) {
                                 operations.push((function (collabData) {
@@ -313,6 +310,40 @@ exports.editDescription = (paramID, paramData, callback) => {
     console.log("in services", paramID, paramData);
 
     notes.editDescription(paramID, paramData, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}
+exports.saveLabelToNote = ( paramData, callback) => {
+    console.log("in services", paramData);
+    if(paramData.pull){
+        notes.deleteLabelToNote(paramData, (err, result) => {
+            if (err) {
+                callback(err);
+            } else {
+                return callback(null, result)
+            }
+        })
+    }
+    else{
+
+        notes.saveLabelToNote(paramData, (err, result) => {
+            if (err) {
+                callback(err);
+            } else {
+                return callback(null, result)
+            }
+        })
+    }
+}
+
+exports.deleteLabelToNote = ( paramData, callback) => {
+    console.log("in services", paramData);
+
+    notes.deleteLabelToNote(paramData, (err, result) => {
         if (err) {
             callback(err);
         } else {
