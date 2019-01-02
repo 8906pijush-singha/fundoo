@@ -20,6 +20,9 @@ const theme = createMuiTheme({
                 height: "20px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 class NavigateReminder extends Component {
@@ -31,7 +34,7 @@ class NavigateReminder extends Component {
                 <div className="gridCards" style={{ marginBottom: "30px" }}>
                     {this.props.reminderNotes.map((key) => {
                         return (
-                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color }} >
+                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color ,  borderRadius: "10px"}} >
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <b>{key.note.title}</b>

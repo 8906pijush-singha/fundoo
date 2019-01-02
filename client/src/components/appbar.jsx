@@ -33,6 +33,9 @@ const theme = createMuiTheme({
         }
 
     },
+    typography: {
+    useNextVariants: true,
+    }
 });
 class AppBarComp extends Component {
     constructor() {
@@ -48,6 +51,7 @@ class AppBarComp extends Component {
 
     }
     handleDrawer() {
+        this.props.slideNotes();
         this.setState({ open: !this.state.open })
     }
     setView() {

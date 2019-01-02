@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, DialogTitle, Input, Button, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import { Dialog, DialogTitle, Input, Button, MuiThemeProvider, createMuiTheme, ClickAwayListener } from '@material-ui/core';
 import Tools from './Tools';
 import EditPin from './editPin';
 
@@ -16,6 +16,9 @@ const theme = createMuiTheme({
             },
 
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 
@@ -57,8 +60,6 @@ class DialogBox extends Component {
         this.props.closeEditBox(e);
     }
     getData(note) {
-        console.log("jdbvjkgfdjkb",note.title);
-        
         if (note.title !== undefined || note.description !== undefined) {
             this.setState({
                 note: note,
@@ -67,42 +68,48 @@ class DialogBox extends Component {
             })
         }
     }
+    handleEditBox(e) {
+        this.props.closeEditBox(e)
+    }
     render() {
         return (
             <MuiThemeProvider theme={theme}>
+
                 <Dialog
                     id="editDialogBox"
                     open={this.props.parentProps}
                     noteID={this.props.noteID}
 
                 >
-                    <DialogTitle>Edit Note</DialogTitle>
-                    <div className="editDialog">
+                    <ClickAwayListener onClickAway={(e) => this.handleEditBox(e)}>
+                        <DialogTitle>Edit Note</DialogTitle>
+                        <div className="editDialog">
+                            <Input
+                                className="editTitleInput"
+                                disableUnderline={true}
+                                placeholder="Title"
+                                value={this.state.title}
+                                onChange={this.handleTitleClick}
+
+                            />
+                            <EditPin />
+                        </div>
+
                         <Input
-                            className="editTitleInput"
+                            className="editNote"
                             disableUnderline={true}
-                            placeholder="Title"
-                            value={this.state.title}
-                            onChange={this.handleTitleClick}
-
+                            placeholder="Note"
+                            value={this.state.description}
+                            onChange={this.handleDescClick}
                         />
-                        <EditPin />
-                    </div>
 
-                    <Input
-                        className="editNote"
-                        disableUnderline={true}
-                        placeholder="Note"
-                        value={this.state.description}
-                        onChange={this.handleDescClick}
-                    />
+                        <div style={{ display: "flex", flexDirection: 'row' }}>
+                            <Tools />
 
-                    <div style={{ display: "flex", flexDirection: 'row' }}>
-                        <Tools />
+                            <Button id="doneButton" onClick={this.handleToggle.bind(this)}>Close</Button>
 
-                        <Button id="doneButton" onClick={this.handleToggle.bind(this)}>Close</Button>
-
-                    </div>
+                        </div>
+                    </ClickAwayListener>
                 </Dialog>
             </MuiThemeProvider>
         )

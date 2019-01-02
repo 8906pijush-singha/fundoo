@@ -17,6 +17,9 @@ const theme = createMuiTheme({
                 height:"20px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 class NavigateTrashed extends Component {
@@ -36,7 +39,7 @@ class NavigateTrashed extends Component {
                     //         <TrashOptions/>
                     //  </Card>)
                     return(
-                        <Card className={changeCardStyle} style={{ backgroundColor:key.note.color }} key={key.note._id} >
+                        <Card className={changeCardStyle} style={{ backgroundColor:key.note.color ,  borderRadius: "10px"}} key={key.note._id} >
                         <div>
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                                 <b style={{marginBottom:"35px"}}>{key.note.title}</b>

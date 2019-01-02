@@ -329,7 +329,6 @@ exports.saveLabelToNote = ( paramData, callback) => {
         })
     }
     else{
-
         notes.saveLabelToNote(paramData, (err, result) => {
             if (err) {
                 callback(err);

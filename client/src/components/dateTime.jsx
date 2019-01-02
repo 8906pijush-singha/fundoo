@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { MenuItem, Popper, Paper, ListItem, Input } from '@material-ui/core';
+import { MenuItem, Popper, Paper, ListItem, ClickAwayListener } from '@material-ui/core';
 
-
-import DateTimePicker from 'react-datetime-picker'
 
 class PickDateAndTime extends Component {
     constructor() {
@@ -12,7 +10,7 @@ class PickDateAndTime extends Component {
             date: new Date()
         }
         this.handleDateAndTime = this.handleDateAndTime.bind(this);
-        this.showTime=this.showTime.bind(this);
+        this.showTime = this.showTime.bind(this);
     }
     handleDateAndTime(event) {
         const { currentTarget } = event
@@ -21,12 +19,19 @@ class PickDateAndTime extends Component {
             open: !this.state.open
         })
     }
-    showTime(){
+    showTime() {
         // console.log(this.state.date)
+    }
+    handlePoppers = () => {
+        this.setState(state => ({
+
+            open: false
+
+        }));
     }
     onChange = date => this.setState({ date })
 
-    render() { 
+    render() {
         const { anchorEl, open } = this.state;
 
         return (
@@ -35,16 +40,18 @@ class PickDateAndTime extends Component {
                     Pick date and time
                 </MenuItem>
                 <Popper open={open} placement={"right"} anchorEl={anchorEl}>
-                    <Paper className="pickDateTimePopper">
-                        <ListItem>Pick date and time</ListItem>
-                        <input type ="date"></input>
-                        {/* <DateTimePicker
+                    <ClickAwayListener onClickAway={this.handlePoppers}>
+                        <Paper className="pickDateTimePopper">
+                            <ListItem>Pick date and time</ListItem>
+                            <input type="date"></input>
+                            {/* <DateTimePicker
                             onClick={this.showTime}
                             onChange={this.onChange}
                             value={this.state.date}
                             defaultValue="2017-05-24T10:30"
                         /> */}
-                    </Paper>
+                        </Paper>
+                    </ClickAwayListener>
                 </Popper>
             </div>
         )

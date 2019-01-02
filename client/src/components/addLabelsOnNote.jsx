@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MenuItem, Popper, Paper, Fade, Checkbox } from '@material-ui/core';
+import { MenuItem, Popper, Paper, Fade, Checkbox, ClickAwayListener } from '@material-ui/core';
 import { getLabels } from '../services/labelServices';
 
 
@@ -17,10 +17,10 @@ class AddLabelsOnNote extends Component {
 
     }
     addLabelPopup(event) {
-        const { currentTarget } = event;
-
+         // const { currentTarget } = event;
+        this.props.closeMOreOptions();
         this.setState(state => ({
-            anchorEl: currentTarget,
+            anchorEl: this.props.anchorEl,
             open: !state.open,
 
         }));
@@ -31,8 +31,6 @@ class AddLabelsOnNote extends Component {
                 this.setState({
                     label: result
                 })
-                console.log("labels", result);
-
             })
             .catch((error) => {
                 alert(error)
@@ -63,7 +61,7 @@ class AddLabelsOnNote extends Component {
         let displayLabels = this.state.label;
         if (this.state.label !== "") {
             displayLabels = this.state.label.map((key) =>
-                <MenuItem style={{ display: "flex", flexDirection: "row", }}>
+                <MenuItem style={{ display: "flex", flexDirection: "row", }} key={key.label}>
 
                     <Checkbox onClick={() => this.selectLabel(this.props.noteID, key.label)} />
 
@@ -80,8 +78,8 @@ class AddLabelsOnNote extends Component {
                 <Popper open={open} anchorEl={anchorEl} placement={'right'} transition>
                     {({ TransitionProps }) => (
                         <Fade {...TransitionProps} timeout={0}>
-                            <Paper className="moreOptionsPopper" style={{ paddingTop: "10px" }}
-                                onClick={() => this.closeLabelPopper()}>
+                            <Paper className="moreOptionsPopper" style={{ paddingTop: "10px" }}>
+                                <ClickAwayListener onClickAway={()=>this.closeLabelPopper()}>
                                 <div style={{ color: "#3c4043", fontSize: "15px", fontWeight: "500", fontFamily: "'Roboto',arial,sans-serif", paddingLeft: "10px", paddingRight: "10px" }}>
                                     Label Note
                                 </div>
@@ -90,6 +88,7 @@ class AddLabelsOnNote extends Component {
 
                                     {displayLabels}
                                 </div>
+                                </ClickAwayListener>
                             </Paper>
                         </Fade>
                     )}

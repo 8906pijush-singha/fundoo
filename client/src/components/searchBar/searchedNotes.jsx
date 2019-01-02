@@ -20,6 +20,9 @@ const theme = createMuiTheme({
                 height: "20px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 class SearchedNotes extends Component {
@@ -30,7 +33,7 @@ class SearchedNotes extends Component {
                 <div className="gridCards" style={{ marginBottom: "30px" }}>
                     {this.props.searchedNotes.map((key) => {
                         return (
-                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color }} >
+                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color,  borderRadius: "10px" }} >
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <b>{key.note.title}</b>

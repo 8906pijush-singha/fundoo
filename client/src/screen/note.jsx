@@ -14,7 +14,8 @@ class Note extends Component {
             trash: false,
             show: false,
             searchNote: "",
-            label: ""
+            label: "",
+            slideNotes:false
         }
         this.createNoteClick = React.createRef();
         this.noteToCardsRef = React.createRef();
@@ -41,7 +42,9 @@ class Note extends Component {
             searchNote: value
         })
     }
-
+    slideNotes=()=>{
+        this.setState({slideNotes:!this.state.slideNotes})
+    }
     closeLabelOption() {
         this.noteToCardsRef.current.closeLabelOption();
     }
@@ -88,13 +91,14 @@ class Note extends Component {
         }
     }
     render() {
-
+        const cardLayout = this.state.slideNotes ? "afterSlide" : "beforeSlide";
         if (localStorage.getItem("isAuth") !== "true") {
             return (window.location.href = "/")
         } else {
             return (
-                <div id="card-layout" >
+                <div className={cardLayout} >
                     <AppBarComp
+                        slideNotes={this.slideNotes}
                         closeLabelOption={this.closeLabelOption}
                         parentProps={this.setCardStyle}
                         handleNavigation={this.handleNavigation}

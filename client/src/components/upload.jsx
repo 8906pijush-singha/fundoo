@@ -6,29 +6,25 @@ class Upload extends Component {
         console.log("galat hai")
         this.fileInput.click();
     }
-    // handlerclick(event){
-    //     console.log(event);
-    // }
+    uploadImage(e) {
+        
+        console.log(e.target.files[0])
+    }
     render() {
         return (
             <div>
-            <span>
-                <img src={require('../assets/notePictures.svg')}
-                    alt="upload pic icon"
-                    onClick={() => { this.triggerInputFile() }} />
+                <span>
+                    <img src={require('../assets/notePictures.svg')}
+                        alt="upload pic icon"
+                        onClick={() => { this.triggerInputFile() }} />
 
-                <input ref={fileInput => this.fileInput = fileInput}
-                    type="file" style={{ 'display': 'none' }}
-                />
-                
-                   {/* <input type="file" name="pic" accept="image/*" onClick={this.handlerclick}/>
+                    <input ref={fileInput => this.fileInput = fileInput}
+                        type="file" style={{ 'display': 'none' }}
+                        onChange={(e) => this.uploadImage(e)}
+                    />
 
-               <input type="file" name="myFile" onClick={(e) => {
-                    console.log('parent');
-                    this.handlerclick;
-                }}/> */}
-
-            </span></div>
+                </span>
+            </div>
         )
     }
 }

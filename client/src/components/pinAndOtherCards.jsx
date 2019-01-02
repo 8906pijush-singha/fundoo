@@ -15,7 +15,7 @@ class PinAndOthers extends Component {
                     {this.props.pinArray.map((key) => {
                         return (
                             <div key={key.note._id}>
-                                <Card className={changeCardStyle} style={{ backgroundColor: key.note.color }} >
+                                <Card className={changeCardStyle} style={{ backgroundColor: key.note.color,  borderRadius: "10px" }} >
                                     <div >
                                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                                             <b>{key.note.title}</b>
@@ -97,7 +97,7 @@ class PinAndOthers extends Component {
                     {this.props.ordinaryCards.map((key) => {
                         return (
                             <div key={key.note._id}>
-                                <Card className={changeCardStyle} style={{ backgroundColor: key.note.color }} >
+                                <Card className={changeCardStyle} style={{ backgroundColor: key.note.color ,  borderRadius: "10px"}} >
                                     <div>
                                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                                             <b>{key.note.title}</b>

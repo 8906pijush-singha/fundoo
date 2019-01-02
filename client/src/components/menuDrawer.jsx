@@ -19,7 +19,9 @@ class MenuDrawer extends Component {
         this.showLabels = this.showLabels.bind(this);
         this.newLabels=this.newLabels.bind(this);
     }
-
+    colseEditLabel=()=>{
+        this.setState({ open: false })        
+    }
     handleEditLabel() {
         this.setState({ open: !this.state.open })
     }
@@ -29,8 +31,6 @@ class MenuDrawer extends Component {
                 this.setState({
                     label: result
                 })
-                console.log("labels", result);
-
             })
             .catch((error) => {
                 alert(error)
@@ -90,7 +90,7 @@ class MenuDrawer extends Component {
         let displayLabels = this.state.label;
         if (this.state.label !== "") {
             displayLabels = this.state.label.map((key) =>
-                <MenuItem style={{ display: "flex", flexDirection: "row", }} onClick={()=>this.displaySearchLabels(key.label)}>
+                <MenuItem style={{ display: "flex", flexDirection: "row", }} onClick={()=>this.displaySearchLabels(key.label)} key={key._id}>
 
                     <img src={require('../assets/labelIcon.svg')} alt="label icon" style={{ marginRight: "50px" }} />
 
@@ -138,11 +138,11 @@ class MenuDrawer extends Component {
 
                 </Drawer>
                 <EditLabel
+                    closeEditLabel={this.colseEditLabel}
                     newLabels={this.newLabels}
                     label={this.state.label}
                     showLabels={this.showLabels}
-                    drawerPropstoEditLabels={this.state.open}
-                    labelToggle={this.handleEditLabel} />
+                    drawerPropstoEditLabels={this.state.open} />
             </div>
         )
     }

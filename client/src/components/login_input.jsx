@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { TextField, Button } from "@material-ui/core"
 import { login } from '../services/login';
+import GoogleLoginPage from './googleLogin';
 
 
 
@@ -63,6 +64,7 @@ class LoginInput extends Component {
           component="span"
           onClick={this.validate}
         ><b>Login</b></Button>
+        <GoogleLoginPage/>
       </div>
 
     );

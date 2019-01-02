@@ -33,8 +33,6 @@ export function deleteNoteForever(url,data) {
 }
 
 export function getCollabDetails(url) {
-    console.log(url);
-    
     return axios(url, {
         method: "GET",
         headers: {
@@ -44,8 +42,6 @@ export function getCollabDetails(url) {
 }
 
 export function saveCollabs(url,data) {
-    console.log(url,data);
-    
     return axios(url, {
         method: "POST",
         headers: {

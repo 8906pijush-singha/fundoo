@@ -20,7 +20,14 @@ const theme = createMuiTheme({
                 width: "20px",
                 height: "20px"
             }
-        }
+        }, MuiPaper: {
+            elevation1: {
+                boxShadow: "0px"
+            }
+        },
+    },
+    typography: {
+        useNextVariants: true,
     }
 })
 
@@ -152,65 +159,65 @@ class CreateNote extends Component {
     render() {
         return (
             <MuiThemeProvider theme={theme}>
-               { !this.state.onCreateNoteClick ?
-                <div>
-                    <Card id="card1">
-                        <div className="createNoteAndUpload">
-                            <Input placeholder="Take a note... "
-                                className="createNoteInput"
-                                readOnly={true}
-                                disableUnderline={true}
-                                onClick={this.setOnCreateNoteClickTrue}
-                                value={''}
-                            ></Input>
-                            <Upload />
-                        </div>
-                    </Card>
-                </div>
-                :
-                <div><Upload />
-                    <Card id="card2" style={{ backgroundColor: this.state.color }}>
-                        <div className="titleAndPin">
-                            <Input
-                                className="createNoteInput"
-                                placeholder="Title "
-                                readOnly={false}
-                                disableUnderline={true}
-                                onClick={this.disableClick}
-                                value={this.state.title}
-                                onChange={this.handleTitle}
+                {!this.state.onCreateNoteClick ?
+                    <div>
+                        <Card id="card1">
+                            <div className="createNoteAndUpload">
+                                <Input placeholder="Take a note... "
+                                    className="createNoteInput"
+                                    readOnly={true}
+                                    disableUnderline={true}
+                                    onClick={this.setOnCreateNoteClickTrue}
+                                    value={''}
+                                ></Input>
+                                <Upload />
+                            </div>
+                        </Card>
+                    </div>
+                    :
+                    <div><Upload />
+                        <Card id="card2" style={{ backgroundColor: this.state.color }}>
+                            <div className="titleAndPin">
+                                <Input
+                                    className="createNoteInput"
+                                    placeholder="Title "
+                                    readOnly={false}
+                                    disableUnderline={true}
+                                    onClick={this.disableClick}
+                                    value={this.state.title}
+                                    onChange={this.handleTitle}
 
-                            ></Input>
-                            <Pin getPinProps={this.handlePin} />
-                        </div>
-                        <div>
-                            <Input
-                                className="createNoteInput"
-                                placeholder="Take a note... "
-                                disableUnderline={true}
-                                // disabled={onclick}                                
-                                onClick={this.disableClick}
-                                value={this.state.description}
-                                onChange={this.handleDescription}
+                                ></Input>
+                                <Pin getPinProps={this.handlePin} />
+                            </div>
+                            <div>
+                                <Input
+                                    className="createNoteInput"
+                                    placeholder="Take a note... "
+                                    disableUnderline={true}
+                                    // disabled={onclick}                                
+                                    onClick={this.disableClick}
+                                    value={this.state.description}
+                                    onChange={this.handleDescription}
 
-                            ></Input>
-                            {this.state.reminder !== "" ?
-                                <div>
-                                    <Chip label={this.state.reminder} />
-                                </div>
-                                : null
-                            }
-                            <div className="createNoteTools">
-                                <Tools getColorProps={this.getColor}
-                                    reminder={this.handleReminder}
-                                    note={this.state}
-                                    ref={this.createNoteToTools}
-                                    archiveProps={this.archive} />
-                                <Button onClick={this.handleClick} >Close</Button></div>
-                        </div>
-                    </Card>
-                </div>
-            }
+                                ></Input>
+                                {this.state.reminder !== "" ?
+                                    <div>
+                                        <Chip label={this.state.reminder} />
+                                    </div>
+                                    : null
+                                }
+                                <div className="createNoteTools">
+                                    <Tools getColorProps={this.getColor}
+                                        reminder={this.handleReminder}
+                                        note={this.state}
+                                        ref={this.createNoteToTools}
+                                        archiveProps={this.archive} />
+                                    <Button onClick={this.handleClick} >Close</Button></div>
+                            </div>
+                        </Card>
+                    </div>
+                }
             </MuiThemeProvider>
         )
 

@@ -21,6 +21,11 @@ import {
 import DialogBox from './Dialog';
 const theme = createMuiTheme({
     overrides: {
+        MuiPaper:{
+            elevation1:{
+                boxShadow:"0px"
+            }
+        },
         MuiChip: {
             root: {
                 marginTop: "20px",
@@ -34,6 +39,9 @@ const theme = createMuiTheme({
                 height: "20px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 
@@ -63,8 +71,6 @@ class Cards extends Component {
     }
     async handleClick(note) {
         await this.setState({ open: true })
-        console.log("sssssss", this.cardsToDialogBox);
-
         this.cardsToDialogBox.current.getData(note);
     }
     closeEditBox() {
@@ -110,6 +116,29 @@ class Cards extends Component {
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
                         newArray[i].note.title = result.data.data;
+                        this.setState({
+                            notes: newArray
+                        })
+
+                    }
+                }
+
+            })
+
+
+    }
+    uploadImage(value, noteId) {
+        const title = {
+            noteID: noteId,
+            title: value
+        }
+
+        updateNotes('/uploadImage', title)
+            .then((result) => {
+                let newArray = this.state.notes
+                for (let i = 0; i < newArray.length; i++) {
+                    if (newArray[i].note._id === noteId) {
+                        newArray[i].note.image = result.data.data;
                         this.setState({
                             notes: newArray
                         })
@@ -234,8 +263,6 @@ class Cards extends Component {
             });
     }
     reminderNote(data, noteId) {
-        console.log(noteId);
-        console.log(data);
         const reminder = {
             noteID: noteId,
             reminder: data
@@ -328,8 +355,6 @@ class Cards extends Component {
                         this.setState({
                             notes: newArray
                         })
-                        console.log("add label array", result.data.data);
-
                     }
                 }
             })
@@ -338,7 +363,6 @@ class Cards extends Component {
             });
     }
     deleteLabelFromNote(value, noteId) {
-        console.log("deleted label array", value, noteId);
         const deleteLabel = {
             pull: true,
             value: value,
@@ -353,8 +377,6 @@ class Cards extends Component {
                         this.setState({
                             notes: newArray
                         })
-                        console.log("add label array", result.data.data);
-
                     }
                 }
             })
@@ -362,8 +384,6 @@ class Cards extends Component {
     render() {
         
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
-        console.log("for labels", this.props.searchNote,"  kjoj");
-
         if (this.props.searchNote !== "" || this.state.label ) {
 
             let searchedNotes;
@@ -373,8 +393,6 @@ class Cards extends Component {
                         obj.note.description.includes(this.props.searchNote)
                 )
             } else {
-                console.log("for labels", this.props.labelValue);
-
                 searchedNotes = this.state.notes.filter(
                     obj => obj.note.label.length > 0 && obj.note.label.find((item) => item === this.props.labelValue))
             }
@@ -443,7 +461,6 @@ class Cards extends Component {
             )
         }
         else {
-            console.log("jkdnvjkdnbvkn0");
             let ordinaryCard = ordinaryCards(this.state.notes);
             return (
                 <MuiThemeProvider theme={theme}>
@@ -466,7 +483,7 @@ class Cards extends Component {
                                 // console.log(this.state.notes[key]._id);
                                 return (
                                     <div key={ordinaryCard[key].note._id}>
-                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color }} >
+                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color,  borderRadius: "10px" }} >
                                             <div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                                     <b onClick={() => this.handleClick(ordinaryCard[key].note)}>{ordinaryCard[key].note.title}</b>
@@ -482,7 +499,7 @@ class Cards extends Component {
                                                     editTitle={this.editTitle}
                                                     editDescription={this.editDescription}
                                                 />
-                                                <div onClick={this.handleClick}>
+                                                <div onClick={() => this.handleClick(ordinaryCard[key].note)}>
 
                                                     {ordinaryCard[key].note.description}
                                                 </div>
@@ -493,7 +510,7 @@ class Cards extends Component {
                                                             if (ordinaryCard[key].owner.fname !== "") {
 
                                                                 return (
-                                                                    <div style={{ margin: "3px" }}>
+                                                                    <div style={{ margin: "3px" }} key={collabKey._id}>
                                                                         {collabKey.email !== localStorage.getItem('Email') && ordinaryCard[key].owner !== undefined ?
                                                                             <Tooltip title={collabKey.fname + " " + collabKey.lname + " (" + collabKey.email + ")"}>
                                                                                 <Avatar style={{ height: "30px", width: "30px", backgroundColor: "rgb(0,0,0,.10)" }}>

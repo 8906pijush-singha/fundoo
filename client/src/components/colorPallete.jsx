@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { IconButton, Tooltip, Card } from '@material-ui/core';
+import { IconButton, Tooltip, Card, ClickAwayListener } from '@material-ui/core';
 
 
 const colorCodesAndNames = [{ name: "white", colorCode: "rgb(255, 255, 255)" },
@@ -49,6 +49,11 @@ class ColorPallete extends Component {
             open:false
         })
     }
+    closeColorPallete(){
+        this.setState({
+            open:false
+        })
+    }
     render() {
 
         const changeCardColor = colorCodesAndNames.map((colorKey) =>
@@ -73,11 +78,16 @@ class ColorPallete extends Component {
                 </Tooltip>
                 <div>
                     {this.state.open ?
+                    <div>
+                        <ClickAwayListener onClickAway={()=>this.closeColorPallete()}>
                         <Card className="colorPalleteCard">
                             {changeCardColor}
                         </Card>
+                        </ClickAwayListener>
 
+                </div>
                         : null}
+
                 </div>
             </div>
 

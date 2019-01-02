@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dialog, TextField, Button, createMuiTheme, MuiThemeProvider, Divider, Tooltip } from '@material-ui/core';
+import { Dialog, TextField, Button, createMuiTheme, MuiThemeProvider, Divider, Tooltip, ClickAwayListener } from '@material-ui/core';
 import { addLabel, deleteLabel, updateLabel } from '../services/labelServices';
 // import SnackBar from './snackBar';
 
@@ -20,6 +20,9 @@ const theme = createMuiTheme({
                 padding: "0px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 
@@ -48,7 +51,6 @@ class EditLabel extends Component {
 
             addLabel('/addLabel', label)
                 .then(async (result) => {
-                    console.log("label result", result);
                     this.setState({ label: "" })
                     this.props.showLabels(result.data.data);
 
@@ -123,7 +125,10 @@ class EditLabel extends Component {
             });
     }
 
-
+    componentDidCatch(error, info) {
+        // You can also log the error to an error reporting service
+        console.log(error, info);
+      }
     createLabel() {
         this.setState({ labelID: "" })
     }
@@ -137,9 +142,8 @@ class EditLabel extends Component {
     handleLabel(evt) {
         this.setState({ label: evt.target.value })
     }
-
-    handleToggle() {
-        this.props.labelToggle()
+    closeEditLabel() {
+        this.props.closeEditLabel()
     }
     render() {
         return (
@@ -147,78 +151,82 @@ class EditLabel extends Component {
                 <div>
                     <Dialog
                         open={this.props.drawerPropstoEditLabels}
-
                     >
-                        <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
-                            <div style={{ color: "#3c4043", fontWeight: "500" }}>Edit Labels</div>
+                        <ClickAwayListener onClickAway={()=>this.closeEditLabel()}>
+                            <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
+                                <div style={{ color: "#3c4043", fontWeight: "500" }}>Edit Labels</div>
 
-                            <div style={{ display: "flex", justifyContent: "space-between", height: "45px" }} onClick={() => this.createLabel()}>
-
-
-                                <img src={require('../assets/addLabels.svg')}
-                                    alt="add label plus icon" />
+                                <div style={{ display: "flex", justifyContent: "space-between", height: "45px" }} onClick={() => this.createLabel()}>
 
 
-                                <TextField
-                                    id="editLabelTextField"
-                                    placeholder="Create New Label"
-                                    InputProps={{
-                                        disableUnderline: true
-                                    }}
-                                    value={this.state.label}
-                                    onChange={this.handleLabel}
-                                />
-                                <Tooltip title="Create Label">
-                                    <img src={require('../assets/tick.svg')}
-                                        alt="label tick icon"
-                                        onClick={() => this.addLabel(this.state.label)} />
-                                </Tooltip>
+                                    <img src={require('../assets/addLabels.svg')}
+                                        alt="add label plus icon" />
+
+
+                                    <TextField
+                                        id="editLabelTextField"
+                                        placeholder="Create New Label"
+                                        InputProps={{
+                                            disableUnderline: true
+                                        }}
+                                        value={this.state.label}
+                                        onChange={this.handleLabel}
+                                    />
+                                    <Tooltip title="Create Label">
+                                        <img src={require('../assets/tick.svg')}
+                                            alt="label tick icon"
+                                            onClick={() => this.addLabel(this.state.label)} />
+                                    </Tooltip>
+
+                                </div>
+
+
+                                {this.props.label.map((key,i) =>{
+                                    return(
+                                    this.state.labelID !== key._id ?
+                                     <div onClick={() => this.changeLables(key._id)}
+                                            key={i}
+                                            style={{ display: "flex", justifyContent: "space-between", height: "45px", alignItems: "center" }}>
+                                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                                <div><img src={require('../assets/labelFilled.svg')} alt="filled label icon" /></div>
+                                                <div style={{ width: "182px", margin: "0px 15px 0px 15px", fontWeight: "500" }}>{key.label}</div>
+                                            </div>
+                                            <div><img src={require('../assets/edit.svg')} alt="edit label icon" /></div>
+                                        </div>
+                                        :
+                                        <div onClick={() => this.changeLables(key._id)}
+                                            key={key._id}
+                                            style={{ display: "flex", justifyContent: "space-between", height: "45px", alignItems: "center" }}>
+                                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                                <img src={require('../assets/deleteLabel.svg')}
+                                                    alt="delete label icon"
+                                                    onClick={() => this.deleteLabel(key._id)} />
+                                                <div style={{ width: "182px", margin: "0px 15px 0px 15px", fontWeight: "500" }}>
+                                                    <TextField
+                                                        defaultValue={key.label}
+                                                        // value={this.state.editLabel}
+                                                        onChange={this.handlEditLabel}
+                                                    />
+
+                                                </div>
+                                            </div>
+                                            <div><img src={require('../assets/tick.svg')}
+                                                alt="label tick icon"
+                                                onClick={() => this.editLabel(this.state.editLabel, key._id)} /></div>
+                                        </div>
+                                    )
+
+                                 } )}
 
                             </div>
 
+                            <Divider />
 
-                            {this.props.label.map((key) =>
-                                this.state.labelID !== key._id ?
-                                    <div onClick={() => this.changeLables(key._id)}
-                                        style={{ display: "flex", justifyContent: "space-between", height: "45px", alignItems: "center" }}>
-                                        <div style={{ display: "flex", flexDirection: "row" }}>
-                                            <div><img src={require('../assets/labelFilled.svg')} alt="filled label icon" /></div>
-                                            <div style={{ width: "182px", margin: "0px 15px 0px 15px", fontWeight: "500" }}>{key.label}</div>
-                                        </div>
-                                        <div><img src={require('../assets/edit.svg')} alt="edit label icon" /></div>
-                                    </div>
-                                    :
-                                    <div onClick={() => this.changeLables(key._id)}
-                                        style={{ display: "flex", justifyContent: "space-between", height: "45px", alignItems: "center" }}>
-                                        <div style={{ display: "flex", flexDirection: "row" }}>
-                                            <img src={require('../assets/deleteLabel.svg')}
-                                                alt="delete label icon"
-                                                onClick={() => this.deleteLabel(key._id)} />
-                                            <div style={{ width: "182px", margin: "0px 15px 0px 15px", fontWeight: "500" }}>
-                                                <TextField
-                                                    defaultValue={key.label}
-                                                    // value={this.state.editLabel}
-                                                    onChange={this.handlEditLabel}
-                                                />
-
-                                            </div>
-                                        </div>
-                                        <div><img src={require('../assets/tick.svg')}
-                                            alt="label tick icon"
-                                            onClick={() => this.editLabel(this.state.editLabel, key._id)} /></div>
-                                    </div>
-
-                            )}
-
-                        </div>
-
-                        <Divider />
-
-                        <div style={{ padding: "10px", display: "flex", flexDirection: "row-reverse" }} >
-                            <Button className="editCloseButton" onClick={this.handleToggle.bind(this)}>Done</Button>
-                        </div>
-                        {/* <SnackBar ref={this.openSnackBar} error={displayErr} /> */}
-
+                            <div style={{ padding: "10px", display: "flex", flexDirection: "row-reverse" }} >
+                                <Button className="editCloseButton" onClick={this.closeEditLabel.bind(this)}>Done</Button>
+                            </div>
+                            {/* <SnackBar ref={this.openSnackBar} error={displayErr} /> */}
+                        </ClickAwayListener>
                     </Dialog>
                 </div>
             </MuiThemeProvider>

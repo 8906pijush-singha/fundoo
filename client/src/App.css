@@ -54,7 +54,7 @@
   font-size:15px;
   margin-bottom: 5px;
 }
-.createNote{
+/* .createNote{
   border: 1px solid lightgrey;
   width:400px;
   height: 30px;
@@ -67,7 +67,7 @@
   display: flex;
   margin-left: 100px;
   margin-top: 50px;
-}
+} */
 #settingsMenuItem{
   border-bottom-right-radius: 0px;
   border-top-right-radius: 0px;
@@ -111,24 +111,32 @@
   width: 550px;
   padding: 10px;
   margin-left:100px;
+  border-radius: 10px;
   margin-top:100px; 
+  border:1px solid #dadce0;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.20);
+
 }
 #card2 {
   
   width: 550px;
   padding: 10px;
   margin-left:100px;
+  border: 10px;
+  border-radius: 10px;
   margin-top:70px;
+  border:1px solid #dadce0;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.20);
+
 }
 .cards{
   width: 240px;
   margin-top: 20px;
   padding: 7px;
-  box-shadow: 2px 2px 2px grey;
-  /* visibility: hidden; */
+  border-radius: 10px;
 }
 .cards:hover{
-  box-shadow: 1px 1px 1px 1px grey;
+  box-shadow: 0px 0.5px 0.5px 0.5px grey;
 }
 .cards:hover .noteicons{
   visibility: visible;
@@ -142,7 +150,7 @@
   padding: 7px;
   margin-left:100px;
   margin-top: 50px;
-  box-shadow: 2px 2px 2px grey;
+  border-radius: 10px;
 }
 .verticalCards:hover .noteicons{
   visibility: visible;
@@ -247,6 +255,14 @@ div .menuItemReminder{
 .createNoteAndUpload{
   display: flex;
   flex-direction: row;
+}
+
+.afterSlide{
+  margin-left: 50px;
+  transition: margin-left 0.225s;
+}
+.beforeSlide{
+  transition:  0.225s;
 }
 /* .pinnedCards{
 

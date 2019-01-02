@@ -21,6 +21,9 @@ const theme = createMuiTheme({
                 height: "20px"
             }
         }
+    },
+    typography: {
+    useNextVariants: true,
     }
 })
 
@@ -34,7 +37,7 @@ class NavigateArchived extends Component {
                     <label style={{ fontFamily: "georgia", fontSize: "15px", color: "grey" }}>ARCHIVED</label>
                     {this.props.archivedNotes.map((key) => {
                         return (
-                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color }} >
+                            <Card className={changeCardStyle} style={{ backgroundColor: key.note.color,  borderRadius: "10px" }} >
                                 <div>
                                     <div style={{ display: "flex", justifyContent: "space-between" }}>
                                         <b>{key.note.title}</b>
