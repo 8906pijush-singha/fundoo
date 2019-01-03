@@ -148,14 +148,14 @@ noteModel.prototype.isPinned=(noteID, updateParams, callback)=> {
         });
 };
 
-noteModel.prototype.updateImage=(noteID, updateParams, callback)=> {
+noteModel.prototype.updateImage=(noteID,image, callback)=> {
     var updateNote = null    
-    if(updateParams != null){
-        updateNote = updateParams;
+    if(image!= null){
+        updateNote = image;
     }else{
         callback("image not found")
     }
-    console.log("image found",noteID, updateParams);
+    console.log("image found",noteID, image);
     
     Note.findOneAndUpdate(
         {

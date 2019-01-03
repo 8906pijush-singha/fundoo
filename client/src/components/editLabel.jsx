@@ -153,6 +153,7 @@ class EditLabel extends Component {
                         open={this.props.drawerPropstoEditLabels}
                     >
                         <ClickAwayListener onClickAway={()=>this.closeEditLabel()}>
+                        <div>
                             <div style={{ padding: "20px", display: "flex", flexDirection: "column" }}>
                                 <div style={{ color: "#3c4043", fontWeight: "500" }}>Edit Labels</div>
 
@@ -226,6 +227,7 @@ class EditLabel extends Component {
                                 <Button className="editCloseButton" onClick={this.closeEditLabel.bind(this)}>Done</Button>
                             </div>
                             {/* <SnackBar ref={this.openSnackBar} error={displayErr} /> */}
+                            </div>
                         </ClickAwayListener>
                     </Dialog>
                 </div>

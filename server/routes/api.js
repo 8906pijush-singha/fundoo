@@ -14,11 +14,10 @@ const noteController = require('../controller/noteController');
 const collabController = require('../controller/collabController')
 const labelController = require('../controller/labelController')
 const cache = require('express-redis-cache')();
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
-// const User=require('../app/model/user');
 
-// User.methods(['get','put','post','delete']);
-// User.register(router,'/user');
 /**
  * routing for register
  */
@@ -53,7 +52,7 @@ router.get('/getNotes', noteAuth.tokenValid,
     noteController.getNotes);
 
 router.put('/updateColor', noteAuth.tokenValid, noteController.updateColor);
-router.put('/updateImage', noteAuth.tokenValid, noteController.updateImage);
+router.put('/uploadImage', noteAuth.tokenValid,upload.single('file'), noteController.updateImage);
 router.put('/isPinned', noteAuth.tokenValid, noteController.isPinned);
 router.put('/isArchived', noteAuth.tokenValid, noteController.isArchived);
 router.put('/setReminder', noteAuth.tokenValid, noteController.setReminder);

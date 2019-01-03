@@ -224,10 +224,10 @@ exports.isPinned = (paramID, paramData, callback) => {
  * @param {object} data
  * @param {callback function} callback
  */
-exports.updateImage = (paramID, paramData, callback) => {
-    console.log("in services", paramID, paramData);
-
-    notes.updateImage(paramID, paramData, (err, result) => {
+exports.updateImage = (paramID,image,callback) => {
+    console.log("in services", paramID);
+   
+    notes.updateImage(paramID,image, (err, result) => {
         if (err) {
             callback(err);
         } else {

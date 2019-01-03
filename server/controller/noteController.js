@@ -1,4 +1,5 @@
 const noteServices = require('../services/noteServices');
+const fs=require('fs');
 exports.createNote = (req, res, next) => {
     try {
         console.log("note Controller", req.body);
@@ -131,20 +132,17 @@ exports.isPinned = (req, res, next) => {
 
 exports.updateImage = (req, res, next) => {
     try {
-        console.log("in noteController", req.body);
+        console.log("in noteController", req.body,req.file);
 
         let image = null;
         var res_result = {};
         let noteID = null;
         if (typeof req.body.noteID === 'undefined') {
             throw new Error("noteID is mandatory");
-        } else if (typeof req.body.image === 'undefined') {
-            throw new Error("image is mandatory");
-        } else {
+        }  else {
             noteID = req.body.noteID;
-            image = req.body.color;
-
-            noteServices.updateImage(noteID, image, (err, result) => {
+           let imageString= new Buffer(fs.readFileSync(req.file.path)).toString("base64")
+            noteServices.updateImage(noteID,imageString, (err, result) => {
                 if (err) {
 
                     const errMessage = {

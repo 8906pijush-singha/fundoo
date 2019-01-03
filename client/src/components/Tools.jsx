@@ -14,7 +14,7 @@ class Tools extends Component {
                 reminder={this.props.reminder} />
                 <AddPerson noteId={this.props.noteId} collabs={this.props.collab}  owner={this.props.owner} />
                 <ColorPallete ToolsProps={this.props.getColorProps} noteId={this.props.noteId} />
-                <Upload note={this.props.note}/>
+                <Upload note={this.props.note} uploadImage={this.props.uploadImage}/>
                 <NoteArchive archiveProps={this.props.archiveProps}
                     noteId={this.props.noteId}
                     archiveStatus={this.props.archiveStatus} />

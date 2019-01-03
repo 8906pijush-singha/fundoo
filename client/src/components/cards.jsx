@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Chip, Avatar, Tooltip } from '@material-ui/core';
 import { getNotes, deleteNoteForever, saveLabel } from '../services/notes';
 import Tools from './Tools';
-import { updateNotes } from '../services/updateNotes';
+import { updateNotes, updateImages } from '../services/updateNotes';
 import Pin from './editPin';
 import PinAndOthers from './pinAndOtherCards';
 import NavigateReminder from './navigationBar/reminderNotes';
@@ -21,9 +21,9 @@ import {
 import DialogBox from './Dialog';
 const theme = createMuiTheme({
     overrides: {
-        MuiPaper:{
-            elevation1:{
-                boxShadow:"0px"
+        MuiPaper: {
+            elevation1: {
+                boxShadow: "0px"
             }
         },
         MuiChip: {
@@ -41,7 +41,7 @@ const theme = createMuiTheme({
         }
     },
     typography: {
-    useNextVariants: true,
+        useNextVariants: true,
     }
 })
 
@@ -51,7 +51,7 @@ class Cards extends Component {
         this.state = {
             open: false,
             notes: [],
-            label:false
+            label: false
             // searchNote: ""
         }
         this.cardsToDialogBox = React.createRef();
@@ -65,9 +65,10 @@ class Cards extends Component {
         this.editTitle = this.editTitle.bind(this);
         this.editDescription = this.editDescription.bind(this);
         this.closeEditBox = this.closeEditBox.bind(this);
-        this.addLabelToNote=this.addLabelToNote.bind(this);
-        this.deleteLabelFromNote=this.deleteLabelFromNote.bind(this);
-        this.closeLabelOption=this.closeLabelOption.bind(this);
+        this.addLabelToNote = this.addLabelToNote.bind(this);
+        this.deleteLabelFromNote = this.deleteLabelFromNote.bind(this);
+        this.closeLabelOption = this.closeLabelOption.bind(this);
+        this.uploadImage = this.uploadImage.bind(this);
     }
     async handleClick(note) {
         await this.setState({ open: true })
@@ -76,9 +77,9 @@ class Cards extends Component {
     closeEditBox() {
         this.setState({ open: false })
     }
-    closeLabelOption(){
+    closeLabelOption() {
         this.setState({
-            label:false
+            label: false
         })
     }
     componentDidMount() {
@@ -128,17 +129,23 @@ class Cards extends Component {
 
     }
     uploadImage(value, noteId) {
-        const title = {
-            noteID: noteId,
-            title: value
-        }
+        console.log("image:------------", value);
+        let data = new FormData();
+        data.append('file', value);
+        data.append('noteID', noteId);
 
-        updateNotes('/uploadImage', title)
+        // const image = {
+        //     noteID: noteId,
+        //     image: data
+        // }
+
+        updateImages('/uploadImage', data)
             .then((result) => {
+                console.log("result",result.data.data)
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
-                        newArray[i].note.image = result.data.data;
+                        newArray[i].note.image = 'data:image/jpg;base64, '+result.data.data;
                         this.setState({
                             notes: newArray
                         })
@@ -382,9 +389,9 @@ class Cards extends Component {
             })
     }
     render() {
-        
+
         let changeCardStyle = this.props.parentProps ? "verticalCards" : "cards";
-        if (this.props.searchNote !== "" || this.state.label ) {
+        if (this.props.searchNote !== "" || this.state.label) {
 
             let searchedNotes;
             if (this.props.searchNote !== "") {
@@ -408,11 +415,12 @@ class Cards extends Component {
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed}
+                    uploadImage={this.uploadImage}
                 />
             )
         }
         else if (this.props.navigateReminder) {
-            
+
             return (
                 <NavigateReminder
                     reminderNotes={reminderNotes(this.state.notes)}
@@ -425,7 +433,8 @@ class Cards extends Component {
                     deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
-                    isTrashed={this.isTrashed} />
+                    isTrashed={this.isTrashed}
+                    uploadImage={this.uploadImage} />
             )
         } else if (this.props.navigateArchive) {
             return (
@@ -440,7 +449,8 @@ class Cards extends Component {
                     deleteLabelFromNote={this.deleteLabelFromNote}
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
-                    isTrashed={this.isTrashed} />
+                    isTrashed={this.isTrashed}
+                    uploadImage={this.uploadImage} />
             )
         } else if (this.props.navigateTrashed) {
             return (
@@ -457,7 +467,9 @@ class Cards extends Component {
                     reminderNote={this.reminderNote}
                     parentProps={this.props.parentProps}
                     isTrashed={this.isTrashed}
-                    deleteNote={this.deleteNote} />
+                    deleteNote={this.deleteNote}
+                    uploadImage={this.uploadImage}
+                />
             )
         }
         else {
@@ -475,7 +487,8 @@ class Cards extends Component {
                             archiveNote={this.archiveNote}
                             reminderNote={this.reminderNote}
                             parentProps={this.props.parentProps}
-                            isTrashed={this.isTrashed} />
+                            isTrashed={this.isTrashed}
+                            uploadImage={this.uploadImage} />
                         :
                         <div className="gridCards" >
 
@@ -483,8 +496,14 @@ class Cards extends Component {
                                 // console.log(this.state.notes[key]._id);
                                 return (
                                     <div key={ordinaryCard[key].note._id}>
-                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color,  borderRadius: "10px" }} >
+                                        <Card className={changeCardStyle} style={{ backgroundColor: ordinaryCard[key].note.color, borderRadius: "10px" }} >
+                                           
                                             <div>
+                                                <div>
+                                                    {ordinaryCard[key].note.image!==""?
+                                                    <img src={ordinaryCard[key].note.image}></img>
+                                                :null}
+                                                </div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                                                     <b onClick={() => this.handleClick(ordinaryCard[key].note)}>{ordinaryCard[key].note.title}</b>
                                                     <Pin noteId={ordinaryCard[key].note._id} getPinProps={this.pinNote} pinStatus={ordinaryCard[key].note.isPinned} />
@@ -544,7 +563,7 @@ class Cards extends Component {
                                                     ordinaryCard[key].note.label.map((key1) =>
                                                         <Chip
                                                             label={key1}
-                                                            onDelete={() => this.deleteLabelFromNote(key1, ordinaryCard[key].note._id)}/>
+                                                            onDelete={() => this.deleteLabelFromNote(key1, ordinaryCard[key].note._id)} />
                                                     )
                                                     :
                                                     null}
@@ -559,7 +578,8 @@ class Cards extends Component {
                                                     archiveProps={this.archiveNote}
                                                     archiveStatus={ordinaryCard[key].note.archive}
                                                     reminder={this.reminderNote}
-                                                    isTrashed={this.isTrashed} />
+                                                    isTrashed={this.isTrashed}
+                                                    uploadImage={this.uploadImage} />
 
                                             </div>
                                         </Card>

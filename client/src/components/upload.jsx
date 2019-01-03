@@ -7,7 +7,7 @@ class Upload extends Component {
         this.fileInput.click();
     }
     uploadImage(e) {
-        
+        this.props.uploadImage(e.target.files[0],this.props.note._id)
         console.log(e.target.files[0])
     }
     render() {
