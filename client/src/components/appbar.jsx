@@ -86,17 +86,18 @@ class AppBarComp extends Component {
                                 </IconButton>
                             </Tooltip>
                             <img src={require('../assets/keepIcon.svg')} alt="keep logo"></img>
-                            <div style={{ color: "gray", marginLeft: "30px", fontSize: "25px", fontFamily: "TimesNewRoman" }}>fundooNotes</div>
-
-                            <div style={{ marginLeft: "50px", border: "1px solid lightgrey", borderTopRightRadius: "10px", borderTopLeftRadius: "10px", borderBottomRightRadius: "10px", borderBottomLeftRadius: "10px" }} id="abcde">
+                            <div id="appbarTitle">fundooNotes</div>
+                            <div className='appBarIconsDiv' >
+                            <div  id="serachBar">
                                 <Tooltip title="Search">
-                                    <IconButton style={{ marginLeft: "5px" }}>
+                                    <IconButton  id ="searchBarIconButton">
                                         <SearchIcon ></SearchIcon>
                                     </IconButton>
                                 </Tooltip>
 
                                 <InputBase placeholder="Search...."
-                                    style={{ marginLeft: "1px", padding: "11px 16px 11px 16px" }}
+                                    id="searchBarInput"
+                                    fullWidth
                                     value={this.state.searchNote}
                                     onChange={this.handleSearchNote}
                                 >
@@ -104,25 +105,25 @@ class AppBarComp extends Component {
                             </div>
 
                             <Tooltip title="refresh">
-                                <IconButton style={{ marginRight: "10px", marginLeft: "5px" }}>
+                                <IconButton id="refreshButton">
                                     <img src={require('../assets/refresh_grey_27x27.png')} alt="refresh icon" onClick={this.handelRefresh} ></img>
                                 </IconButton>
                             </Tooltip>
 
                             <Settings />
-
-                            <ViewCards parentProps={this.setView} />
-
+                           
+                            <ViewCards style={{marginLeft:'auto'}} parentProps={this.setView} />
+                           
                             <UserProfile />
-
+                            </div>
                         </Toolbar>
 
 
                     </AppBar>
                         
                     <MenuDrawer closeLabelOption={this.props.closeLabelOption} parentProps={this.state.open} handleNavigation={this.props.handleNavigation} searchLabels={(value)=>this.searchLabels(value)}/>
-
                 </MuiThemeProvider>
+                
 
 
             )

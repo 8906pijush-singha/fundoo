@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { IconButton, Fade, Popper, Paper, Tooltip, Avatar } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
+import { uploadProfilePic } from '../services/post';
 
 
 const styles = theme => ({
@@ -25,6 +26,7 @@ class UserProfile extends Component {
     anchorEl: null,
     open: false,
     placement: null,
+    profilePic: ""
   };
   triggerInputFile() {
     this.fileInput.click();
@@ -38,8 +40,27 @@ class UserProfile extends Component {
     }));
 
   };
+  componentDidMount() {
+    if(localStorage.getItem("profilePic")!=="undefind"){
+      this.setState({
+        profilePic:localStorage.getItem("profilePic")
+      })
+    }
+  }
+  uploadImage(e) {
+    let data = new FormData();
+    data.append('file', e.target.files[0]);
+    uploadProfilePic('/setProfilePic', data)
+      .then((result) => {
+        this.setState({
+          profilePic: result.data.data
+        })
+      }).catch((err) => {
+        alert(err);
+      })
+  }
   render() {
-    const { classes } = this.props;
+   
     const { anchorEl, open, placement } = this.state;
     const username = localStorage.getItem("UserName")
     const email = localStorage.getItem("Email")
@@ -48,7 +69,7 @@ class UserProfile extends Component {
       return (window.location.href = "/")
     } else {
       return (
-        <div className={classes.root}>
+        <div className='appbarProfileDiv'>
           <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
@@ -64,8 +85,16 @@ class UserProfile extends Component {
                       >
                         <input ref={fileInput => this.fileInput = fileInput}
                           type="file" style={{ 'display': 'none' }}
+                          onChange={(e) => this.uploadImage(e)}
                         />
-                        <b style={{ fontSize: "33px" }}>{initial}</b>
+                        {this.state.profilePic !== "" ?
+                          <img style={{
+                            maxWidth: "100%",
+                            height: "auto"
+                          }} src={this.state.profilePic} alt="profileImage"></img>
+                          :
+                          <b style={{ fontSize: "33px" }}>{initial}</b>
+                        }
                       </Avatar>
 
                       <div className="accountDetails">
@@ -87,11 +116,18 @@ class UserProfile extends Component {
             <div>{localStorage.getItem("Email")}</div>
           </div>}>
             <IconButton
-              style={{ marginLeft: "30px" }}
+              id="profileIconButton"
               onClick={this.handleClick("bottom-end")}
             >
               <Avatar style={{ width: "30px", height: "30px" }} >
-                {initial}
+                {this.state.profilePic !== "" ?
+                  <img style={{
+                    maxWidth: "100%",
+                    height: "auto"
+                  }} src={this.state.profilePic}  alt="profileImage"></img>
+                  :
+                  initial
+                }
               </Avatar>
             </IconButton>
           </Tooltip>

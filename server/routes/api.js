@@ -38,6 +38,10 @@ router.post('/forgot', auth.forgotEmailValid, userController.forgotController)
  * routing for reset
  */
 router.post('/reset', auth.resetPassValid, userController.resetController)
+/**
+ * routing to set ProfilePic
+ */
+router.put('/setProfilePic', noteAuth.tokenValid,upload.single('file'), userController.setProfilePic)
 
 /**
  * API ROUTES FOR NOTES----------------------------------------

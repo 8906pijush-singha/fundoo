@@ -96,7 +96,7 @@ class Note extends Component {
             return (window.location.href = "/")
         } else {
             return (
-                <div className={cardLayout} >
+                <div  >
                     <AppBarComp
                         slideNotes={this.slideNotes}
                         closeLabelOption={this.closeLabelOption}
@@ -105,9 +105,11 @@ class Note extends Component {
                         getSearchNote={this.getSearchNote}
                         searchLabels={this.searchLabels}
                     />
+                    <div className={cardLayout}>
                     <div className="dashBoard">
-                        {(this.state.archive || this.state.trash) ? null :
+                     {(this.state.archive || this.state.trash) ? null :
                             <CreateNote ref={this.createNoteClick} showCardCall={this.showCards} />}
+                       
                         <Cards
                             labelValue={this.state.label}
                             searchNote={this.state.searchNote}
@@ -116,6 +118,7 @@ class Note extends Component {
                             navigateReminder={this.state.reminder}
                             navigateArchive={this.state.archive}
                             navigateTrashed={this.state.trash} />
+                    </div>
                     </div>
                 </div>
             )

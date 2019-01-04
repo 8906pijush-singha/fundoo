@@ -7,7 +7,7 @@
 
 
 const userServices = require('../services/userServices');
-
+const fs=require('fs');
 const jwt = require('jsonwebtoken');
 /**
  * @param {http request} req 
@@ -44,12 +44,7 @@ exports.registration = (req, res, next) => {
  */
 exports.login = (req, res, next) => {
     try {
-        // let responseResult = {
-        //     status:false,
-        //     message:"something bad happend"
-        // };
-        // const v=new Error();
-        // v.
+        
         userServices.login(req.body, (err, result) => {
             if (err) {
                 const obj = {
@@ -57,8 +52,6 @@ exports.login = (req, res, next) => {
                     msg: "something bad happened"
                 }
                 next(obj)
-                // responseResult.message = err;
-                // res.status(400).send(responseResult);
             } else {
                 const token = jwt.sign({
                     id: result.id,
@@ -68,7 +61,8 @@ exports.login = (req, res, next) => {
                 console.log("token===\n", token);
                 const obj = {
                     token: token,
-                    userName: result.fname + " " + result.lname
+                    userName: result.fname + " " + result.lname,
+                    profilePic:result.profilePic
                 }
 
 
@@ -174,5 +168,37 @@ exports.resetController = (req, res, next) => {
         })
     } catch (err) {
         next(err)
+    }
+}
+
+exports.setProfilePic = (req, res, next) => {
+    try {
+        console.log("in noteController", req.body,req.file,req.decoded);
+        var res_result = {};
+        let userID = null;
+        if (typeof req.file === 'undefined') {
+            throw new Error("file is mandatory");
+        }  else {
+            userID = req.decoded;
+            console.log("galat hai",userID);
+            
+           let imageString= new Buffer(fs.readFileSync(req.file.path)).toString("base64")
+           userServices.setProfilePic(userID, imageString, (err, result) => {
+                if (err) {
+
+                    const errMessage = {
+                        status: 400,
+                        message: "Bad Request"
+                    }
+                    next(errMessage);
+                } else {
+                    res_result.status = true;
+                    res_result.data = result;
+                    res.status(200).send(res_result);
+                }
+            })
+        }
+    } catch (error) {
+        next(error);
     }
 }

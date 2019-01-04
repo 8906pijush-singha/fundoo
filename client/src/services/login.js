@@ -11,6 +11,7 @@ export function login(email,password){
           localStorage.setItem("token",response.data.token);
           localStorage.setItem("isAuth",true); 
           localStorage.setItem("UserName",response.data.userName); 
+          localStorage.setItem("profilePic",response.data.profilePic); 
           localStorage.setItem("Email",email);
           window.location.href='notes';
         })

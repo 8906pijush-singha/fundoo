@@ -8,7 +8,6 @@ class Upload extends Component {
     }
     uploadImage(e) {
         this.props.uploadImage(e.target.files[0],this.props.note._id)
-        console.log(e.target.files[0])
     }
     render() {
         return (

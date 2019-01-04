@@ -52,7 +52,6 @@ class Cards extends Component {
             open: false,
             notes: [],
             label: false
-            // searchNote: ""
         }
         this.cardsToDialogBox = React.createRef();
         this.handleClick = this.handleClick.bind(this);
@@ -90,7 +89,6 @@ class Cards extends Component {
                 this.setState({
                     notes: result
                 })
-                console.log("this card", result);
             })
             .catch((error) => {
                 alert(error)
@@ -133,12 +131,6 @@ class Cards extends Component {
         let data = new FormData();
         data.append('file', value);
         data.append('noteID', noteId);
-
-        // const image = {
-        //     noteID: noteId,
-        //     image: data
-        // }
-
         updateImages('/uploadImage', data)
             .then((result) => {
                 console.log("result",result.data.data)
@@ -501,7 +493,8 @@ class Cards extends Component {
                                             <div>
                                                 <div>
                                                     {ordinaryCard[key].note.image!==""?
-                                                    <img src={ordinaryCard[key].note.image}></img>
+                                                    <img style={{maxWidth: "100%",
+                                                        height: "auto"}} src={ordinaryCard[key].note.image} alt ="cardImage"></img>
                                                 :null}
                                                 </div>
                                                 <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -560,9 +553,10 @@ class Cards extends Component {
 
                                                     : null}
                                                 {ordinaryCard[key].note.label.length > 0 ?
-                                                    ordinaryCard[key].note.label.map((key1) =>
+                                                    ordinaryCard[key].note.label.map((key1,i) =>
                                                         <Chip
                                                             label={key1}
+                                                            key={i}
                                                             onDelete={() => this.deleteLabelFromNote(key1, ordinaryCard[key].note._id)} />
                                                     )
                                                     :

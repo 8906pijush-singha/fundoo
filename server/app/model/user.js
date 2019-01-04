@@ -38,6 +38,9 @@ const UserSchema = new mongoose.Schema({
             ref: 'noteSchema'
         }
     ],
+    profilePic:{
+        type:String
+    },
     resetPasswordToken: String,
     resetPasswordExpires: Date
 })
@@ -334,6 +337,34 @@ userModel.prototype.getUserDetails = (callback) => {
         }
     })
 }
+
+userModel.prototype.setProfilePic=(userID,image, callback)=> {
+    var updateUser = null    
+    if(image!= null){
+        updateUser = 'data:image/jpg;base64, '+image;
+    }else{
+        callback("image not found")
+    }
+    console.log("image found",userID, image);
+    
+    User.findOneAndUpdate(
+        {
+            _id: userID
+        },
+        {
+            $set:{
+                profilePic:updateUser
+            }
+        },
+        (err,result)=>{
+            if(err){
+                callback(err)
+            }else{
+                console.log("updated note",updateUser)
+                return callback(null,updateUser)
+            }
+        });
+};
 module.exports = new userModel;
 
 

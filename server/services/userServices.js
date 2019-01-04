@@ -259,3 +259,20 @@ exports.reset = (data, callback) => {
         }
     })
 }
+
+
+/**
+ * @param {object} data
+ * @param {callback function} callback
+ */
+exports.setProfilePic  = (paramID,image,callback) => {
+    console.log("in services", paramID);
+   
+    user.setProfilePic (paramID,image, (err, result) => {
+        if (err) {
+            callback(err);
+        } else {
+            return callback(null, result)
+        }
+    })
+}

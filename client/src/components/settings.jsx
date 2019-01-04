@@ -35,7 +35,7 @@ class Settings extends Component {
             <MenuItem id="settingsMenuItem">{value}</MenuItem>
         );
         return (
-            <div>
+            <div id="settingsIcon">
                 <IconButton >
                     <Tooltip title="Settings">
                         <img src={gearIcon} onClick={this.handleClick('bottom-start')} alt="settings icon" />

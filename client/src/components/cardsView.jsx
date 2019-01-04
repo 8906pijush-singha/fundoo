@@ -18,7 +18,7 @@ class ViewCards extends Component {
     render() {
         return (
             this.state.view ?
-                <div>
+                <div className="cardsView"> 
                     <Tooltip title="List View">
                         <IconButton style={{ marginRight: "0px" }} onClick={this.onListViewClick}>
                             <img src={require('../assets/view-agenda.svg')} alt="setting icon" ></img>
@@ -26,7 +26,7 @@ class ViewCards extends Component {
                     </Tooltip>
                 </div>
                 :
-                <div>
+                <div className="cardsView">
                     <Tooltip title="Grid View">
                         <IconButton style={{ marginRight: "0px" }} onClick={this.onListViewClick}>
                             <img src={require('../assets/view-grid.svg')} alt="setting icon" ></img>

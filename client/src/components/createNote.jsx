@@ -194,6 +194,7 @@ class CreateNote extends Component {
                                 <Input
                                     className="createNoteInput"
                                     placeholder="Take a note... "
+                                    multiline
                                     disableUnderline={true}
                                     // disabled={onclick}                                
                                     onClick={this.disableClick}
