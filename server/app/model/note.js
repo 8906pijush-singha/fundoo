@@ -151,7 +151,7 @@ noteModel.prototype.isPinned=(noteID, updateParams, callback)=> {
 noteModel.prototype.updateImage=(noteID,image, callback)=> {
     var updateNote = null    
     if(image!= null){
-        updateNote = image;
+        updateNote = 'data:image/jpg;base64, '+image;
     }else{
         callback("image not found")
     }

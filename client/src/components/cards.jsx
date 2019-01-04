@@ -145,7 +145,7 @@ class Cards extends Component {
                 let newArray = this.state.notes
                 for (let i = 0; i < newArray.length; i++) {
                     if (newArray[i].note._id === noteId) {
-                        newArray[i].note.image = 'data:image/jpg;base64, '+result.data.data;
+                        newArray[i].note.image = result.data.data;
                         this.setState({
                             notes: newArray
                         })
